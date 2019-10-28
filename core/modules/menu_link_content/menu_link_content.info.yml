@@ -1,0 +1,13 @@
+name: 'Custom Menu Links'
+type: module
+description: 'Allows administrators to create custom menu links.'
+package: Core
+# version: VERSION
+core: 8.x
+dependencies:
+  - drupal:link
+
+# Information added by Drupal.org packaging script on 2019-10-02
+version: '8.7.8'
+project: 'drupal'
+datestamp: 1570044520

@@ -1,0 +1,13 @@
+name: 'HAL'
+type: module
+description: 'Serializes entities using Hypertext Application Language.'
+package: Web services
+# version: VERSION
+core: 8.x
+dependencies:
+  - drupal:serialization
+
+# Information added by Drupal.org packaging script on 2019-10-02
+version: '8.7.8'
+project: 'drupal'
+datestamp: 1570044520
