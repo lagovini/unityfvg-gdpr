@@ -1,0 +1,13 @@
+uuid: a05600d8-cad8-4fa2-ad69-e745d9164eae
+langcode: it
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: lDM9mvIGAu8Sw8rt-uCO4Sr7yX5VPrDPxYcawkbKd6k
+id: node_make_unsticky_action
+label: 'Rimuovere il contenuto dalla cima delle liste'
+type: node
+plugin: node_make_unsticky_action
+configuration: {  }

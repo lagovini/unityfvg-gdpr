@@ -1,0 +1,20 @@
+uuid: fcb01020-5a3d-4a20-bc8c-5ef3082a3875
+langcode: it
+status: true
+dependencies:
+  theme:
+    - bartik
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: bartik_page_title
+theme: bartik
+region: content
+weight: -50
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Titolo della pagina'
+  provider: core
+  label_display: '0'
+visibility: {  }
