@@ -1,4 +1,4 @@
-uuid: c72360fe-1aa0-481a-982f-8fa12fe8b4f3
+uuid: 40cd1bf0-7f70-4b3e-9298-8a5761fbafa7
 langcode: it
 status: true
 dependencies:
@@ -7,18 +7,18 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - bootstrap
 _core:
-  default_config_hash: rH6PpAn7-RScha1rGkohGAYSSh_1OVeZzioJPzPw6O4
-id: bartik_tools
-theme: bartik
-region: sidebar_first
+  default_config_hash: f3Dd5TnUiFDjFZp9yEGJInwt6cUzs7O6SvLTFTATSlU
+id: bootstrap_tools
+theme: bootstrap
+region: sidebar_second
 weight: 0
 provider: null
 plugin: 'system_menu_block:tools'
 settings:
   id: 'system_menu_block:tools'
-  label: Strumenti
+  label: Tools
   provider: system
   label_display: visible
   level: 1

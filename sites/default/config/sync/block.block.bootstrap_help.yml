@@ -1,22 +1,22 @@
-uuid: 70fefbc1-a6f0-4b58-9ff0-77d622d62e40
+uuid: a5bbe192-5673-4568-aad5-e8ab00b78927
 langcode: it
 status: true
 dependencies:
   module:
     - help
   theme:
-    - bartik
+    - bootstrap
 _core:
-  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
-id: bartik_help
-theme: bartik
-region: content
+  default_config_hash: MhtNdV__HKRTab0ZPjkPNfYL4Ng4UPBucDLoC7Rg5Eo
+id: bootstrap_help
+theme: bootstrap
+region: help
 weight: -30
 provider: null
 plugin: help_block
 settings:
   id: help_block
-  label: Aiuto
+  label: Help
   provider: help
   label_display: '0'
 visibility: {  }

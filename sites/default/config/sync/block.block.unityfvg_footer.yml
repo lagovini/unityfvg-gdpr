@@ -1,4 +1,4 @@
-uuid: 5e8fc05d-ed1d-4348-b6bd-16e946ca93e8
+uuid: 518cd146-0c80-4573-ae91-b7b6c46a7ced
 langcode: it
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - unityfvg
 _core:
   default_config_hash: 8zRjTNbfNAJ94lQpZDu6MkyD87GYJ2zpH9VQPVmRbcM
-id: bartik_footer
-theme: bartik
-region: footer_fifth
+id: unityfvg_footer
+theme: unityfvg
+region: footer
 weight: 0
 provider: null
 plugin: 'system_menu_block:footer'

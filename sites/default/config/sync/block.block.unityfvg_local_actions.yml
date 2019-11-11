@@ -1,13 +1,13 @@
-uuid: f22f7dca-f768-4823-a78c-ae1210798f9b
+uuid: 2627e0f8-40f6-4855-8e96-e3785a374cb5
 langcode: it
 status: true
 dependencies:
   theme:
-    - bartik
+    - unityfvg
 _core:
   default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
-id: bartik_local_actions
-theme: bartik
+id: unityfvg_local_actions
+theme: unityfvg
 region: content
 weight: -20
 provider: null

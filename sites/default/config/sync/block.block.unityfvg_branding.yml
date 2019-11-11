@@ -1,0 +1,25 @@
+uuid: fd33e585-18d2-423a-ab2f-95adf87705b6
+langcode: it
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: unityfvg_branding
+theme: unityfvg
+region: header
+weight: 0
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Branding del sito'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

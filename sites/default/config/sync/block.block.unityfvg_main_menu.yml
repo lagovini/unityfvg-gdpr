@@ -1,4 +1,4 @@
-uuid: 94b9d3c9-a4d8-479e-9f88-93a1e950d2b0
+uuid: 637393c7-648b-4885-b481-05b3266981e4
 langcode: it
 status: true
 dependencies:
@@ -7,13 +7,13 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - unityfvg
 _core:
   default_config_hash: ChCx7DYNUrPTt5uiRdQAPDKJQMc-_SyAQTrZh8H0o-c
-id: bartik_main_menu
-theme: bartik
-region: primary_menu
-weight: 0
+id: unityfvg_main_menu
+theme: unityfvg
+region: sidebar_first
+weight: -5
 provider: null
 plugin: 'system_menu_block:main'
 settings:

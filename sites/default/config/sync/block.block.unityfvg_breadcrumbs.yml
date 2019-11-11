@@ -1,16 +1,16 @@
-uuid: 57f36b1f-66a6-45c1-a786-2725ad712787
+uuid: 2241bb75-244f-4f1b-af8c-7745aef1546f
 langcode: it
-status: true
+status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
+    - unityfvg
 _core:
   default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
-id: bartik_breadcrumbs
-theme: bartik
-region: breadcrumb
+id: unityfvg_breadcrumbs
+theme: unityfvg
+region: navigation
 weight: 0
 provider: null
 plugin: system_breadcrumb_block
