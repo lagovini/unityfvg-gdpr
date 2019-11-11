@@ -27,6 +27,8 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       DB_NAME: $DB_NAME
       DB_DRIVER: $DB_DRIVER
+      DB_PORT: $DB_PORT
+      SITE_ENVIRONMENT: $SITE_ENVIRONMENT
       PHP_FPM_USER: wodby
       PHP_FPM_GROUP: wodby
       COLUMNS: 80 # Set 80 columns for docker exec -it.
