@@ -12,7 +12,7 @@ dependencies:
 id: unityfvg_chatbot
 theme: unityfvg
 region: navigation
-weight: 0
+weight: -8
 provider: null
 plugin: 'block_content:b0e27bc9-55b8-4d6c-80f7-3661dda2e9c0'
 settings:

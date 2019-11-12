@@ -1,0 +1,31 @@
+uuid: a6910cbc-9d48-42d8-b473-8f7a022aee25
+langcode: it
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:c4400065-54f9-4a5e-9d3d-7e9284f50655'
+  module:
+    - block_content
+    - system
+  theme:
+    - unityfvg
+id: presentazione
+theme: unityfvg
+region: content
+weight: -8
+provider: null
+plugin: 'block_content:c4400065-54f9-4a5e-9d3d-7e9284f50655'
+settings:
+  id: 'block_content:c4400065-54f9-4a5e-9d3d-7e9284f50655'
+  label: Presentazione
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

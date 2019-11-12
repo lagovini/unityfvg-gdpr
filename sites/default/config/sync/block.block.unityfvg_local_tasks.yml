@@ -9,7 +9,7 @@ _core:
 id: unityfvg_local_tasks
 theme: unityfvg
 region: content
-weight: -40
+weight: -5
 provider: null
 plugin: local_tasks_block
 settings:

@@ -1,4 +1,4 @@
-uuid: 637393c7-648b-4885-b481-05b3266981e4
+uuid: cad5401d-94d3-4b2e-81b4-9d9d7e7daeea
 langcode: it
 status: true
 dependencies:
@@ -8,12 +8,10 @@ dependencies:
     - system
   theme:
     - unityfvg
-_core:
-  default_config_hash: ChCx7DYNUrPTt5uiRdQAPDKJQMc-_SyAQTrZh8H0o-c
-id: unityfvg_main_menu
+id: navigazioneprincipale
 theme: unityfvg
-region: sidebar_first
-weight: -5
+region: content
+weight: -6
 provider: null
 plugin: 'system_menu_block:main'
 settings:
@@ -28,5 +26,5 @@ visibility:
   request_path:
     id: request_path
     pages: '<front>'
-    negate: true
+    negate: false
     context_mapping: {  }

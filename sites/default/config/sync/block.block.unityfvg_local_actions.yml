@@ -9,7 +9,7 @@ _core:
 id: unityfvg_local_actions
 theme: unityfvg
 region: content
-weight: -20
+weight: -3
 provider: null
 plugin: local_actions_block
 settings:

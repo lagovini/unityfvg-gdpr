@@ -10,15 +10,15 @@ dependencies:
     - unityfvg
 id: unityfvggdpr
 theme: unityfvg
-region: navigation
-weight: 0
+region: navigation_collapsible
+weight: -6
 provider: null
 plugin: 'system_menu_block:unityfvg-gdpr'
 settings:
   id: 'system_menu_block:unityfvg-gdpr'
   label: 'unityfvg-gdpr menu'
   provider: system
-  label_display: visible
+  label_display: '0'
   level: 1
   depth: 0
   expand_all_items: false

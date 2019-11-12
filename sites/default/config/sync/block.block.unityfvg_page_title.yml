@@ -2,6 +2,8 @@ uuid: d0daeae9-9364-49a1-b65e-a26a7d98d35b
 langcode: it
 status: true
 dependencies:
+  module:
+    - system
   theme:
     - unityfvg
 _core:
@@ -9,7 +11,7 @@ _core:
 id: unityfvg_page_title
 theme: unityfvg
 region: content
-weight: -50
+weight: -7
 provider: null
 plugin: page_title_block
 settings:
@@ -17,4 +19,9 @@ settings:
   label: 'Titolo della pagina'
   provider: core
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }
