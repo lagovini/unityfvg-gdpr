@@ -1,5 +1,11 @@
 framework:
   css:
+    base:
+      css/base/elements.css: {}
+    component:
+      css/components/header.css: {}
+      css/components/menu.css: {}
+      css/components/main-content.css: {}
     theme:
       css/style.css: {}
 

@@ -1,0 +1,35 @@
+.navbar-default {
+  background-color: #fff;
+  padding-bottom: 2em;
+  border-radius: 0;
+  border-radius: 0;
+  border: 0;
+}
+
+.region-navigation-collapsible nav {
+  width: 100%;
+  float: left;
+  background-color: #009fe3;
+}
+
+.region-navigation-collapsible nav a,
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 1.9rem;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.menu--unityfvg-gdpr .last a {
+  color: #fff;
+  background-color: #17baff;
+}
+
+.region-navigation-collapsible .menu--unityfvg-gdpr {
+  margin: auto;
+  display: table;
+  float: none;
+}
+
