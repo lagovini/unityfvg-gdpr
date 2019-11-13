@@ -13,7 +13,8 @@
 }
 
 .region-navigation-collapsible nav a,
-.navbar-default .navbar-nav > li > a {
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:focus {
   color: #fff;
   text-transform: uppercase;
   font-weight: bold;
@@ -31,5 +32,14 @@
   margin: auto;
   display: table;
   float: none;
+}
+
+/*
+* Menu footer
+*/
+.menu--footer {
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
 }
 
