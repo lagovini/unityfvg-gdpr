@@ -2,3 +2,7 @@
  * If using a CSS pre-processor, tell it to overwrite this file. If not, place
  * your custom CSS modifications here.
  */
+ #block-presentazione {
+  padding: 2rem;
+  font-size: 2rem;
+}
