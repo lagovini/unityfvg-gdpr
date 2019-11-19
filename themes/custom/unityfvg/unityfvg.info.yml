@@ -24,3 +24,5 @@ regions:
 libraries-extend:
   bootstrap/framework:
     - unityfvg/framework
+    - unityfvg/montserrat
+    - unityfvg/SourceSansPro

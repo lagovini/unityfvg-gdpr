@@ -35,6 +35,38 @@
 }
 
 /*
+* unityfvg-main-menu
+*/
+#block-unityfvg-main-menu a {
+  color: gray;
+}
+
+#block-unityfvg-main-menu a:hover {
+  color:white;
+  background-color:#40c6ff;
+}
+
+#block-unityfvg-main-menu a.is-active,
+#block-unityfvg-main-menu a.active-trail {
+  background-color:#E0E0E0;
+  color:#444;
+  font-weight: bold;
+}
+#block-unityfvg-main-menu a.active-trail.dropdown-toggle {
+  border-bottom: 1px solid #BDBDBD;
+}
+
+
+
+#block-unityfvg-main-menu ul.second {
+  background-color:#f3f3f378;
+}
+
+#block-unityfvg-main-menu ul.second a {
+  padding-left: 2rem;
+}
+
+/*
 * Menu footer
 */
 .menu--footer {
@@ -44,17 +76,11 @@
 }
 
 /*
-* Menu hompage
+* Start Menu hompage
 */
-.path-frontpage .menu--main {
-  display: flex;
-  justify-content: center;
-  flex-flow: row wrap;
-  align-items: center;
-}
 
 .path-frontpage .menu--main li {
-  width: 33.33333333%;
+  width: 100%;
   text-align: center;
   margin-bottom: .5rem;
 }
@@ -65,10 +91,6 @@
   background: #777777;
   margin: 0 .3rem;
   color: #fff;
-}
-
-.path-frontpage .menu--main li:nth-child(4) {
-  width: 66.66666%;
 }
 
 .path-frontpage .menu--main li:nth-child(1) a {
@@ -86,29 +108,6 @@
   background: linear-gradient(0.25turn, #f0c554, #e49800);
 }
 
-.path-frontpage .menu--main li:nth-child(4) a {
-  line-height: 6;
-}
-
-/*
-* Ultimo item menu
-*/
-.path-frontpage .menu--main li.last {
-  align-self: start;
-}
-.path-frontpage .menu--main li.last a {
-  position: relative;
-  z-index: 0;
-  background-color: transparent;
-  color: #111111;
-  font-size: 2.5rem;
-  width: 50%;
-  text-align: center;
-  margin: auto;
-  padding-top: 3rem;
-  line-height: 1;
-}
-
 .path-frontpage .menu--main li.last a::before {
   content: url(../../images/cassetta.png);
   display: block;
@@ -118,3 +117,20 @@
   margin: auto;
   transform: translateX(-25%);
 }
+/*
+* Ultimo item menu
+*/
+.path-frontpage .menu--main li.last a {
+  position: relative;
+  width: 50%;
+  z-index: 0;
+  color: #111111;
+  font-size: 2.5rem;
+  background-color: transparent;
+  text-align: center;
+  margin: auto;
+  padding-top: 3rem;
+}
+/*
+* End Menu hompage
+*/
