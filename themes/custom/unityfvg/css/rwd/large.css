@@ -1,6 +1,10 @@
 img.img-responsive {
   display: inherit;
 }
+.region-footer .img-responsive {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
 
 /* .region-footer .img-responsive {
   margin-top: inherit;
