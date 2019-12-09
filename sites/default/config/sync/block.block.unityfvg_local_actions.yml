@@ -1,0 +1,20 @@
+uuid: 2627e0f8-40f6-4855-8e96-e3785a374cb5
+langcode: it
+status: true
+dependencies:
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: unityfvg_local_actions
+theme: unityfvg
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Azioni di amministrazione principali'
+  provider: core
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 7dc82352-851a-4078-829d-d7c7f0442151
+langcode: it
+status: true
+dependencies:
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: X9I1OB0W3WlWtrK-CNcg6hNWwa8wficanpH8pYnDZDE
+id: unityfvg_local_tasks
+theme: unityfvg
+region: content
+weight: -5
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Schede
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

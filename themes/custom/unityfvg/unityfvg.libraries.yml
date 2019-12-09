@@ -1,0 +1,28 @@
+framework:
+  css:
+    base:
+      css/base/elements.css: {}
+    component:
+      css/components/header.css: {}
+      css/components/menu.css: {}
+      css/components/main-content.css: {}
+      css/components/block.css: {}
+      css/components/footer.css: {}
+    theme:
+      css/style.css: {}
+      css/rwd/narrow.css: { media: "all and (min-width: 992px)" }
+      css/rwd/large.css: { media: "all and (min-width: 1200px)" }
+montserrat:
+  license:
+    name: SIL Open Font License 1.1
+    url: https://github.com/JulietaUla/Montserrat/blob/master/OFL.txt
+  css:
+    theme:
+      //fonts.googleapis.com/css?family=Montserrat:800&display=swap: {  type: external }
+SourceSansPro:
+  license:
+    name: OFL web version
+    url: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web
+  css:
+    theme:
+      //fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap: {  type: external }

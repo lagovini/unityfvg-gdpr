@@ -1,0 +1,33 @@
+#block-footerloghi {
+  background-color: #fff;
+  padding: 2em;
+  text-align: center;
+}
+
+#block-footerloghi p {
+  margin: 1em 0;
+}
+
+#block-unityfvg-footer {
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #0082ba;
+  border-top: 1px solid #005f87;
+}
+
+#block-unityfvg-footer ul a {
+  color: #fff;
+}
+#block-unityfvg-footer ul a:hover {
+  color:#191919;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+#block-footercopy {
+  text-align: center;
+  background-color:#004969;
+  color:#fff;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+}

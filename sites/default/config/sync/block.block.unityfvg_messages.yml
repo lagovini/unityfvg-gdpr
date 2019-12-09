@@ -1,0 +1,22 @@
+uuid: 5480fb59-3e66-4cd2-a451-753d96511e9e
+langcode: it
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: unityfvg_messages
+theme: unityfvg
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Messaggi di stato'
+  provider: system
+  label_display: '0'
+visibility: {  }

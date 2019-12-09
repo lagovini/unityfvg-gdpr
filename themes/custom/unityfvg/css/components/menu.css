@@ -1,0 +1,159 @@
+.navbar-default {
+  background-color: #fff;
+  padding-bottom: 2em;
+  border-radius: 0;
+  border-radius: 0;
+  border: 0;
+}
+
+.region-navigation-collapsible nav {
+  width: 100%;
+  float: left;
+  background-color: #009fe3;
+}
+
+.region-navigation-collapsible nav a,
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 30px;
+  font-size: 1.9rem;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.menu--unityfvg-gdpr .last a {
+  color: #fff;
+  background-color: #17baff;
+}
+
+.region-navigation-collapsible .menu--unityfvg-gdpr {
+  margin: auto;
+  display: table;
+  float: none;
+}
+
+/*
+* unityfvg-main-menu
+*/
+#block-unityfvg-main-menu a {
+  color: gray;
+}
+
+#block-unityfvg-main-menu a:hover {
+  color:white;
+  background-color:#40c6ff;
+}
+
+#block-unityfvg-main-menu a.is-active,
+#block-unityfvg-main-menu a.active-trail {
+  background-color:#E0E0E0;
+  color:#444;
+  font-weight: bold;
+}
+#block-unityfvg-main-menu a.active-trail.dropdown-toggle {
+  border-bottom: 1px solid #BDBDBD;
+}
+
+
+
+#block-unityfvg-main-menu ul.second {
+  background-color:#f3f3f378;
+}
+
+#block-unityfvg-main-menu ul.second a {
+  padding-left: 2rem;
+}
+
+/*
+* Menu footer
+*/
+.menu--footer {
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+/*
+* Start Menu hompage
+*/
+
+.path-frontpage .menu--main li {
+  width: 100%;
+  text-align: center;
+  margin-bottom: .5rem;
+}
+
+.path-frontpage .menu--main li a {
+  font-size: 3.2rem;
+  line-height: 11.8;
+  background: #777777;
+  margin: 0 .3rem;
+  color: #fff;
+}
+
+.path-frontpage .menu--main li:nth-child(1) a {
+  background-color: #009fe3;
+  background: linear-gradient(0.25turn, #4bc2f1, #009fe3);
+}
+
+.path-frontpage .menu--main li:nth-child(2) a {
+  background-color: #e73312;
+  background: linear-gradient(0.25turn, #ef784c, #e73312);
+}
+
+.path-frontpage .menu--main li:nth-child(3) a {
+  background-color: #e49800;
+  background: linear-gradient(0.25turn, #f0c554, #e49800);
+}
+
+.path-frontpage .menu--main li.last a::before {
+  content: url(../../images/cassetta.png);
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  margin: auto;
+  transform: translateX(-25%);
+}
+/*
+* Ultimo item menu
+*/
+.path-frontpage .menu--main li.last a {
+  position: relative;
+  width: 50%;
+  z-index: 0;
+  color: #111111;
+  font-size: 2.5rem;
+  background-color: transparent;
+  text-align: center;
+  margin: auto;
+  padding-top: 3rem;
+}
+/*
+* End Menu hompage
+*/
+/*
+* Menu RWD
+*/
+.wrapp-navbar-toggle {
+  float: left;
+  width: 100%;
+  background: #009fe3;
+}
+.wrapp-navbar-toggle > button {
+  border-color: #fff;
+}
+
+.navbar-default .wrapp-navbar-toggle  .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+.label-menu-ay11 {
+  float: right;
+  position: relative;
+  color: white;
+  line-height: 3;
+  padding: 0 2rem;
+}

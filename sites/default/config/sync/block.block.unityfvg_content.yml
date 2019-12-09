@@ -1,0 +1,22 @@
+uuid: b5661660-3f6b-4645-875b-399a913f0aa0
+langcode: it
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: unityfvg_content
+theme: unityfvg
+region: content
+weight: -1
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Contenuto della pagina principale'
+  provider: system
+  label_display: '0'
+visibility: {  }

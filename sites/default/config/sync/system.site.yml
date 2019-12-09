@@ -1,0 +1,14 @@
+uuid: d5bd2e27-ecfb-47a4-9d71-bbd38ea8d137
+name: 'DEV gdpr unityfvg'
+mail: testd8@units.it
+slogan: ''
+page:
+  403: ''
+  404: ''
+  front: /node
+admin_compact_mode: false
+weight_select_max: 100
+langcode: it
+default_langcode: it
+_core:
+  default_config_hash: yTxtFqBHnEWxQswuWvkjE8mKw2t8oKuCL1q8KnfHuGE

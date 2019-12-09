@@ -1,0 +1,9 @@
+# Production services.
+#
+# To activate this feature, follow the instructions at the top of the
+# 'production.settings.php' file, which sits next to this file.
+parameters:
+  twig.config: # disabling twig debugging and auto reload, plus enabling twig caching
+    debug: false
+    auto_reload: null
+    cache: true

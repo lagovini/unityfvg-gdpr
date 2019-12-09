@@ -1,0 +1,22 @@
+uuid: 3e3ce774-841a-41a2-9248-d56fb0261343
+langcode: it
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: 8I8iACSa0sKO3k3jlvUG1ge52rfcKX7USJAQYnzuBgg
+id: unityfvg_help
+theme: unityfvg
+region: content
+weight: -4
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Aiuto
+  provider: help
+  label_display: '0'
+visibility: {  }

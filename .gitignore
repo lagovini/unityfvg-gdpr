@@ -17,6 +17,12 @@
 # custom module, theme, etc., are not ignored unless you purposely do so.
 # /vendor/
 
+# Ignore paths that contain generated content.
+sites/*/files/css
+sites/*/files/js
+sites/*/files/php
+sites/*/private
+
 # Ignore configuration files that may contain sensitive information.
 sites/*/settings*.php
 sites/*/services*.yml

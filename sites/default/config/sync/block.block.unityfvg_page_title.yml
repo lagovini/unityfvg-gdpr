@@ -1,0 +1,27 @@
+uuid: d0daeae9-9364-49a1-b65e-a26a7d98d35b
+langcode: it
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - unityfvg
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: unityfvg_page_title
+theme: unityfvg
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Titolo della pagina'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: true
+    context_mapping: {  }

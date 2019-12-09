@@ -1,0 +1,10 @@
+uuid: a7c109e3-58aa-4cde-ac1e-e3e8ad9e2d56
+langcode: it
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: M7yqicYkU36hRy5p9drAaGBBihhUD1OyujFrAaQ93ZE
+id: html_time
+label: 'Ora HTML'
+locked: true
+pattern: 'H:i:s'

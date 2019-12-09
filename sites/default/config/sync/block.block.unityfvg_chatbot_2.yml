@@ -1,0 +1,33 @@
+uuid: d6470fc2-0aa2-4af6-b6b7-95269b4d2a49
+langcode: it
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:b0e27bc9-55b8-4d6c-80f7-3661dda2e9c0'
+  module:
+    - block_content
+    - ctools
+  theme:
+    - unityfvg
+id: unityfvg_chatbot_2
+theme: unityfvg
+region: content
+weight: -2
+provider: null
+plugin: 'block_content:b0e27bc9-55b8-4d6c-80f7-3661dda2e9c0'
+settings:
+  id: 'block_content:b0e27bc9-55b8-4d6c-80f7-3661dda2e9c0'
+  label: CHATBOT
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      page: page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

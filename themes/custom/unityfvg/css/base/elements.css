@@ -1,0 +1,24 @@
+body {
+  font-family: "Source Sans Pro",sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color:#333;
+  background-color:#e2f3fd;
+}
+
+h1, h2, h3, h4, h5, .page-header {
+  font-family: 'Montserrat',Lato,Helvetica,Arial,sans-serif;
+  font-weight: 800;
+  color: #009fe3;
+  border-bottom: 0;
+}
+
+h1 {
+  font-size: 3.8rem;
+}
+
+footer.footer {
+  padding-bottom: 0;
+  padding-top: 0;
+  border: 0;
+}

@@ -1,0 +1,25 @@
+uuid: 5c067954-73d7-42e4-a1ad-127530aced13
+langcode: it
+status: true
+dependencies:
+  config:
+    - system.menu.unityfvg-gdpr
+  module:
+    - system
+  theme:
+    - unityfvg
+id: unityfvggdpr
+theme: unityfvg
+region: navigation_collapsible
+weight: -6
+provider: null
+plugin: 'system_menu_block:unityfvg-gdpr'
+settings:
+  id: 'system_menu_block:unityfvg-gdpr'
+  label: 'unityfvg-gdpr menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+  expand_all_items: false
+visibility: {  }
