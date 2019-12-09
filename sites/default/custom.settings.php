@@ -1,5 +1,4 @@
 <?php
-
 // @codingStandardsIgnoreFile
 
 /**
@@ -764,6 +763,22 @@ $settings['entity_update_batch_size'] = 50;
 $settings['entity_update_backup'] = TRUE;
 
 /**
+ * Load environment override configuration, if available.
+ */
+
+if(getenv('SITE_ENVIRONMENT')){
+  // Environment specific settings files.
+  if (file_exists(__DIR__ . '/' . getenv('SITE_ENVIRONMENT') . '.settings.php')) {
+    include __DIR__ . '/' . getenv('SITE_ENVIRONMENT') . '.settings.php';
+  }
+  // Environment specific services files.
+  if (file_exists(__DIR__ . '/' . getenv('SITE_ENVIRONMENT') . '.services.yml')) {
+    $settings['container_yamls'][] = __DIR__ . '/' . getenv('SITE_ENVIRONMENT') . '.services.yml';
+  }
+}
+
+
+/**
  * Load local development override configuration, if available.
  *
  * Use settings.local.php to override variables on secondary (staging,
@@ -774,17 +789,20 @@ $settings['entity_update_backup'] = TRUE;
  * Keep this code block at the end of this file to take full effect.
  */
 #
-# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#   include $app_root . '/' . $site_path . '/settings.local.php';
-# }
+
+if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+   include $app_root . '/' . $site_path . '/settings.local.php';
+}
+
 $databases['default']['default'] = array (
-  'database' => 'drupal',
-  'username' => 'drupal',
-  'password' => 'drupal',
+  'database' => getenv('DB_NAME'),
+  'username' => getenv('DB_USER'),
+  'password' => getenv('DB_PASSWORD'),
   'prefix' => '',
-  'host' => 'mariadb',
-  'port' => '3306',
+  'host' => getenv('DB_HOST'),
+  'port' => getenv('DB_PORT'),
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
+  'driver' => getenv('DB_DRIVER'),
 );
+// custom config sync
 $config_directories['sync'] = 'sites/default/config/sync';
