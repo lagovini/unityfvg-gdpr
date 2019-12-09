@@ -6,8 +6,3 @@ hidden: true
 dependencies:
   - drupal:link
   - drupal:entity_test
-
-# Information added by Drupal.org packaging script on 2019-10-02
-version: '8.7.8'
-project: 'drupal'
-datestamp: 1570044520
