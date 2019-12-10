@@ -37,7 +37,6 @@
         {% set link_attributes = item.link_attributes %}
         {% if menu_level == 0 and item.is_expanded and item.below %}
           {% set link_title %}{{ link_title }} <span class="caret"></span>{% endset %}
-          {% set link_attributes = link_attributes.addClass('dropdown-toggle').setAttribute('data-toggle', 'dropdown') %}
         {% endif %}
         {# Must use link() here so it triggers hook_link_alter(). #}
         {{ link(link_title, item.url, link_attributes.addClass(item.in_active_trail ? 'active-trail')) }}
