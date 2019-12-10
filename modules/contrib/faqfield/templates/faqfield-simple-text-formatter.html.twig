@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a FAQ Field simple text formatter.
+ *
+ * Available variables:
+ * - question: Prefiltered question value by check_plain.
+ * - answer: Prefiltered answer value by field setting format.
+ * - delta: Delta # of field element.
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_faqfield_simple_text_formatter()
+ *
+ * @ingroup themeable
+ */
+#}
+{% spaceless %}
+    <h3 class="faqfield-question">{{ question }}</h3>
+    <div class="faqfield-answer">{{ answer }}</div>
+{% endspaceless %}

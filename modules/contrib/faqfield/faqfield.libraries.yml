@@ -1,0 +1,9 @@
+faqfield.accordion:
+  version: '8.x-1.0'
+  js:
+    js/faqfield.accordion.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.ui.accordion

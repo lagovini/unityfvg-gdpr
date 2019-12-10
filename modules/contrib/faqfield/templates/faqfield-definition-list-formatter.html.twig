@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a FAQ Field definition list formatter.
+ *
+ * Available variables:
+ * - items: An array of objects with the following fields.
+ *   - question: Prefiltered question value by check_plain.
+ *   - answer: Prefiltered answer value by field setting format.
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_faqfield_definition_list_formatter()
+ *
+ * @ingroup themeable
+ */
+#}
+{% spaceless %}
+    <dl class="faqfield-definition-list">
+        {% for item in items %}
+            <dt class="faqfield-question">{{ item.question }}</dt>
+            <dd class="faqfield-answer">{{ item.answer }}</dd>
+        {% endfor %}
+    </dl>
+{% endspaceless %}
