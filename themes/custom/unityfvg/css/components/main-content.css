@@ -2,3 +2,18 @@
   padding: 2rem;
   background-color: #ffffff;
 }
+
+/* Inizio vista informativa */
+.view-id-informative {
+  margin-top: 5rem;
+}
+
+.view-id-informative .views-row {
+  margin: 6rem 0;
+}
+.view-id-informative .views-field-title h2 {
+  color: #ffffff;
+  background: #009fe3;
+  padding: .4rem .8rem;
+}
+/* Fine vista informativa */
