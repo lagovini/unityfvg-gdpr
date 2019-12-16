@@ -1,0 +1,12 @@
+name: 'Webform Image Select'
+type: module
+description: 'Provides a webform element for a selecting an image.'
+package: Webform
+core: 8.x
+dependencies:
+  - 'webform:webform'
+
+# Information added by Drupal.org packaging script on 2019-12-02
+version: '8.x-5.6'
+project: 'webform'
+datestamp: 1575331093

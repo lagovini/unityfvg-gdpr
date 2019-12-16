@@ -1,0 +1,150 @@
+<?php
+
+/**
+ * @file
+ * Defines a field for frequently asked questions.
+ */
+
+use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\field\FieldStorageConfigInterface;
+
+/**
+ * Implements hook_help().
+ */
+function faqfield_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.faqfield':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The FAQ Field module defines a field for storing frequently asked questions, for use with the Field module. See the <a href="!field_ui">Field module help page</a> for more information about fields.', ['!field_ui' => \Drupal::url('help.page', ['name' => 'field_ui'])]) . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function faqfield_theme() {
+  return [
+    // Simple text field formatter template.
+    'faqfield_simple_text_formatter' => [
+      'variables' => [
+        'question' => NULL,
+        'answer' => NULL,
+        'answer_format' => NULL,
+        'delta' => NULL,
+      ],
+      'template' => 'faqfield-simple-text-formatter',
+    ],
+    // Definition list field formatter template.
+    'faqfield_definition_list_formatter' => [
+      'variables' => [
+        'items' => [],
+      ],
+      'template' => 'faqfield-definition-list-formatter',
+    ],
+    // Anchor list field formatter template.
+    'faqfield_anchor_list_formatter' => [
+      'variables' => [
+        'items' => [],
+        'list_type' => 'ul',
+      ],
+      'template' => 'faqfield-anchor-list-formatter',
+    ],
+    // jQuery Accordion field formatter template.
+    'faqfield_jquery_accordion_formatter' => [
+      'variables' => [
+        'items' => [],
+        'id' => NULL,
+      ],
+      'template' => 'faqfield-jquery-accordion-formatter',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for the simple text field formatter template.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - question: Question value.
+ *   - answer: Answer value.
+ *   - answer_format: Answer markup format.
+ *   - delta: Delta of field element.
+ */
+function template_preprocess_faqfield_simple_text_formatter(&$variables) {
+  $variables['question'] = SafeMarkup::checkPlain($variables['question']);
+  $variables['answer'] = check_markup($variables['answer'], $variables['answer_format']);
+}
+
+/**
+ * Prepares variables for the definition list field formatter template.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - items: An array of objects with the following fields.
+ *    - question: Prefiltered question value by check_plain.
+ *    - answer: Prefiltered answer value by field setting format.
+ *    - answer_format: Answer markup format.
+ */
+function template_preprocess_faqfield_definition_list_formatter(&$variables) {
+  foreach ($variables['items'] as &$item) {
+    $item['question'] = SafeMarkup::checkPlain($item['question']);
+    $item['answer'] = check_markup($item['answer'], $item['answer_format']);
+    unset($item);
+  }
+}
+
+/**
+ * Prepares variables for the definition list field formatter template.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - items: An array of objects with the following fields.
+ *    - question: Prefiltered question value by check_plain.
+ *    - answer: Prefiltered answer value by field setting format.
+ *    - answer_format: Answer markup format.
+ *    - name: String to be used as anchor name.
+ *   - list_type: The type of HTML list used for the anchor link list.
+ */
+function template_preprocess_faqfield_anchor_list_formatter(&$variables) {
+  foreach ($variables['items'] as &$item) {
+    // Build string to be used as anchor name.
+    $item['name'] = 'faq-' . SafeMarkup::checkPlain(str_replace(' ', '-', $item['question']));
+
+    $item['question'] = SafeMarkup::checkPlain($item['question']);
+    $item['answer'] = check_markup($item['answer'], $item['answer_format']);
+    unset($item);
+  }
+}
+
+/**
+ * Prepares variables for the jQuery accordion field formatter template.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - items: An array of objects with the following fields.
+ *    - question: Prefiltered question value by check_plain.
+ *    - answer: Prefiltered answer value by field setting format.
+ *    - answer_format: Answer markup format.
+ *   - id: Id to wrap the accordion markup in.
+ */
+function template_preprocess_faqfield_jquery_accordion_formatter(&$variables) {
+  foreach ($variables['items'] as &$item) {
+    $item['question'] = SafeMarkup::checkPlain($item['question']);
+    $item['answer'] = check_markup($item['answer'], $item['answer_format']);
+    unset($item);
+  }
+}
+
+/**
+ * Implements hook_field_storage_config_create().
+ *
+ * Set the default cardinality to unlimited after a faqfield was created.
+ */
+function faqfield_field_storage_config_create(FieldStorageConfigInterface $field_storage) {
+  if ($field_storage->getType() == 'faqfield') {
+    $field_storage->setCardinality(FieldStorageConfigInterface::CARDINALITY_UNLIMITED);
+  }
+}

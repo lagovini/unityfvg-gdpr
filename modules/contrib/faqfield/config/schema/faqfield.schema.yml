@@ -1,0 +1,73 @@
+# Schema for the configuration files of the FAQ Field module.
+
+# FieldFormatter: jQuery Accordion
+field.formatter.settings.faqfield_accordion:
+  type: mapping
+  label: 'FAQ Field jQuery Accordion format settings'
+  mapping:
+    active:
+      type: integer
+      label: 'Index of active element starting from 0. Leave empty to display none at start.'
+    heightStyle:
+      type: string
+      label: 'Controls the height of the accordion and each panel.'
+    collapsible:
+      type: boolean
+      label: 'Whether an opened question can be collapsed (by the triggering event).'
+    event:
+      type: string
+      label: 'Event on which to trigger the accordion.'
+    animate:
+      type: mapping
+      label: 'Animation options for the accordion formatter.'
+      mapping:
+        easing:
+          type: string
+          label: 'Name of easing to use when the event is triggered.'
+        duration:
+          type: integer
+          label: 'Animation duration in milliseconds with the selected easing.'
+
+# FieldFormatter: HTML anchor list
+field.formatter.settings.faqfield_anchor_list:
+  type: mapping
+  label: 'FAQ Field HTML anchor list format settings'
+  mapping:
+    anchor_list_type:
+      type: string
+      label: 'The type of HTML list used for the anchor link list.'
+
+# FieldWidget: Default widget.
+field.widget.settings.faqfield_default:
+  type: mapping
+  label: 'FAQ Field default widget settings'
+  mapping:
+    answer_widget:
+      type: string
+      label: 'What form widget to use for answer input.'
+    question_title:
+      type: string
+      label: 'Custom title of question input.'
+      translatable: true
+      translation context: 'Custom title of FAQ Field question widget.'
+    answer_title:
+      type: string
+      label: 'Custom title of answer input.'
+      translatable: true
+      translation context: 'Custom title of FAQ Field answer widget.'
+    advanced:
+      type: mapping
+      label: 'Advanced options of the FAQ Field default widget.'
+      mapping:
+        question_length:
+          type: integer
+          label: 'Maximum length of questions.'
+        question_size:
+          type: integer
+          label: 'Size the question widget.'
+        question_rows:
+          type: integer
+          label: 'Number of rows used for the question widget.'
+        answer_rows:
+          type: integer
+          label: 'Number of rows used for the answer widget.'

@@ -1,0 +1,25 @@
+{
+  "name": "drupal/faqfield",
+  "type": "drupal-module",
+  "description": "This module provides a field for frequently asked questions.",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "http://drupal.org/project/faqfield",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Patrick Drotleff (patrickd)",
+      "homepage": "https://www.drupal.org/u/patrickd",
+      "role": "Maintainer"
+    },
+    {
+      "name": "Kevin Quillen (kevinquillen)",
+      "homepage": "https://www.drupal.org/u/kevinquillen",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "http://drupal.org/project/issues/faqfield",
+    "source": "http://cgit.drupalcode.org/faqfield"
+  }
+}

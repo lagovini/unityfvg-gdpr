@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a FAQ Field accordion formatter.
+ *
+ * Available variables:
+ * - items: An array of objects with the following fields.
+ *   - question: Prefiltered question value by check_plain.
+ *   - answer: Prefiltered answer value by field setting format.
+ * - id: Id to wrap the accordion markup in.
+ *
+ * @see template_preprocess()
+ * @see template_preprocess_faqfield_jquery_accordion_formatter()
+ *
+ * @ingroup themeable
+ */
+#}
+{% spaceless %}
+    <div id="{{ id }}">
+        {% for item in items %}
+            <h3 class="faqfield-question">{{ item.question }}</h3>
+            <div class="faqfield-answer">{{ item.answer }}</div>
+        {% endfor %}
+    </div>
+{% endspaceless %}
