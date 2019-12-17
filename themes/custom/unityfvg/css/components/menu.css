@@ -162,3 +162,9 @@
 .region-content .menu--main .menu.nav.second {
   margin-left: 5rem;
 }
+.region-content .menu--main li:nth-child(3) .menu.nav.second {
+  display: none;
+}
+.region-content .menu--main li:nth-child(3) span.caret {
+  display: none;
+}
