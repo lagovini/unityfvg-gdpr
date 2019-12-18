@@ -2,13 +2,13 @@
  * Node type edit Informativa
  * TMP
 */
+.page-node-type-informativa .radio input[type=radio], .radio-inline input[type=radio] {
+  display: none;
+  pointer-events: none;
+}
 .page-node-type-informativa .radio label {
   pointer-events: none;
 }
 .page-node-type-informativa input[type="radio"]:checked {
   display: block;
-}
-.page-node-type-informativa .radio input[type=radio], .radio-inline input[type=radio] {
-  display: none;
-  pointer-events: none;
 }
