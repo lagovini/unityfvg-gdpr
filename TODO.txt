@@ -8,3 +8,6 @@ menu.css
       .region-content .menu--main li:nth-child(3) span.caret {
         display: none;
       }
+
+node.css
+le istruzioni per disabilitare radio button in modifoca nodo informativa, andranno eliminate se  ciascuna informativa diventa un nodo

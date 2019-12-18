@@ -6,6 +6,7 @@ framework:
       css/components/header.css: {}
       css/components/menu.css: {}
       css/components/main-content.css: {}
+      css/components/node.css: {}
       css/components/block.css: {}
       css/components/footer.css: {}
     theme:
