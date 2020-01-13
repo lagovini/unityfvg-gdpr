@@ -4,6 +4,7 @@ namespace Drupal\block_content_permissions\Controller;
 
 use Drupal\block_content\Controller\BlockContentController;
 use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Session\AccountInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -17,20 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 class BlockContentPermissionsAddPageController extends BlockContentController {
 
   /**
-   * The custom block storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $blockContentStorage;
-
-  /**
-   * The custom block type storage.
-   *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
-   */
-  protected $blockContentTypeStorage;
-
-  /**
    * The account.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -38,28 +25,36 @@ class BlockContentPermissionsAddPageController extends BlockContentController {
   protected $account;
 
   /**
-   * {@inheritdoc}
+   * Override.
+   *
+   * Add current_user.
    */
   public static function create(ContainerInterface $container) {
     $entity_manager = $container->get('entity.manager');
     return new static(
       $entity_manager->getStorage('block_content'),
       $entity_manager->getStorage('block_content_type'),
+      $container->get('theme_handler'),
       $container->get('current_user')
     );
   }
 
   /**
-   * {@inheritdoc}
+   * Override.
+   *
+   * Add AccountInterface.
    */
-  public function __construct(EntityStorageInterface $block_content_storage, EntityStorageInterface $block_content_type_storage, AccountInterface $account) {
+  public function __construct(EntityStorageInterface $block_content_storage, EntityStorageInterface $block_content_type_storage, ThemeHandlerInterface $theme_handler, AccountInterface $account) {
     $this->blockContentStorage = $block_content_storage;
     $this->blockContentTypeStorage = $block_content_type_storage;
+    $this->themeHandler = $theme_handler;
     $this->account = $account;
   }
 
   /**
-   * {@inheritdoc}
+   * Override.
+   *
+   * Add create permission control over block content types.
    */
   public function add(Request $request) {
     $types = $this->blockContentTypeStorage->loadMultiple();
