@@ -9,10 +9,13 @@ framework:
       css/components/node.css: {}
       css/components/block.css: {}
       css/components/footer.css: {}
+      css/components/view.css: {}
     theme:
       css/style.css: {}
       css/rwd/narrow.css: { media: "all and (min-width: 992px)" }
       css/rwd/large.css: { media: "all and (min-width: 1200px)" }
+  js:
+    js/scripts.js: {}
 montserrat:
   license:
     name: SIL Open Font License 1.1

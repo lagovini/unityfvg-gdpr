@@ -1,0 +1,1163 @@
+uuid: 4ecef057-8032-4299-b8a7-8d74f4d2e901
+langcode: it
+status: open
+dependencies: {  }
+open: null
+close: null
+weight: 0
+uid: 1
+template: false
+archive: false
+id: scheda_di_analisi_per_progetti_d
+title: 'Scheda di analisi per progetti di ricerca'
+description: ''
+category: ''
+elements: |
+  markup_03:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<h2><span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:Calibri,sans-serif"><strong><u>TRATTAMENTI DI DATI A FINI STATISTICI O DI RICERCA SCIENTIFICA</u></strong></span></span></span></h2>'
+  attenzione_ricerca_salute:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': |
+      <p>&nbsp;</p>
+      
+      <h5>&nbsp;</h5>
+      
+      <h5><span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:Calibri,sans-serif"><strong><u><span style="color:red">ATTENZIONE: NON SI APPLICA ALLA RICERCA CONNESSA A ATTIVITA&rsquo; DI TUTELA DELLA SALUTE NE&rsquo; PER QUELLE CHE HANNO UNA RICARDUTA PERSONALIZZATA SULL&rsquo;INTERESSATO. </span></u></strong></span></span></span></h5>
+      
+      <h5><span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:Calibri,sans-serif"><strong><u><span style="color:red">PER LA RICERCA MEDICA, BIOMEDICA ED EPIDEMIOLOGICA VI SONO INVECE ULTERIORI ISTRUZIONI PARTICOLARI <span style="background:yellow">[LEGGI ISTRUZIONI PARTICOLARI &ndash; LINK A ISTRUZIONI PARTICOLARI &nbsp;- vedi gruppo CODAU anche per informativa specifica in linee guida 2.0 </span></span></u></strong><a href="https://drive.google.com/file/d/160Z77nPKPyJSya5-k-McM05ZzmODqaH_/view" style="color:#0563c1; text-decoration:underline">https://drive.google.com/file/d/160Z77nPKPyJSya5-k-McM05ZzmODqaH_/view</a> per dati genetici <a href="https://drive.google.com/file/d/1BtsZAYuUolT9tvymz8XDSyANbRIHIcPu/view" style="color:#0563c1; text-decoration:underline">https://drive.google.com/file/d/1BtsZAYuUolT9tvymz8XDSyANbRIHIcPu/view</a> <strong><u><span style="background:yellow"><span style="color:red">]</span></span></u></strong></span></span></span></h5>
+      
+  premessa_inizio_percorso_giudato:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<h2><strong>PREMESSA</strong></h2>'
+  premessa:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': |
+      Come noto il trattamento di dati personali richiede il rispetto dei principi e di specifici adempimenti richiesti dal Regolamento 2016/679 (GDPR) e del D.Lgs. n. 196/2003 (Codice Privacy).<br />
+      Nel caso di trattamento di dati effettuati a fini statistici, al di fuori del Sistema statistico nazionale, o di ricerca scientifica, affinch&eacute; il trattamento sia considerato lecito potendo quindi essere effettuato, devono essere in particolare seguite anche le disposizioni contenute nelle regole deontologiche emanate dal Garante per la Protezione di Dati nel provvedimento n. 515 del 19 dicembre 2018 (pubblicato su GU n. 11 del 14 gennaio 2019 &ndash; doc. web. n. 9069637).<br />
+      Questa scheda, pertanto, &egrave; di ausilio a chiunque sia interessato al trattamento dei dati per fini statistici o di ricerca scientifica fornendo ai singoli ricercatori le informazioni necessarie alla corretta gestione dei dati personali raccolti direttamente (ad. es. tramite interviste, questionari ecc.), o indirettamente (banche dati ecc.) nell&rsquo;ambito dell&rsquo;attivit&agrave; di ricerca.<br />
+      &nbsp;
+      
+  inizio_percorso_guidato:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<h2><strong>INIZIO PERCORSO GUIDATO&nbsp;</strong></h2>'
+  markup_04:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': |
+      Una ricerca pu&ograve; o meno comportare un trattamento di dati. La prima domanda da porsi &egrave;: sto trattando dati personali? Queste regole, infatti, si applicano se nel questionario vengono richieste informazioni relative a una persona fisica identificata o identificabile e non al trattamento di informazioni che possono considerarsi anonime. L&rsquo;identificabilit&agrave; anche potenziale di un soggetto deve tenere in considerazione tutti i mezzi di cui il titolare del trattamento o un terzo pu&ograve; ragionevolmente avvalersi per identificare questa persona considerando anche i costi e il tempo necessario per l&rsquo;identificazione e tenendo conto sia delle tecnologie a disposizione al momento che degli sviluppi tecnologici (considerando 26 GDPR e art. 4 delibera Garante 515/2018).<br />
+      <br />
+      <strong>La risposta ai quesiti di seguito proposti pu&ograve;&nbsp; aiutare nel determinare se il questionario sottoposto richiede informazioni riferibili a un determinato anche potenzialmente identificabile.</strong>
+      
+  markup_05:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<h2>TITOLARE E SOGGETTI COINVOLTI NEL PROGETTO</h2>'
+  titolare_del_progetto_1:
+    '#type': webform_custom_composite
+    '#title': 'TITOLARE DEL PROGETTO'
+    '#title_display': invisible
+    '#required': true
+    '#element':
+      tit_prj_1:
+        '#type': textfield
+        '#title': 'TITOLARE DEL PROGETTO'
+      e_mail_1:
+        '#type': email
+        '#title': E_MAIL
+      telefono:
+        '#type': tel
+        '#title': Telefono
+  titolare_del_progetto_unico:
+    '#type': webform_custom_composite
+    '#title': 'TITOLARE DEL PROGETTO unico'
+    '#multiple': false
+    '#title_display': invisible
+    '#required': true
+    '#element':
+      tit_prj_1:
+        '#type': textfield
+        '#title': 'TITOLARE DEL PROGETTO'
+      e_mail_1:
+        '#type': email
+        '#title': E_MAIL
+      telefono:
+        '#type': tel
+        '#title': Telefono
+  responsabile_scientifico:
+    '#type': webform_custom_composite
+    '#title': 'RESPONSABILE SCIENTIFICO'
+    '#title_display': invisible
+    '#required': true
+    '#element':
+      re_prj:
+        '#type': textfield
+        '#title': 'RESPONSABILE SCIENTIFICO'
+      e_mail_2:
+        '#type': email
+        '#title': E_MAIL
+      telefono_1:
+        '#type': tel
+        '#title': Telefono
+  autore_della_presente_scheda:
+    '#type': webform_custom_composite
+    '#title': 'AUTORE DELLA PRESENTE SCHEDA'
+    '#title_display': invisible
+    '#required': true
+    '#element':
+      aut_sch:
+        '#type': textfield
+        '#title': 'AUTORE DELLA PRESENTE SCHEDA'
+      e_mail_3:
+        '#type': email
+        '#title': E_MAIL
+      telefono_2:
+        '#type': tel
+        '#title': Telefono
+  personale_interno_coinvolto:
+    '#type': textarea
+    '#title': 'PERSONALE INTERNO COINVOLTO'
+  personale_esterno_coinvolto:
+    '#type': textarea
+    '#title': 'PERSONALE ESTERNO COINVOLTO'
+  codice_progetto_ugov:
+    '#type': textfield
+    '#title': 'Codice Progetto Ugov'
+    '#help': 'QUESTO CODICE PROGETTO DOVRA&#39; ESSERE INSERITO IN UGOV PROGETTI'
+    '#required': true
+    '#required_error': 'Per questo CODICE PROGETTO esiste già una Scheda di Ricerca!'
+    '#unique': true
+    '#unique_error': 'Esiste già una scheda per questo Codice Progetto'
+  nome_progetto_ugov:
+    '#type': textfield
+    '#title': 'Nome Progetto Ugov'
+    '#help': 'QUESTO NOME PROGETTO DOVRA&#39; ESSERE INSERITO IN UGOV PROGETTI'
+    '#required': true
+    '#unique': true
+    '#unique_error': 'Per questo NOME PROGETTO esiste già una Scheda di Ricerca!'
+  markup:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<strong>1) INDIVIDUAZIONE</strong>'
+  premessa_domanda1:
+    '#type': webform_buttons
+    '#title': 'Una o più risposte date dal soggetto che compila il questionario consentono di individuare il soggetto all’interno di quell’insieme di dati? '
+    '#help_title': ' '
+    '#help': 'E&rsquo; evidente che la richiesta di dati quali nome, indirizzo e-mail, e tutti quelli che in linea di massima sono riconducibili a un unico soggetto non siano anonimi. Deve essere anche considerata la potenzialit&agrave; di individuazione tramite la richiesta di dati &ldquo;rari&rdquo; che sono a tutti gli effetti dei quasi-identificatori correlato al campione del questionario. A titolo esemplificativo, quando il questionario &egrave; rivolto a un definito numero di partecipanti (es. una sola classe) e si chiede la nazionalit&agrave; di provenienza, &egrave; evidente che pur non chiedendo ulteriori dati personali si potrebbe individuare l&rsquo;unico soggetto straniero presente in quella classe. Indicativamente per non ritenersi individuabile il &ldquo;quasi indicatore&rdquo; non dovrebbe riguardare meno di 3 soggetti in uno stesso gruppo;'
+    '#options':
+      si: Sì
+      'no': 'No'
+    '#required': true
+  markup_01:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<strong>2) CORRELABILITA&#39;</strong>'
+  premessa_domanda2:
+    '#type': webform_buttons
+    '#title': 'Una o più risposte date dal soggetto che compila il questionario consentono di individuare il soggetto all’interno di altri insieme di dati a disposizione del Titolare? '
+    '#help_title': ' '
+    '#help': '<span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Ad esempio se, pur non chiedendo il nome ad uno studente, si chiedono dati quali la data di nascita o l&rsquo;anno di nascita, esatto nome del corso frequentato e magari anche la citt&agrave; di provenienza &egrave; evidente che potenzialmente si possa identificarlo incrociando questi dati con la banca dati dell&rsquo;Ateneo;</span></span></span>'
+    '#options':
+      si: Sì
+      'no': 'No'
+    '#required': true
+  markup_02:
+    '#type': webform_markup
+    '#display_on': both
+    '#markup': '<strong>3) DEDUZIONE</strong>'
+  premessa_domanda3:
+    '#type': webform_buttons
+    '#title': 'È possibile che da una o più risposte date si possano dedurre altre risposte che sono relative a dati personali? '
+    '#help_title': ' '
+    '#help': '<span style="font-family:&quot;Calibri&quot;,sans-serif; font-size:11.0pt; line-height:105%; mso-ansi-language:IT; mso-bidi-font-family:&quot;Times New Roman&quot;; mso-bidi-language:AR-SA; mso-fareast-font-family:Calibri; mso-fareast-language:EN-US">E&rsquo; importante che non vi possa essere correlazione stretta tra le risposte in modo da escludere la potenzialit&agrave; che dall&rsquo;incrocio delle stesse risposte al questionario la persona sia identificabile. A titolo esemplificativo la richiesta della citt&agrave; di provenienza non consente una efficace anonimizzazione del dato perch&eacute; la scala o ordine di grandezza utilizzato &egrave; di per s&eacute; limitante.</span>'
+    '#options':
+      si: Sì
+      'no': 'No'
+    '#required': true
+  scheda_di_ricerca:
+    '#type': webform_section
+    '#title': 'SCHEDA DI RICERCA'
+    '#description': |
+      <p>Scheda di progetto di ricerca in conformit&agrave; al GDPR e all&#39;allegato 1 delle Regole deontologiche per trattamenti a fini statistici o&nbsp; di&nbsp; ricerca scientifica (Delibera Garante Protezione Dati Personali n. 515 del 19 dicembre 2018, in GU n.11 del 14-1-2019.</p>
+      
+      <p>&nbsp;</p>
+      
+      <p>La compilazione della presente scheda costituisce DICHIARAZIONE DI IMPEGNO a conformarsi alle predette regole deontologiche da parte del &quot;referente&quot; e impegno a vincolare a tali regole i suoi collaboratori (art. 3 c. 2 lett. c).</p>
+      
+      <p>La scheda deve esser conservata per almeno 5 anni (art. 3 c. 3), durante i quali deve essere consultabile solo in forma riservata (la memorizzazione in questa sezione costituisce adempimento di tale obbligo).[DA VALUTARE]</p>
+      
+      <p>&nbsp;</p>
+      
+      <p><u><strong>Questa scheda deve essere compilata SOLO per progetti che riguadano dati personali.</strong></u></p>
+      
+      <p>&nbsp;</p>
+      
+      <p><u><strong>LA PRESENTE SCHEDA NON SOSTITUISCE LA SCHEDA PROGETTO ARIC.</strong></u></p>
+      
+    '#required': true
+    '#states':
+      visible:
+        - ':input[name="premessa_domanda1"]':
+            value: si
+        - or
+        - ':input[name="premessa_domanda2"]':
+            value: si
+        - or
+        - ':input[name="premessa_domanda3"]':
+            value: si
+    indicazione:
+      '#type': checkboxes
+      '#title': 'Indicazione del tipo di progetto di ricerca'
+      '#multiple': 6
+      '#options':
+        Ad: 'Attività rientrante nell''attività didattica'
+        Ts: 'Tesi di laurea'
+        DR: 'Dottorato di ricerca'
+        AR: 'Assegno di ricerca'
+        PRN: 'Progetto di rilevanza nazionale'
+        PRINT: 'Progetto di rilevanza internazionale'
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    ds_trattamenti_finalita:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<strong>DESCRIZIONE DEI TRATTAMENTI E DELLE FINALITA&#39;</strong>'
+    ambito_contesto_ric:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<strong>Il ricercatore, prima dell&#39;avvio della ricerca, dovrebbe individuare l&#39;ambito, il contesto e le finalit&agrave; della ricerca.</strong>'
+    des_prj:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4><strong>DESCRIZIONE DEL PROGETTO</strong></h4>'
+    1_data_di_inizio_prevista_:
+      '#type': date
+      '#title': '1. Data di inizio prevista '
+      '#required': true
+      '#datepicker': true
+      '#datepicker_button': true
+      '#date_date_format': d/m/Y
+    1_data_di_fine_prevista_:
+      '#type': date
+      '#title': '2. Data di fine prevista '
+      '#required': true
+      '#datepicker': true
+      '#datepicker_button': true
+      '#date_date_format': d/m/Y
+    3_ipotesi_breve_stato_dell_arte_giustificazione_teorica:
+      '#type': textarea
+      '#title': '3. Ipotesi/Breve stato dell''arte/giustificazione teorica'
+      '#required': true
+    4_obiettivi_risultati_attesi:
+      '#type': textarea
+      '#title': '4. Obiettivi/Risultati attesi'
+      '#required': true
+    5_metodologia:
+      '#type': textarea
+      '#title': '5. Metodologia'
+      '#required': true
+    6_descrizione_della_procedura:
+      '#type': textarea
+      '#title': '6. Descrizione della procedura'
+      '#required': true
+    modalita_procedure:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>MODALITA&#39; E PROCEDURE</h4>'
+    7_modalita_di_raccolta_dati:
+      '#type': checkboxes
+      '#title': '7. Modalità di raccolta dati'
+      '#multiple': 6
+      '#options':
+        QU: 'Utilizzo di questionari'
+        INSTR: 'Interviste strutturate o semi-strutturate'
+        INTPRO: 'Interviste in profondità'
+        FOC: 'Focus group'
+        DIA: 'Raccolta di diari (diary keeping)'
+        PRINT: 'Progetto di rilevanza internazionale'
+        OSSINS: 'osservazione del comportamento dei soggetti a loro insaputa'
+        STIMF: 'somministrazione di stimoli, compiti o procedure che il soggetto potrebbe trovare fastidiosi, stressanti, fisicamente o psicologicamente dolorosi sia durante sia successivamente la conduzione dello studio.'
+        STIM: ' somministrazione di stimoli, compiti o procedure e registrazione di risposte comportamentali, opinioni o giudizi'
+        REG: ' registrazioni audio o video dei soggetti'
+        OSS: 'osservazione del comportamento dei soggetti'
+        REGMOV: ' registrazione di movimenti'
+        RV: 'immersione in ambienti di realtà virtuale'
+        RPE: 'registrazione di potenziali evocati'
+        TST: 'somministrazione di test, questionari o protocolli sperimentali attraverso internet (web, posta elettronica)'
+        NEURO: 'utilizzo di test neuropsicologiche di tecniche di neuroimmagine'
+        DRUG: 'somministrazione di sostanze o agenti (ad es. farmaci, alcol)'
+        TRIAL: 'partecipazione ad un trial clinico'
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    altro_specificare_:
+      '#type': textarea
+      '#title': 'Altro (specificare)'
+    allegare_copia_delle_domande_che_verranno_poste_se_previsto_dall:
+      '#type': radios
+      '#title': 'Allegare copia delle domande che verranno poste (se previsto dalla procedura utilizzata)'
+      '#help_title': ' '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    domande_da_allegare:
+      '#type': webform_document_file
+      '#title': 'Domande da allegare'
+      '#states':
+        visible:
+          ':input[name="allegare_copia_delle_domande_che_verranno_poste_se_previsto_dall"]':
+            value: si
+      '#file_extensions': pdf
+      '#button': true
+      '#button__title': 'Carica pdf'
+    8_descrizione_del_flusso_dei_dati_:
+      '#type': textarea
+      '#title': '8. Descrizione del flusso dei dati '
+      '#required': true
+    ric_risk:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<strong>Il ricercatore dovrebbe altres&igrave; effettuare una valutazione dei rischi per i diritti e le libert&agrave; degli interessati, anche sulla base delle caratteristiche degli interessati.</strong>'
+    par_prj:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>PARTECIPANTI AL PROGETTO</h4>'
+    tipologia:
+      '#type': checkboxes
+      '#title': '9. Tipologia'
+      '#multiple': 6
+      '#options':
+        mag: 'Maggiori di età'
+        min: 'Minori di età'
+        stu: Studenti
+        lav: Lavoratori
+        dis: 'Soggetti con disabilità fisica e psichica o con limitata capacità di intendere o volere'
+        cond: 'Condannati, detenuti, imputati, indagati o sottoposti a misure di sicurezza o prevenzione'
+        vol: 'Volontari sani'
+        paz: Pazienti
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    altro_specificare_1:
+      '#type': textarea
+      '#title': 'Altro (specificare)'
+    10_numero_indicativo_di_partecipanti:
+      '#type': textfield
+      '#title': '10. Numero indicativo di partecipanti'
+      '#required': true
+    11_caratteristiche_del_gruppo_di_partecipanti_alla_ricerca:
+      '#type': checkboxes
+      '#title': '11. Caratteristiche del gruppo di partecipanti alla ricerca'
+      '#multiple': 6
+      '#options':
+        sex: 'Gruppi omogenei per abitudini sessuali'
+        raz: 'Gruppi omogenei per appartenenza razziale e etnica'
+        geo: 'Gruppi omogenei per area geografica'
+        fis: 'Gruppi omogenei per caratteristiche fisiche'
+        par: 'Gruppi omogenei per consanguineità'
+        condrisk: 'Gruppi omogenei per fattori di rischio'
+        pol: ' Gruppi omogenei per convinzioni religiose, filosofiche, politiche o sindacali'
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    specificare_eventuali_e_ulteriori_criteri_di_inclusione_esclusio:
+      '#type': textarea
+      '#title': 'Specificare eventuali e ulteriori criteri di inclusione/esclusione'
+    12_e_possibile_che_alcuni_dei_soggetti_si_trovino_in_una_posizio:
+      '#type': radios
+      '#title': '12. E'' possibile che alcuni dei soggetti si trovino in una posizione di dipendenza nei confronti del ricercatore o dei suoi collaboratori, tale per cui si possa supporre che l''espressione del consenso a partecipare allo studio non sia del tutto libera e priva da ogni tipo di pressione? '
+      '#help_title': ' '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_indicare_come_si_intende_provvedere_per_minimizzare_la_pos:
+      '#type': textarea
+      '#title': 'Se Sì, indicare come si intende provvedere per minimizzare la possibilità che il soggetto si senta obbligato a prendere parte alla ricerca (ad es. nel rapporto studente/professore, paziente/medico, dipendente/datore di lavoro)'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="12_e_possibile_che_alcuni_dei_soggetti_si_trovino_in_una_posizio"]':
+            value: si
+    13_come_verranno_diffuse_le_informazioni_l_invito_a_partecipare_:
+      '#type': textarea
+      '#title': '13. Come verranno diffuse le informazioni/l''invito a partecipare alla ricerca'
+    14_e_prevista_qualche_forma_di_incentivo_per_i_partecipanti_allo:
+      '#type': radios
+      '#title': '14. E'' prevista qualche forma di incentivo per i partecipanti allo studio?'
+      '#options':
+        si: Si
+        'no': 'No'
+    se_si_indicare_quali:
+      '#type': textarea
+      '#title': 'Se Sì, indicare quali'
+      '#states':
+        visible:
+          ':input[name="14_e_prevista_qualche_forma_di_incentivo_per_i_partecipanti_allo"]':
+            value: si
+    15_rischi_per_i_partecipanti_:
+      '#type': checkboxes
+      '#title': '15. Rischi per i partecipanti '
+      '#multiple': 6
+      '#options':
+        'no': Nessuno
+        soceco: 'Rischi sociali, legali o economici'
+        psic: 'Disagi o rischi per il benessere fisico e psicologico'
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    altro_specificare_2:
+      '#type': textarea
+      '#title': 'Altro (specificare)'
+    16_benefici_per_i_partecipanti_:
+      '#type': checkboxes
+      '#title': '16. Benefici per i partecipanti '
+      '#multiple': 6
+      '#options':
+        'no': Nessuno
+        sci: 'Benefici di natura sociale ottenuti attraverso un miglioramento delle conoscenze scientifiche'
+        com: 'Compenso o altri vantaggi materiali'
+      '#required': true
+      '#states':
+        visible:
+          - ':input[name="premessa_domanda1"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda2"]':
+              value: si
+          - or
+          - ':input[name="premessa_domanda3"]':
+              value: si
+    altro_specificare_3:
+      '#type': textarea
+      '#title': 'Altro (specificare)'
+    17_e_prevista_una_specifica_polizza_di_assicurazione_per_respons:
+      '#type': radios
+      '#title': '17. E'' prevista una specifica polizza di assicurazione per responsabilità civile aggiuntiva a quella dell''Ateneo?'
+      '#options':
+        ass: 'Sì, è stata stipulata una polizza assicurativa che copre tutti i danni strettamente connessi alla partecipazione allo studio'
+        assate: 'Lo studio è no-profit e osservazionale e viene utilizzata l''assicurazione di Ateneo'
+        premio: 'Lo studio è no-profit, interventistico e viene aggiunto un premio assicurativo'
+        noass: 'Non è prevista alcuna forma di assicurazione'
+      '#required': true
+    assicurazione:
+      '#type': webform_custom_composite
+      '#title': 'La copertura assicurativa &egrave; stata stipulata con la seguente compagnia assicurativa.'
+      '#multiple': false
+      '#description_display': before
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="17_e_prevista_una_specifica_polizza_di_assicurazione_per_respons"]':
+            value: ass
+      '#multiple__header': false
+      '#multiple__sorting': false
+      '#multiple__operations': false
+      '#multiple__add_more': false
+      '#wrapper_type': form_element
+      '#element':
+        nome:
+          '#type': textfield
+          '#title': Nome
+        telefono:
+          '#type': textfield
+          '#title': Telefono
+        fax:
+          '#type': textfield
+          '#title': Fax
+        n_polizza:
+          '#type': textfield
+          '#title': 'Numero polizza'
+    18_come_si_prevede_di_affrontare_il_caso_in_cui_l_interessato_in:
+      '#type': checkboxes
+      '#title': '18. Come si prevede di affrontare il caso in cui l''interessato intenda non aderire alla ricerca (anche in un momento successivo)'
+      '#options':
+        RIT: 'L''interessato potrà ritirare il consenso in qualsiasi momento e senza fornire spiegazioni alcune, con la conseguente distruzione dei dati'
+        RIC: 'L''interessato potrà richiedere che tutti i dati precedentemente raccolti siano distrutti o resi anonimi in modo definitivo solo nelle fasi antecedenti alla irreversibile anonimizzazione o aggregazione.'
+      '#required': true
+    altro_specificare_4:
+      '#type': textarea
+      '#title': 'Altro (specificare)'
+    com_diff_dati:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>COMUNICAZIONE E DIFFUSIONE DEI DATI</h4>'
+    19_i_dati_personali_non_anonimi_o_aggregati_vengono_diffusi_:
+      '#type': radios
+      '#title': '19. I dati personali (non anonimi o aggregati) vengono diffusi?'
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_selezionare_una_o_piu_modalita:
+      '#type': checkboxes
+      '#title': 'Se sì, selezionare una o più modalità'
+      '#options':
+        stel: 'Stampa quotidiana e periodica anche elettronica'
+        sta: 'Stampati in genere'
+        tv: TV
+        pt: Posta
+        fax: FAX
+        pe: 'Posta elettronica'
+        int: Internet
+        prod: 'A mezzo confezione del prodotto'
+        aff: 'Affissione dei dati in luoghi pubblici'
+        radio: Radio
+        tel: Telefono
+        ag: 'Agenzie di stampa'
+        multi: 'Strumenti multimediali (cd,dvd...)'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="19_i_dati_personali_non_anonimi_o_aggregati_vengono_diffusi_"]':
+            value: si
+    altro_specificare_5:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+      '#states':
+        visible:
+          ':input[name="19_i_dati_personali_non_anonimi_o_aggregati_vengono_diffusi_"]':
+            value: si
+    20_i_dati_personali_pseudonomizzati_e_che_non_siano_pertanto_ano:
+      '#type': radios
+      '#title': '20. I dati personali (pseudonomizzati e che non siano pertanto anonimi o aggregati) vengono comunicati?'
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_selezionare_uno_o_piu_ambiti_di_comunicazione_:
+      '#type': checkboxes
+      '#title': ' Se sì, selezionare uno o più ambiti di comunicazione'
+      '#options':
+        pri: 'Soggetti privati'
+        pubb: 'Soggetti pubblici'
+        soc: ' Persone giuridiche, società di persone o di capitali, imprese individuali'
+        org: 'Organi costituzionali o di rilevanza costituzionale'
+        stato: 'Amministrazioni dello Stato'
+        regio: ' Amministrazioni regionali'
+        elo: ' Enti locali (comuni e province)'
+        assel: 'Associazioni di enti locali'
+        aaamm: 'Altre amministrazioni ed enti pubblici'
+        ssn: 'Organismi del servizio sanitario nazionale'
+        epne: 'Enti pubblici non economici'
+        epe: 'Enti pubblici economici'
+        augiu: 'Autorità giudiziaria'
+        uffgiu: 'Uffici giudiziari'
+        vig: 'Società di vigilanza private'
+        scon: 'Società controllanti, controllate e/o collegate'
+        impr: 'Associazioni di imprenditori o di imprese'
+        sid: 'Organismi sindacali o patronati'
+        orlav: ' Organismi paritetici in materia di lavoro'
+        prof: ' Consulenti e liberi professionisti anche in forma associata'
+        bank: ' Banche'
+        infi: ' Intermediari finanziari'
+        si: ' Gestori di sistemi informatici centralizzati (centrali rischi, antifrodi, ecc.)'
+        ass: Assicurazioni
+        soci: 'Soci associati e iscritti'
+        cliut: Clienti/utenti
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="20_i_dati_personali_pseudonomizzati_e_che_non_siano_pertanto_ano"]':
+            value: si
+    altro_specificare_in_dettaglio_1:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+      '#states':
+        visible:
+          ':input[name="19_i_dati_personali_non_anonimi_o_aggregati_vengono_diffusi_"]':
+            value: si
+    21_i_dati_personali_pseudonomizzati_e_che_non_siano_pertanto_ano:
+      '#type': radios
+      '#title': '21. I dati personali (pseudonomizzati e che non siano pertanto anonimi o aggregati) vengono trasferiti all''estero?'
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_in_che_area_geografica_vengono_trasferiti_i_dati_:
+      '#type': checkboxes
+      '#title': 'Se sì, in che area geografica vengono trasferiti i dati?'
+      '#options':
+        acn: 'Paesi dell''America del centro-nord'
+        as: 'Paesi dell''America del sud'
+        asia: ' Paesi dell''area asiatica'
+        afr: ' Paesi dell''area africana'
+        oce: 'Paesi dell''Oceania'
+        exue: ' Paesi dell''Europa extra UE'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="21_i_dati_personali_pseudonomizzati_e_che_non_siano_pertanto_ano"]':
+            value: si
+    in_quale_i_paese_i_all_interno_dell_area_:
+      '#type': textarea
+      '#title': 'In quale/i Paese/i all''interno dell''area'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="21_i_dati_personali_pseudonomizzati_e_che_non_siano_pertanto_ano"]':
+            value: si
+    markup_06:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>TITOLARE E INTERESSI LEGITTIMI PERSEGUITI</h4>'
+    22_e_necessaria_l_autorizzazione_di_altri_enti_soggetti_terzi_pe:
+      '#type': radios
+      '#title': '22. E'' necessaria l''autorizzazione di altri Enti/soggetti terzi per l''accesso ai dati o per il coinvolgimento dei partecipanti? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_allegare_copia_della_lettera_di_autorizzazione_e_o_la_lett:
+      '#type': webform_document_file
+      '#title': 'Se sì, allegare copia della lettera di autorizzazione e/o la lettera di richiesta di eventuali dati provenienti da soggetti terzi'
+      '#states':
+        visible:
+          ':input[name="22_e_necessaria_l_autorizzazione_di_altri_enti_soggetti_terzi_pe"]':
+            value: si
+      '#file_extensions': pdf
+      '#button': true
+      '#button__title': 'Carica pdf'
+    23_sono_previsti_ai_sensi_della_normativa_vigente_interventi_che:
+      '#type': radios
+      '#title': '23. Sono previsti, ai sensi della normativa vigente, interventi che richiedono specifiche professionalità (ad es. medico, psicologo, infermiere, ecc.)? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_specificare_quali_istruzioni_sono_fornite_in_merito_al_tra:
+      '#type': textarea
+      '#title': 'Se Sì, specificare quali istruzioni sono fornite in merito al trattamento dei dati personali '
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="23_sono_previsti_ai_sensi_della_normativa_vigente_interventi_che"]':
+            value: si
+    24_ci_sono_eventuali_partner_enti_sponsor_o_finanziatori_che_pot:
+      '#type': radios
+      '#title': '24. Ci sono eventuali partner, enti_sponsor o finanziatori che potrebbero venire a conoscenza dei dati personali? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_indicare_tali_soggetti_e_il_ruolo_che_hanno_nel_progetto:
+      '#type': webform_custom_composite
+      '#title': 'Se Sì, indicare tali soggetti e il ruolo che hanno nel progetto'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="24_ci_sono_eventuali_partner_enti_sponsor_o_finanziatori_che_pot"]':
+            value: si
+      '#element':
+        nominativo:
+          '#type': textfield
+          '#title': NOMINATIVO
+        ruolo:
+          '#type': textfield
+          '#title': RUOLO
+    25_e_stata_prevista_adeguata_informativa_per_i_partecipanti_:
+      '#type': radios
+      '#title': '25. E'' stata prevista adeguata informativa per i partecipanti? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_allegare_una_copia_dell_informativa_e_dell_eventuale_dichi:
+      '#type': webform_document_file
+      '#title': 'Se Sì, allegare una copia dell''Informativa e dell''eventuale dichiarazione di consenso '
+      '#states':
+        visible:
+          ':input[name="25_e_stata_prevista_adeguata_informativa_per_i_partecipanti_"]':
+            value: si
+      '#file_extensions': pdf
+      '#button': true
+      '#button__title': 'Carica pdf'
+    26_e_possibile_fornire_l_informativa_ai_partecipanti_alla_ricerc:
+      '#type': radios
+      '#title': '26. E'' possibile fornire l''informativa ai partecipanti alla ricerca (soggetti interessati)? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_no_nel_caso_di_ricerca_medica_biomedica_ed_epidemiologica_ind:
+      '#type': checkboxes
+      '#title': 'Se No, nel caso di ricerca medica, biomedica ed epidemiologica, indicare le ragioni, considerate del tutto particolari o eccezionali, documentate nel progetto di ricerca:'
+      '#description_display': after
+      '#options':
+        nocond: 'No, per motivi etici riconducibili alla circostanza che l''interessato ignora la propria condizione(11) -- (11) Rientrano in questa categoria le ricerche per le quali l''informativa sul trattamento dei dati da rendere agli interessati comporterebbe la rivelazione di notizie concernenti la conduzione dello studio la cui conoscenza potrebbe arrecare un danno materiale o psicologico agli interessati stessi (possono rientrare in questa ipotesi, ad esempio, gli studi epidemiologici sulla distribuzione di un fattore che predica o possa predire lo sviluppo di uno stato morboso).'
+        nocont: 'Sebbene sia stato svolto ogni ragionevole sforzo organizzativo (12), non è possibile contattare gli interessati in ragione: -- (12) Motivi di impossibilità organizzativa riconducibili alla circostanza che la mancata considerazione dei dati riferiti al numero stimato di interessati che non è possibile contattare per informarli, rispetto al numero complessivo di soggetti che si intende coinvolgere nella ricerca, produrrebbe conseguenze significative per lo studio in termini di alterazione dei risultati; ciò avuto riguardo, in particolare, ai criteri di inclusione previsti dallo studio, alle modalità di arruolamento, alla numerosità statistica del campione prescelto, nonchè al periodo di tempo trascorso dal momento in cui i dati riferiti agli interessati sono stati originariamente raccolti (ad esempio, nei casi in cui lo studio riguarda interessati con patologie ad elevata incidenza di mortalità o in fase terminale della malattia o in età avanzata e in gravi condizioni di salute).'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="26_e_possibile_fornire_l_informativa_ai_partecipanti_alla_ricerc"]':
+            value: 'no'
+    invisibile:
+      '#type': checkboxes
+      '#title': Invisibile
+      '#title_display': invisible
+      '#description_display': after
+      '#options':
+        num: 'del numero molto alto degli interessati che è stato stimato'
+        conseg: 'perchè ci sarebbero conseguenze significative per lo studioin termini di alterazione dei risultati'
+        dec: 'del fatto che i soggetti sono deceduti o persi al follow up'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="se_no_nel_caso_di_ricerca_medica_biomedica_ed_epidemiologica_ind[nocont]"]':
+            checked: true
+    27_indicare_a_chi_si_chiedera_di_acconsentire_alla_partecipazion:
+      '#type': checkboxes
+      '#title': '27. Indicare a chi si chiederà di acconsentire alla partecipazione precisandone il ruolo e i motivi'
+      '#description_display': after
+      '#options':
+        nocond: 'I dati di minori o di soggetti incapaci di esprimere il consenso saranno utilizzati soltanto, se sarà ottenuto il consenso dei genitori o dell''altro genitore in mancanza di uno di essi o del rappresentante legale'
+        nocont: 'Nei casi di incapacità temporanea, all''atto della riacquisizione delle proprie capacità decisionali, al soggetto sarà richiesto il consenso'
+      '#required': true
+    altro_specificare_in_dettaglio_2:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+    nel_caso_di_trattamenti_di_natura_non_sensibile_ne_giudiziari_in:
+      '#type': textarea
+      '#title': 'Nel caso di trattamenti di natura NON SENSIBILE, NE'' GIUDIZIARI , indicare le ragioni per le quali si è reso necessario DIFFERIRE o NON FORNIRE l''nformativa:'
+    28_specificare_quali_saranno_le_modalita_con_le_quali_sara_resa_:
+      '#type': checkboxes
+      '#title': '28. Specificare quali saranno le modalità con le quali sarà resa successivamente l''informativa'
+      '#description_display': after
+      '#options':
+        diffris: 'l''informativa è differita perchè ci sarebbero conseguenze significative per lo studio in termini di alterazione dei risultati'
+        mezzi: 'rendere l''informativa comporta un impiego di mezzi manifestatamente sproporzionato'
+      '#required': true
+    indicare_quali_saranno_le_modalita_adottate_per_informare_gli_in:
+      '#type': textarea
+      '#title': 'Indicare quali saranno le modalità adottate per informare gli interessati quando saranno venuti meno i motivi che giustificano il differimento, ovvero le ragioni portate per il mancato completamento dell''informativa'
+    29_e_previsto_un_trattamento_dati_raccolti_presso_terzi_es_altri:
+      '#type': radios
+      '#title': '29. E'' previsto un trattamento dati raccolti presso terzi (es.altri enti o aziende) per altri scopi che comporti uno sforzo sproporzionato rispetto al diritto tutelato, tale da rendere impossibile fornire l''informativa'
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_indicare_le_forme_di_pubblicita_adottate_previa_informazio:
+      '#type': checkboxes
+      '#title': 'Se sì, indicare le forme di pubblicità adottate previa informazione al Garante '
+      '#description_display': after
+      '#options':
+        nazio: 'inserzione su almeno un quotidiano di larga diffusione nazionale o annuncio presso un''emittente radiotelevisiva a diffusione nazionale, per trattamenti riguardanti insiemi numerosi di soggetti distribuiti sull''intero territorio nazionale'
+        quot: 'inserzione su almeno un quotidiano di larga diffusione regionale (o provinciale) o annuncio presso un''emittente radiotelevisiva a diffusione regionale (o provinciale), per trattamenti riguardanti insiemi numerosi di soggetti distribuiti su un''area regiona'
+        web: 'l''inserzione in strumenti informativi (es. sito web) di cui gli interessati sono normalmente destinatari, per trattamenti riguardanti insiemi di specifiche categorie di soggetti, identificate da particolari caratteristiche demografiche e/o da particolari '
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="29_e_previsto_un_trattamento_dati_raccolti_presso_terzi_es_altri"]':
+            value: si
+    33_quali_modalita_saranno_adottate_per_ricevere_espressioni_di_d:
+      '#type': checkboxes
+      '#title': '30. Quali modalità saranno adottate per ricevere espressioni di dubbi e rispondere a richieste di precisazioni da parte dei soggetti nel corso dello studio?'
+      '#description_display': after
+      '#options':
+        richsogg: 'verrà fornita indicazione dei soggetti a cui poter inviare le richieste.'
+        moduli: 'tramite moduli che sono stati predisposti per raccogliere i reclami/segnalazioni e suggerimenti'
+      '#required': true
+    inserire_il_nome_e_cognome_della_persona_e_a_disposizione_per_og:
+      '#type': webform_custom_composite
+      '#title': 'Inserire il nome e cognome della persona/e a disposizione per ogni domanda o dubbio'
+      '#title_display': invisible
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="33_quali_modalita_saranno_adottate_per_ricevere_espressioni_di_d[richsogg]"]':
+            checked: true
+      '#element':
+        nome_4:
+          '#type': textfield
+          '#title': 'NOME '
+        e_mail_1:
+          '#type': email
+          '#title': E_MAIL
+        telefono:
+          '#type': tel
+          '#title': Telefono
+    altro_specificare_in_dettaglio_6:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+    markup_10:
+      '#type': webform_markup
+      '#states':
+        visible:
+          ':input[name="24_ci_sono_eventuali_partner_enti_sponsor_o_finanziatori_che_pot"]':
+            value: si
+      '#display_on': both
+      '#markup': '<h4>Da compilare nel caso in cui siano acquisiti dati inerenti lo stato di salute</h4>'
+    31_in_che_modo_i_partecipanti_saranno_informati_della_possibilit:
+      '#type': checkboxes
+      '#title': '31.  In che modo i partecipanti saranno informati della possibilità di ricevere, direttamente o indirettamente, ogni altro dato relativo alle loro condizioni psicofisiche che dovesse diventare disponibile durante la ricerca?'
+      '#description_display': after
+      '#options':
+        posta: posta
+        fax1: fax
+        tel1: telefono
+        mail3: 'posta elettronica'
+        medico: 'medico curante'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="29_e_previsto_un_trattamento_dati_raccolti_presso_terzi_es_altri"]':
+            value: si
+    altro_specificare_in_dettaglio_11:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+    markup_11:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>MISURE DI SICUREZZA</h4>'
+    32_verranno_conservati_i_dati_identificativi_dei_partecipanti_:
+      '#type': radios
+      '#title': '32. Verranno conservati i dati identificativi dei partecipanti? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    33_la_ricerca_riguarda_dati_particolari_o_giudiziari_:
+      '#type': radios
+      '#title': '33. La ricerca riguarda dati "particolari" o "giudiziari" '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    34_la_ricerca_riguarda_dati_medici_biomedici_o_epidemiologici_:
+      '#type': radios
+      '#title': '34. La ricerca riguarda dati medici, biomedici o epidemiologici? '
+      '#options':
+        si: Sì
+        'no': 'No'
+      '#required': true
+    se_si_specificare_le_ragioni_sottese_a_tale_esigenza:
+      '#type': textarea
+      '#title': 'Se sì, specificare le ragioni sottese a tale esigenza'
+      '#states':
+        visible:
+          ':input[name="34_la_ricerca_riguarda_dati_medici_biomedici_o_epidemiologici_"]':
+            value: si
+    35_per_non_identificare_direttamente_l_interessato_sono_state_ad:
+      '#type': checkboxes
+      '#title': '35. Per non identificare direttamente l''interessato sono state adottate le seguenti misure '
+      '#description_display': after
+      '#options':
+        critto: 'Adozione di tecniche crittografate'
+        codun: |
+          Utilizzo di codici univoci per ciascun partecipante. Solo il responsabile della ricerca ed altri soggetti autorizzati, possono (con l'uso di mezzi ragionevoli (13)) collegare i codici all'identità dei partecipanti -- (13)  Ad esempio tramite: 
+          - l'uso di risorse hardware e software per effettuare le elaborazioni necessarie per collegare informazioni non nominative ad un soggetto identificato, tenendo anche conto delle effettive possibilità di pervenire in modo illecito alla sua identificazione in raqpporto ai sistemi di sicurezza ed al software di controllo adottati;
+          - la conoscenza di procedure di estrazione campionaria, imputazione, correzione e protezione statistica adottate per la protezione dei dati.
+          
+        codpart: 'Il trattamento dei dati avverrà tramite l''uso di un codice che sarà consegnato ai partecipanti in modo casuale all''inizio dell''esperimento'
+        codpart1: 'Il trattamento dei dati avverrà tramite l''uso di un codice che sarà scelto dai partecipanti'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="29_e_previsto_un_trattamento_dati_raccolti_presso_terzi_es_altri"]':
+            value: si
+    altro_specificare_in_dettaglio_12:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+    36_per_anonimizzare_o_aggregare_i_dati_anche_in_un_momento_succe:
+      '#type': checkboxes
+      '#title': '36. Per anonimizzare o aggregare i dati, anche in un momento successivo alla raccolta, sono state adottate le seguenti misure'
+      '#description_display': after
+      '#options':
+        elim: 'i dati personali, a seguito della raccolta sono eliminati definitivamente senza la possibilità di risalire ai dati originali'
+        sost: 'i dati personali sono sostituiti da uno o più identificatori, che possono essere utilizati per un set di dati o per ogni singolo dato'
+        distr: 'sono distrutti i dati che possono essere idonei a identificare gli interessati e sono conservati i soli dati aggregati (14) -- (14) Si considerano dati aggregati le combinazioni di modalità alle quali è associata una frequenza non inferiore a una soglia prestabilita, ovvero un''intensità data dalla sintesi dei valori assunti da un numero di unità statistiche pari alla suddetta soglia. Il valore minimo attribuibile alla soglia è pari a tre.'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="29_e_previsto_un_trattamento_dati_raccolti_presso_terzi_es_altri"]':
+            value: si
+    altro_specificare_in_dettaglio_13:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+    37_individuazione_di_misure_che_contribuiscono_alla_proporzional:
+      '#type': textarea
+      '#title': '37. Individuazione di misure che contribuiscono alla proporzionalità e alla necessità di elaborazione dei dati'
+    markup_12:
+      '#type': webform_markup
+      '#display_on': both
+      '#markup': '<h4>CONSERVAZIONE</h4>'
+    38_per_quanto_tempo_i_dati_raccolti_verranno_conservati_dalla_co:
+      '#type': textarea
+      '#title': '38.  Per quanto tempo i dati raccolti verranno conservati dalla conclusione della ricerca '
+      '#required': true
+    al_termine_di_questo_periodo_i_dati_saranno_:
+      '#type': checkboxes
+      '#title': 'al termine di questo periodo i dati saranno: '
+      '#description_display': after
+      '#options':
+        DISTRUTTI: distrutti
+        CONANO: 'conservati in forma anonima'
+      '#required': true
+    39_indicare_le_modalita_di_conservazione_dei_dati_:
+      '#type': checkboxes
+      '#title': '39.  Indicare le modalità di conservazione dei dati '
+      '#description_display': after
+      '#options':
+        carta: 'In formato cartaceo'
+        digit: 'In formato digitale'
+      '#required': true
+      '#states':
+        visible:
+          ':input[name="al_termine_di_questo_periodo_i_dati_saranno_[CONANO]"]':
+            checked: true
+    altro_specificare_in_dettaglio_14:
+      '#type': textarea
+      '#title': 'Altro (specificare in dettaglio)'
+  ricerca_anonima:
+    '#type': webform_section
+    '#title': 'RICERCA SOGGETTO NON IDENTIFICABILE E QUINDI ANONIMO'
+    '#states':
+      visible:
+        ':input[name="premessa_domanda1"]':
+          value: 'no'
+        ':input[name="premessa_domanda2"]':
+          value: 'no'
+        ':input[name="premessa_domanda3"]':
+          value: 'no'
+    scheda_anonima_testo1:
+      '#type': webform_markup
+      '#markup': |
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">ATTENZIONE: al fine di evitare l&rsquo;identificabilit&agrave; del soggetto &egrave; opportuno utilizzare questi accorgimenti:</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">1)&nbsp;&nbsp;&nbsp;&nbsp; Utilizzare intervalli numerici. Non chiedere un numero preciso (1, 2, 3) ma individuare un intervallo (da 1 a 5, da 6 a 10, etc). Il presente accorgimento dovrebbe essere adottato anche in riferimento a et&agrave; o altre indicazioni numeriche specifiche.</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">2)&nbsp;&nbsp;&nbsp;&nbsp; Utilizzare scale o ordini di grandezza efficaci per tutti le domande del questionario: es. regione anzich&eacute; una citt&agrave;, un anno anzich&eacute; una data; etc.</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">3)&nbsp;&nbsp;&nbsp;&nbsp; Assicurarsi che il campione di potenziali interessati alle risposte al questionario sia quanto pi&ugrave; elevato possibile;</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">4)&nbsp;&nbsp;&nbsp;&nbsp; Assicurarsi di non richiedere dati &ldquo;rari&rdquo; o quasi identificatori.</span></span></span><br />
+        &nbsp;
+        
+    ho_capito_:
+      '#type': checkbox
+      '#title': 'ho capito?'
+      '#required': true
+    ricerca_anonima_testo2:
+      '#type': webform_markup
+      '#states':
+        visible:
+          ':input[name="ho_capito_"]':
+            checked: true
+      '#markup': |
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif"><strong>1. IL QUESTIONARIO E&rsquo; ANONIMO E SOMMINISTRATO CARTACEAMENTE? LEGGI LE ISTRUZIONI</strong></span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">ISTRUZIONI: In linea di massima tutte le volte in cui l&rsquo;accesso al questionario &egrave; libero (quindi senza un procedimento di autenticazione), non viene richiesto un indirizzo mail nella compilazione, non vengano richieste risposte a domande che possano essere anche potenzialmente riconducibili a una persona si potr&agrave; procedere autonomamente senza preoccuparsi dell&rsquo;applicazione del GDPR e della relativa disciplina.</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif"><u>Nel caso di richiesta di informazioni anonime il questionario potr&agrave; essere sottoposto senza particolari adempimenti specificando questa dicitura: </u>&ldquo;Il questionario &egrave; stato predisposto in modo da non raccogliere dati personali che identificano in maniera diretta o anche solo potenziale i diretti interessati&rdquo;.</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif"><strong>2. IL QUESTIONARIO E&rsquo; ANONIMO E SOMMINISTRATO TRAMITE PIATTAFORMA ON LINE? LEGGI LE ISTRUZIONI</strong></span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif">Per i questionari anonimi <strong>on line</strong>, in attesa di predisporre uno strumento interno, si suggerisce di utilizzare la piattaforma EUSurvey<a href="https://ec.europa.eu/eusurvey/home/welcome"> </a><u><span style="color:#1155cc"><a href="https://ec.europa.eu/eusurvey/home/welcome"><span style="color:#1155cc">https://ec.europa.eu/eusurvey/home/welcome</span></a></span></u> per la somministrazione dei questionari, che offre maggiori garanzie a livello di privacy rispetto ad altre piattaforme commerciali (es. google form) e di inserire questa dicitura: &ldquo;Il questionario &egrave; stato predisposto in modo da non raccogliere dati personali che identificano in maniera diretta o anche solo potenziale i diretti interessati. Per la diffusione del questionario e la raccolta delle risposte viene utilizzata la piattaforma EUSurvey, un&rsquo;applicazione sviluppata dalla Comunit&agrave; Europea, che non colleziona ulteriori dati personali degli utenti che rispondono al questionario, si rimanda all&rsquo;informativa privacy prevista da questo strumento:<a href="https://ec.europa.eu/eusurvey/home/privacystatement"> </a><u><span style="color:#1155cc"><a href="https://ec.europa.eu/eusurvey/home/privacystatement"><span style="color:#1155cc">https://ec.europa.eu/eusurvey/home/privacystatement</span></a></span></u>. I cookie della piattaforma EUSurvey vengono cancellati al termine della sessione. Le risposte verranno comunque eliminate dalla piattaforma al termine del periodo previsto di validit&agrave; del sondaggio&rdquo;.</span></span></span><br />
+        <span style="font-size:11pt"><span style="line-height:105%"><span style="font-family:&quot;Calibri&quot;,sans-serif"><strong><u>Accorgimenti ulteriori:</u></strong> eliminare i questionari e relative risposte dalle piattaforme al termine della raccolta.</span></span></span><br />
+        &nbsp;
+css: ''
+javascript: ''
+settings:
+  ajax: false
+  ajax_scroll_top: form
+  ajax_progress_type: ''
+  ajax_effect: ''
+  ajax_speed: null
+  page: true
+  page_submit_path: ''
+  page_confirm_path: ''
+  page_admin_theme: false
+  form_title: source_entity_webform
+  form_submit_once: false
+  form_exception_message: ''
+  form_open_message: ''
+  form_close_message: ''
+  form_previous_submissions: true
+  form_confidential: false
+  form_confidential_message: ''
+  form_remote_addr: true
+  form_convert_anonymous: false
+  form_prepopulate: false
+  form_prepopulate_source_entity: false
+  form_prepopulate_source_entity_required: false
+  form_prepopulate_source_entity_type: ''
+  form_reset: false
+  form_disable_autocomplete: false
+  form_novalidate: false
+  form_disable_inline_errors: false
+  form_required: false
+  form_unsaved: false
+  form_disable_back: false
+  form_submit_back: false
+  form_autofocus: false
+  form_details_toggle: false
+  form_access_denied: default
+  form_access_denied_title: ''
+  form_access_denied_message: ''
+  form_access_denied_attributes: {  }
+  form_file_limit: ''
+  submission_label: ''
+  submission_log: false
+  submission_views: {  }
+  submission_views_replace:
+    webform_routes: {  }
+    node_routes: {  }
+  submission_user_columns: {  }
+  submission_user_duplicate: true
+  submission_access_denied: default
+  submission_access_denied_title: ''
+  submission_access_denied_message: ''
+  submission_access_denied_attributes: {  }
+  submission_exception_message: ''
+  submission_locked_message: ''
+  submission_excluded_elements: {  }
+  submission_exclude_empty: false
+  submission_exclude_empty_checkbox: false
+  previous_submission_message: ''
+  previous_submissions_message: ''
+  autofill: false
+  autofill_message: ''
+  autofill_excluded_elements: {  }
+  wizard_progress_bar: true
+  wizard_progress_pages: false
+  wizard_progress_percentage: false
+  wizard_progress_link: false
+  wizard_progress_states: false
+  wizard_start_label: ''
+  wizard_preview_link: false
+  wizard_confirmation: true
+  wizard_confirmation_label: ''
+  wizard_track: ''
+  preview: 0
+  preview_label: ''
+  preview_title: ''
+  preview_message: ''
+  preview_attributes: {  }
+  preview_excluded_elements: {  }
+  preview_exclude_empty: true
+  preview_exclude_empty_checkbox: false
+  draft: authenticated
+  draft_multiple: false
+  draft_auto_save: false
+  draft_saved_message: ''
+  draft_loaded_message: ''
+  draft_pending_single_message: ''
+  draft_pending_multiple_message: ''
+  confirmation_type: page
+  confirmation_title: ''
+  confirmation_message: ''
+  confirmation_url: ''
+  confirmation_attributes: {  }
+  confirmation_back: true
+  confirmation_back_label: ''
+  confirmation_back_attributes: {  }
+  confirmation_exclude_query: false
+  confirmation_exclude_token: false
+  confirmation_update: false
+  limit_total: null
+  limit_total_interval: null
+  limit_total_message: ''
+  limit_total_unique: false
+  limit_user: null
+  limit_user_interval: null
+  limit_user_message: ''
+  limit_user_unique: false
+  entity_limit_total: null
+  entity_limit_total_interval: null
+  entity_limit_user: null
+  entity_limit_user_interval: null
+  purge: none
+  purge_days: null
+  results_disabled: false
+  results_disabled_ignore: false
+  token_view: false
+  token_update: false
+access:
+  create:
+    roles:
+      - authenticated
+    users: {  }
+    permissions: {  }
+  view_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  update_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  delete_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  purge_any:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  view_own:
+    roles:
+      - authenticated
+    users: {  }
+    permissions: {  }
+  update_own:
+    roles:
+      - authenticated
+    users: {  }
+    permissions: {  }
+  delete_own:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  administer:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  test:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+  configuration:
+    roles: {  }
+    users: {  }
+    permissions: {  }
+handlers: {  }
