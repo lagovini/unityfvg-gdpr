@@ -1,0 +1,21 @@
+/*
+ * view
+*/
+
+div.view-display-id-page_6 .view-content h3 span {
+  color: #ffffff;
+  background: #009fe3;
+  padding: .4rem .8rem;
+}
+
+div.view-display-id-page_6 .view-content > h3 {
+  margin-top: 2em;
+}
+
+div.view-display-id-page_6  div.informativa-ente {
+  margin: .5rem !important;
+}
+
+div.view-display-id-page_6 .view-content .views-field-field-area h3 {
+  text-transform: capitalize;
+}

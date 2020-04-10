@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * A module for testing Entity Print.
+ */
+
+/**
+ * Implements hook_system_theme_info().
+ */
+function entity_print_test_system_theme_info() {
+  $themes['entity_print_test_theme'] = drupal_get_path('module', 'entity_print_test') . '/themes/entity_print_test_theme/entity_print_test_theme.info';
+  return $themes;
+}
+
+/**
+ * Implements hook_entity_print_pdf_engine_alter().
+ */
+function entity_print_test_entity_print_pdf_engine_alter(&$definitions) {
+  // Replace these with a class that always makes them not available so I don't
+  // have to manually disable to run the tests locally where they're installed.
+  $disabled_engines = ['dompdf', 'phpwkhtmltopdf'];
+  foreach ($disabled_engines as $id) {
+    if (isset($definitions[$id]['class'])) {
+      $definitions[$id]['class'] = 'Drupal\entity_print_test\Plugin\EntityPrint\PrintEngine\NotAvailablePrintEngine';
+    }
+  }
+}

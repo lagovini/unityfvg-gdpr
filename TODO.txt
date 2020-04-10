@@ -1,0 +1,13 @@
+menu.css
+  istruzioni che modificano la voce di menu "aiuto" all'interno di region-content
+  DA CORREGGERE AGGIUNGENDO UNA CLASSE (pittusto che riferirsi a child(3))
+  MODULO APPOSITO DA INSTALLARE
+      .region-content .menu--main li:nth-child(3) .menu.nav.second {
+        display: none;
+      }
+      .region-content .menu--main li:nth-child(3) span.caret {
+        display: none;
+      }
+
+node.css
+le istruzioni per disabilitare radio button in modifoca nodo informativa, andranno eliminate se  ciascuna informativa diventa un nodo

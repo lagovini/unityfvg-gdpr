@@ -1,0 +1,13 @@
+name: 'Webform Views test'
+type: module
+description: 'Support module for testing webform views module.'
+package: Testing
+# core: 8.x
+dependencies:
+  - 'webform_views:webform_views'
+
+# Information added by Drupal.org packaging script on 2019-05-08
+version: '8.x-5.0-alpha7'
+core: '8.x'
+project: 'webform_views'
+datestamp: 1557288188
