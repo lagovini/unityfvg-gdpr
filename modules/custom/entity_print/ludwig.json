@@ -1,0 +1,8 @@
+{
+  "require": {
+    "dompdf/dompdf": {
+      "version" : "v0.8.3",
+      "url": "https://github.com/dompdf/dompdf/releases/download/v0.8.3/dompdf_0-8-3.zip"
+    }
+  }
+}

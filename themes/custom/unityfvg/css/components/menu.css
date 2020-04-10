@@ -63,7 +63,12 @@
 }
 
 #block-unityfvg-main-menu ul.second a {
-  padding-left: 2rem;
+  padding-left: 3rem;
+  font-weight: normal;
+}
+
+#block-unityfvg-main-menu > ul > li a {
+  font-weight: bold;
 }
 
 /*
@@ -161,4 +166,15 @@
 
 .region-content .menu--main .menu.nav.second {
   margin-left: 5rem;
+}
+.region-content .menu--main li:nth-child(5) .menu.nav.second {
+  display: none;
+}
+.region-content .menu--main li:nth-child(5) span.caret {
+  display: none;
+}
+
+.path-frontpage .menu--main li:nth-child(5),
+.path-frontpage .menu--main li:nth-child(6) {
+  display: none;
 }

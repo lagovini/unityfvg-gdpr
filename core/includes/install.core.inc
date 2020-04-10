@@ -425,10 +425,9 @@ function install_begin_request($class_loader, &$install_state) {
   }
   $GLOBALS['conf']['container_service_providers']['InstallerConfigOverride'] = 'Drupal\Core\Installer\ConfigOverride';
 
-  // Only allow dumping the container once the hash salt has been created. Note,
-  // InstallerKernel::createFromRequest() is not used because Settings is
+  // Note, InstallerKernel::createFromRequest() is not used because Settings is
   // already initialized.
-  $kernel = new InstallerKernel($environment, $class_loader, (bool) Settings::get('hash_salt', FALSE));
+  $kernel = new InstallerKernel($environment, $class_loader, FALSE);
   $kernel::bootEnvironment();
   $kernel->setSitePath($site_path);
   $kernel->boot();
@@ -2323,7 +2322,13 @@ function install_config_import_batch() {
   // Match up the site UUIDs, the install_base_system install task will have
   // installed the system module and created a new UUID.
   $system_site = $sync->read('system.site');
-  \Drupal::configFactory()->getEditable('system.site')->set('uuid', $system_site['uuid'])->save();
+  // When installing from configuration it is possible that system.site
+  // configuration is not present. If this occurs a ConfigImporterException will
+  // by thrown when $config_importer->initialize() is called below and the error
+  // will be reported to the user.
+  if ($system_site !== FALSE) {
+    \Drupal::configFactory()->getEditable('system.site')->set('uuid', $system_site['uuid'])->save();
+  }
 
   // Create the storage comparer and the config importer.
   $storage_comparer = new StorageComparer($sync, \Drupal::service('config.storage'));
