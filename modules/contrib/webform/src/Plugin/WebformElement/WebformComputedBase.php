@@ -22,7 +22,7 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     return [
       // Element settings.
       'title' => '',
@@ -46,8 +46,10 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
       // Attributes.
       'wrapper_attributes' => [],
       'label_attributes' => [],
-    ] + $this->getDefaultBaseProperties();
+    ] + $this->defineDefaultBaseProperties();
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -176,9 +178,9 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
       '#type' => 'select',
       '#title' => $this->t('Mode'),
       '#options' => [
-        WebformComputedBaseElement::MODE_AUTO => t('Auto-detect'),
-        WebformComputedBaseElement::MODE_HTML => t('HTML'),
-        WebformComputedBaseElement::MODE_TEXT => t('Plain text'),
+        WebformComputedBaseElement::MODE_AUTO => $this->t('Auto-detect'),
+        WebformComputedBaseElement::MODE_HTML => $this->t('HTML'),
+        WebformComputedBaseElement::MODE_TEXT => $this->t('Plain text'),
       ],
     ];
     $form['computed']['template'] = [

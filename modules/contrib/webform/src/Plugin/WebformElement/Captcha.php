@@ -3,6 +3,7 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Element\WebformMessage as WebformMessageElement;
 use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\webform\WebformSubmissionForm;
 use Drupal\webform\WebformSubmissionInterface;
@@ -20,6 +21,9 @@ use Drupal\Core\Url as CoreUrl;
  *   description = @Translation("Provides a form element that determines whether the user is human."),
  *   category = @Translation("Advanced elements"),
  *   states_wrapper = TRUE,
+ *   dependencies = {
+ *     "captcha",
+ *   }
  * )
  */
 class Captcha extends WebformElementBase {
@@ -27,7 +31,7 @@ class Captcha extends WebformElementBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     return [
       // Captcha settings.
       'captcha_type' => 'default',
@@ -39,6 +43,8 @@ class Captcha extends WebformElementBase {
       // Conditional logic.
     ];
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -136,14 +142,14 @@ class Captcha extends WebformElementBase {
     // @see _captcha_available_challenge_types();
     // @see \Drupal\captcha\Service\CaptchaService::getAvailableChallengeTypes
     $captcha_types = [];
-    $captcha_types['default'] = t('Default challenge type');
+    $captcha_types['default'] = $this->t('Default challenge type');
     // We do our own version of Drupal's module_invoke_all() here because
     // we want to build an array with custom keys and values.
     foreach (\Drupal::moduleHandler()->getImplementations('captcha') as $module) {
       $result = call_user_func_array($module . '_captcha', ['list']);
       if (is_array($result)) {
         foreach ($result as $type) {
-          $captcha_types["$module/$type"] = t('@type (from module @module)', [
+          $captcha_types["$module/$type"] = $this->t('@type (from module @module)', [
             '@type' => $type,
             '@module' => $module,
           ]);
@@ -154,6 +160,14 @@ class Captcha extends WebformElementBase {
     $form['captcha'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('CAPTCHA settings'),
+    ];
+    $form['captcha']['message'] = [
+      '#type' => 'webform_message',
+      '#message_type' => 'warning',
+      '#message_message' => $this->t('Note that the CAPTCHA module disables page caching of pages that include a CAPTCHA challenge.'),
+      '#message_close' => TRUE,
+      '#message_storage' => WebformMessageElement::STORAGE_SESSION,
+      '#access' => TRUE,
     ];
     $form['captcha']['captcha_type'] = [
       '#type' => 'select',
@@ -229,10 +243,10 @@ class Captcha extends WebformElementBase {
         $element['captcha_widgets']['captcha_refresh'] = [
           '#theme' => 'image_captcha_refresh',
           '#captcha_refresh_link' => $uri,
+          '#parents' => array_merge($element['#parents'], ['captcha_widgets']),
         ];
       }
     }
-
 
     return $element;
   }

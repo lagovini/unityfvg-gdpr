@@ -140,6 +140,7 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     $this->assertContains('<b>Subject</b><br />This has &lt;removed&gt;&quot;special&quot; &#039;chararacters&#039;<br /><br />', $sent_email['params']['body']);
     $this->assertContains('<b>Message</b><br /><p><em>Please enter a message.</em> Test that double "quotes" are not encoded.</p><br /><br />', $sent_email['params']['body']);
     $this->assertContains('<p style="color:yellow"><em>Custom styled HTML markup</em></p>', $sent_email['params']['body']);
+    $this->assertContains('<b>File</b><br />', $sent_email['params']['body']);
     $this->assertNotContains('<b>Optional</b><br />{Empty}<br /><br />', $sent_email['params']['body']);
     $this->assertNotContains('<b>Checkbox/b><br />Yes<br /><br />', $sent_email['params']['body']);
 
@@ -166,6 +167,18 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
 
     $email_handler = $webform->getHandler('email');
 
+    // Exclude file attachment.
+    $configuration = $email_handler->getConfiguration();
+    $configuration['settings']['exclude_attachments'] = TRUE;
+    $email_handler->setConfiguration($configuration);
+    $webform->save();
+
+    // Check excluding attachments.
+    $this->postSubmissionTest($webform);
+    $sent_email = $this->getLastEmail();
+    $this->assertNotContains('<b>File</b><br />', $sent_email['params']['body']);
+    $this->assertTrue(isset($sent_email['params']['attachments'][0]['filecontent']));
+
     // Exclude file element.
     $configuration = $email_handler->getConfiguration();
     $configuration['settings']['excluded_elements'] = ['file' => 'file'];
@@ -175,6 +188,7 @@ class WebformHandlerEmailAdvancedTest extends WebformBrowserTestBase {
     // Check excluding files.
     $this->postSubmissionTest($webform);
     $sent_email = $this->getLastEmail();
+    $this->assertNotContains('<b>File</b><br />', $sent_email['params']['body']);
     $this->assertFalse(isset($sent_email['params']['attachments'][0]['filecontent']));
 
     // Check empty element is excluded.

@@ -78,8 +78,7 @@ class WebformCompositePluginTest extends WebformBrowserTestBase {
   datetime: '2018-03-21T23:19:25+1100'
   nested_tel: 123-456-7890
   nested_select: Monday
-  nested_radios: Monday
-  webform_toggle: ''");
+  nested_radios: Monday");
   }
 
 }

@@ -23,13 +23,13 @@ class WebformActions extends ContainerBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     $properties = [
       // Title.
       'title' => '',
       // Attributes.
       'attributes' => [],
-    ] + $this->getDefaultBaseProperties();
+    ] + $this->defineDefaultBaseProperties();
     foreach (WebformActionsElement::$buttons as $button) {
       $properties[$button . '_hide'] = FALSE;
       $properties[$button . '__label'] = '';
@@ -37,6 +37,8 @@ class WebformActions extends ContainerBase {
     }
     return $properties;
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -129,6 +131,12 @@ class WebformActions extends ContainerBase {
         'title' => $this->t('Draft'),
         'label' => $this->t('draft'),
         'access' => $draft_enabled,
+      ],
+      'update' => [
+        'title' => $this->t('Update'),
+        'label' => $this->t('Update'),
+        'description' => $this->t('This is used after a submission has been saved and finalized to the database.'),
+        'access' => !$webform->isResultsDisabled(),
       ],
       'wizard_prev' => [
         'title' => $this->t('Wizard previous'),

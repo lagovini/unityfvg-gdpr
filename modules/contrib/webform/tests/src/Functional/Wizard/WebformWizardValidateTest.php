@@ -124,7 +124,6 @@ wizard_1_test_composite:
   radios: ''
   date: ''
   webform_entity_select: ''
-  webform_toggle: ''
   entity_autocomplete: null
   datetime: ''
   nested_radios: ''
@@ -137,13 +136,12 @@ wizard_1_test_composite_multiple:
     webform_email_confirm: ''
     tel: ''
     select: ''
-    radios: ''
+    radios: null
     date: ''
     webform_entity_select: ''
-    webform_toggle: ''
     entity_autocomplete: null
     datetime: ''
-    nested_radios: ''
+    nested_radios: null
 wizard_2_custom_composite: {  }
 wizard_2_test_composite: null
 wizard_2_test_composite_multiple: {  }");
@@ -186,7 +184,6 @@ wizard_1_test_composite:
   radios: ''
   date: ''
   webform_entity_select: ''
-  webform_toggle: ''
   entity_autocomplete: null
   datetime: ''
   nested_radios: ''
@@ -199,13 +196,12 @@ wizard_1_test_composite_multiple:
     webform_email_confirm: ''
     tel: ''
     select: ''
-    radios: ''
+    radios: null
     date: ''
     webform_entity_select: ''
-    webform_toggle: ''
     entity_autocomplete: null
     datetime: ''
-    nested_radios: ''
+    nested_radios: null
 wizard_2_custom_composite:
   - datelist: '2002-02-02T02:20:00+1100'
     textfield: '{wizard_2_custom_composite_textfield}'
@@ -221,7 +217,6 @@ wizard_2_test_composite:
   radios: ''
   date: ''
   webform_entity_select: ''
-  webform_toggle: ''
   entity_autocomplete: null
   datetime: ''
   nested_radios: ''
@@ -234,13 +229,12 @@ wizard_2_test_composite_multiple:
     webform_email_confirm: ''
     tel: ''
     select: ''
-    radios: ''
+    radios: null
     date: ''
     webform_entity_select: ''
-    webform_toggle: ''
     entity_autocomplete: null
     datetime: ''
-    nested_radios: ''";
+    nested_radios: null";
     $this->assertRaw($raw);
 
     // Make sure navigating back and next through the

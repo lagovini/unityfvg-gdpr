@@ -32,7 +32,7 @@ class WebformElementSignatureTest extends WebformElementBrowserTestBase {
 
     // Check signature display.
     $this->drupalGet('/webform/test_element_signature');
-    $this->assertRaw('<input data-drupal-selector="edit-signature" aria-describedby="edit-signature--description" type="hidden" name="signature" value="" class="js-webform-signature form-webform-signature" />');
+    $this->assertRaw('<input data-drupal-selector="edit-signature" aria-describedby="edit-signature--description" type="hidden" name="signature" value="" class="js-webform-signature form-webform-signature" data-drupal-states="{&quot;disabled&quot;:{&quot;.webform-submission-test-element-signature-add-form :input[name=\u0022disable\u0022]&quot;:{&quot;checked&quot;:true}},&quot;readonly&quot;:{&quot;.webform-submission-test-element-signature-add-form :input[name=\u0022readonly\u0022]&quot;:{&quot;checked&quot;:true}}}" />');
     $this->assertRaw('<input type="submit" name="op" value="Reset" class="button js-form-submit form-submit" />');
     $this->assertRaw('<canvas></canvas>');
     $this->assertRaw('</div>');

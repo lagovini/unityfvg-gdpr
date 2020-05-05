@@ -181,6 +181,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -258,6 +259,7 @@ handlers:
       ignore_access: false
       exclude_empty: true
       exclude_empty_checkbox: false
+      exclude_attachments: false
       html: true
       attachments: true
       twig: false
@@ -268,3 +270,4 @@ handlers:
       sender_name: ''
       theme_name: ''
       parameters: {  }
+variants: {  }

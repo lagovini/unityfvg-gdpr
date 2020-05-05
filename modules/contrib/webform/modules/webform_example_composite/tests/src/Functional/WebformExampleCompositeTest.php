@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\webform_attachment\Functional;
+namespace Drupal\Tests\webform_example_composite\Functional;
 
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;

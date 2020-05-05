@@ -357,6 +357,13 @@ abstract class WebformHandlerBase extends PluginBase implements WebformHandlerIn
   /**
    * {@inheritdoc}
    */
+  public function isApplicable(WebformInterface $webform) {
+    return TRUE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function isSubmissionOptional() {
     return ($this->pluginDefinition['submission'] === self::SUBMISSION_OPTIONAL);
   }
@@ -451,13 +458,6 @@ abstract class WebformHandlerBase extends PluginBase implements WebformHandlerIn
   /**
    * {@inheritdoc}
    */
-  public function calculateDependencies() {
-    return [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     return $form;
   }
@@ -483,10 +483,14 @@ abstract class WebformHandlerBase extends PluginBase implements WebformHandlerIn
    */
   protected function applyFormStateToConfiguration(FormStateInterface $form_state) {
     $values = $form_state->getValues();
+    $default_configuration = $this->defaultConfiguration();
     foreach ($values as $key => $value) {
       if (array_key_exists($key, $this->configuration)) {
-        if (is_bool($this->configuration[$key])) {
-          $this->configuration[$key] = (int) $value;
+        if (is_bool($default_configuration[$key])) {
+          $this->configuration[$key] = (boolean) $value;
+        }
+        elseif (is_int($default_configuration[$key])) {
+          $this->configuration[$key] = (integer) $value;
         }
         else {
           $this->configuration[$key] = $value;

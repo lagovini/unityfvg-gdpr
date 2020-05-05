@@ -23,13 +23,18 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     $properties = [
       'title' => '',
       'open' => FALSE,
       'prev_button_label' => '',
       'next_button_label' => '',
-    ] + $this->getDefaultBaseProperties();
+      // Submission display.
+      'format' => $this->getItemDefaultFormat(),
+      'format_html' => '',
+      'format_text' => '',
+      'format_attributes' => [],
+    ] + $this->defineDefaultBaseProperties();
     unset($properties['flex']);
     return $properties;
   }
@@ -37,9 +42,11 @@ class WebformWizardPage extends Details implements WebformElementWizardPageInter
   /**
    * {@inheritdoc}
    */
-  public function getTranslatableProperties() {
-    return array_merge(parent::getTranslatableProperties(), ['prev_button_label', 'next_button_label']);
+  protected function defineTranslatableProperties() {
+    return array_merge(parent::defineTranslatableProperties(), ['prev_button_label', 'next_button_label']);
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}

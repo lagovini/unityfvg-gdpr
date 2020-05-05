@@ -36,7 +36,7 @@ class Address extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     $properties = [
       // Element settings.
       'title' => '',
@@ -64,10 +64,13 @@ class Address extends WebformCompositeBase {
       'available_countries' => [],
       'field_overrides' => [],
       'langcode_override' => '',
-    ] + $this->getDefaultBaseProperties() + $this->getDefaultMultipleProperties();
+    ] + $this->defineDefaultBaseProperties()
+      + $this->defineDefaultMultipleProperties();
     unset($properties['multiple__header']);
     return $properties;
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -364,9 +367,9 @@ class Address extends WebformCompositeBase {
           '#type' => 'select',
           '#default_value' => $override,
           '#options' => [
-            FieldOverride::HIDDEN => t('Hidden'),
-            FieldOverride::OPTIONAL => t('Optional'),
-            FieldOverride::REQUIRED => t('Required'),
+            FieldOverride::HIDDEN => $this->t('Hidden'),
+            FieldOverride::OPTIONAL => $this->t('Optional'),
+            FieldOverride::REQUIRED => $this->t('Required'),
           ],
           '#empty_option' => $this->t('- No override -'),
           '#parents' => ['properties', 'field_overrides', $field_name],

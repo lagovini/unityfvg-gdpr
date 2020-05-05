@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\webform\Functional\Element;
 
+use Drupal\webform\Entity\Webform;
+
 /**
  * Tests for webform actions element.
  *
@@ -20,7 +22,11 @@ class WebformElementActionsTest extends WebformElementBrowserTestBase {
    * Tests actions element.
    */
   public function testActions() {
+    $webform = Webform::load('test_element_actions');
+
+    /**************************************************************************/
     /* Test webform actions */
+    /**************************************************************************/
 
     // Get form.
     $this->drupalGet('/webform/test_element_actions');
@@ -53,11 +59,23 @@ class WebformElementActionsTest extends WebformElementBrowserTestBase {
 
     // Submit form.
     $this->drupalPostForm(NULL, [], t('Submit'));
+    $sid = $this->getLastSubmissionId($webform);
 
     // Check no actions.
     $this->assertNoRaw('form-actions');
 
+    // Check custom update action.
+    $this->drupalLogin($this->rootUser);
+    $this->drupalGet("/admin/structure/webform/manage/test_element_actions/submission/$sid/edit");
+    $this->drupalPostForm(NULL, [], t('Next Page >'));
+    $this->assertRaw('<input class="webform-button--submit custom-update button button--primary js-form-submit form-submit" style="font-weight: bold" data-custom-update data-drupal-selector="edit-actions-custom-submit" type="submit" id="edit-actions-custom-submit" name="op" value="{Custom update}" />');
+
+    /**************************************************************************/
     /* Test actions buttons */
+    /**************************************************************************/
+
+    $webform = Webform::load('test_element_actions_buttons');
+
     $this->drupalLogin($this->rootUser);
 
     $this->drupalGet('/webform/test_element_actions_buttons');
@@ -81,6 +99,13 @@ class WebformElementActionsTest extends WebformElementBrowserTestBase {
     // Check submit button.
     $this->assertRaw('<input class="webform-button--submit form_submit_attributes button button--primary js-form-submit form-submit" style="color: green" data-drupal-selector="edit-actions-submit" type="submit" id="edit-actions-submit" name="op" value="Submit" />');
 
+    $this->drupalPostForm(NULL, [], t('Submit'));
+    $sid = $this->getLastSubmissionId($webform);
+
+    // Check update button.
+    $this->drupalGet("/admin/structure/webform/manage/test_element_actions_buttons/submission/$sid/edit");
+    $this->drupalPostForm(NULL, [], t('Next Page >'));
+    $this->assertRaw('<input class="webform-button--submit form_update_attributes button button--primary js-form-submit form-submit" style="color: purple" data-drupal-selector="edit-actions-submit" type="submit" id="edit-actions-submit" name="op" value="Save" />');
   }
 
 }

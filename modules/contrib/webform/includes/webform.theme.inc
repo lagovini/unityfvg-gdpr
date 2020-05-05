@@ -34,6 +34,7 @@ function webform_theme() {
     'webform_actions' => [
       'render element' => 'element',
     ],
+
     'webform_handler_action_summary' => [
       'variables' => ['settings' => NULL, 'handler' => NULL],
     ],
@@ -48,6 +49,10 @@ function webform_theme() {
     ],
     'webform_handler_settings_summary' => [
       'variables' => ['settings' => NULL, 'handler' => NULL],
+    ],
+
+    'webform_variant_override_summary' => [
+      'variables' => ['settings' => NULL, 'variant' => NULL],
     ],
 
     'webform_confirmation' => [
@@ -491,6 +496,7 @@ function webform_preprocess_form_element_label(&$variables) {
 
   // Remove label 'for' attribute.
   if (!empty($element['#attributes']['webform-remove-for-attribute'])) {
+    unset($element['#attributes']['webform-remove-for-attribute']);
     unset($variables['attributes']['webform-remove-for-attribute']);
     unset($variables['attributes']['for']);
   }
@@ -578,8 +584,13 @@ function webform_preprocess_file_link(&$variables) {
   $file = ($file instanceof File) ? $file : File::load($file->fid);
 
   // Remove link to temporary anonymous private file uploads.
-  if ($file->isTemporary() && $file->getOwner()->isAnonymous() && strpos($file->getFileUri(), 'private://webform/') === 0) {
+  if ($file->isTemporary() && $file->getOwner() && $file->getOwner()->isAnonymous() && strpos($file->getFileUri(), 'private://webform/') === 0) {
     $variables['link'] = $file->getFilename();
+  }
+
+  // Add file size variable to Claro theme.
+  if (empty($variables['file_size']) && \Drupal::service('webform.theme_manager')->isActiveTheme('claro')) {
+    $variables['file_size'] = format_size($file->getSize(), \Drupal::languageManager()->getCurrentLanguage()->getId());
   }
 }
 
@@ -642,7 +653,7 @@ function _webform_preprocess_options(array &$variables) {
  */
 function _webform_preprocess_element(array &$variables, $title_parents = ['title']) {
   $element =& $variables['element'];
-  $type = $element['#type'];
+  $type = (isset($element['#type'])) ? $element['#type'] : '';
 
   // Fix details 'description' property which does not have description.content.
   // @see template_preprocess_details
@@ -751,7 +762,7 @@ function _webform_preprocess_description_help(array &$variables) {
  */
 function _webform_preprocess_help(array &$variables, $title_parents = ['title']) {
   $element =& $variables['element'];
-  $type = $element['#type'];
+  $type = (isset($element['#type'])) ? $element['#type'] : '';
 
   if (empty($element['#help'])) {
     return;
@@ -1153,7 +1164,9 @@ function webform_theme_suggestions_form_element(array $variables) {
   $suggestions = [];
 
   // Add webform type suggestion.
-  $suggestions[] = 'form_element__webform_' . $element['#type'];
+  if (isset($element['#type'])) {
+    $suggestions[] = 'form_element__webform_' . $element['#type'];
+  }
 
   // Add radio/checkbox displayed as a button suggestion.
   // @sse webform_process_options()

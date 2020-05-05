@@ -20,4 +20,3 @@ permissions:
   - 'view group_membership content'
   - 'view group_node:webform content'
   - 'view group_node:webform entity'
-

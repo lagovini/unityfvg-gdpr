@@ -205,21 +205,6 @@ function webform_css_alter(&$css, AttachedAssetsInterface $assets) {
  * Implements hook_js_alter().
  */
 function webform_js_alter(&$javascript, AttachedAssetsInterface $assets) {
-  // Add Google API key required by webform/libraries.jquery.geocomplete
-  // which is dependency for webform/webform.element.location.geocomplete.
-  //
-  // @see \Drupal\webform\Element\WebformLocationGeocomplete::processWebformComposite
-  // @see webform.libraries.yml
-  // @see webform/webform.element.location.geocomplete
-  // @see webform/libraries.jquery.geocomplete
-  $settings = $assets->getSettings();
-  if (!empty($settings['webform']['location']['geocomplete']['api_key']) && isset($javascript['https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places'])) {
-    $api_key = $settings['webform']['location']['geocomplete']['api_key'];
-    $javascript['https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places']['data'] = "https://maps.googleapis.com/maps/api/js?key=$api_key&libraries=places";
-    unset($settings['webform']['location']['geocomplete']['api_key']);
-    $assets->setSettings($settings);
-  }
-
   _webform_asset_alter($javascript, 'javascript');
 }
 

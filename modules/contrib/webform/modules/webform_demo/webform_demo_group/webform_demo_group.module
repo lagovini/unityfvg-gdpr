@@ -11,7 +11,7 @@ use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Implements hook_block_access()
+ * Implements hook_block_access().
  */
 function webform_demo_group_block_access(Block $block, $operation, AccountInterface $account) {
   // Block access to group operation block when there is no group context in

@@ -169,6 +169,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -251,6 +252,7 @@ handlers:
       ignore_access: true
       exclude_empty: true
       exclude_empty_checkbox: true
+      exclude_attachments: false
       html: true
       attachments: true
       twig: false
@@ -262,3 +264,4 @@ handlers:
       return_path: return_path@example.com
       sender_mail: sender_mail@example.com
       sender_name: sender_name
+variants: {  }

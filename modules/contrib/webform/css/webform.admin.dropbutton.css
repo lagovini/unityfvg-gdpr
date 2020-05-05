@@ -6,14 +6,15 @@
  * @see /admin/structure/webform/manage/{webform}/results/submissions
  * @see /admin/structure/webform/manage/{webform}
  * @see /admin/structure/webform/manage/{webform}/handlers
+ * @see /admin/structure/webform/manage/{webform}/variants
  */
 
 /**
  * Fix webform submission views dropdown display.
  */
 .js .webform-submission-views-dropbutton .dropbutton-wrapper {
-  display: block;
   position: relative;
+  display: block;
   min-height: 2em;
 }
 

@@ -57,7 +57,6 @@ class WebformElementFormatTest extends WebformElementBrowserTestBase {
       'Email multiple (Link)' => '<a href="mailto:example@example.com">example@example.com</a>, <a href="mailto:test@test.com">test@test.com</a>, <a href="mailto:random@random.com">random@random.com</a>',
       'Signature (Status)' => '[signed]',
       'Telephone (Link)' => '<a href="tel:+1 212-333-4444">+1 212-333-4444</a>',
-      'Toggle (Value)' => 'Yes',
       'URL (Link)' => '<a href="http://example.com">http://example.com</a>',
       'Date (Raw value)' => '1942-06-18',
       'Date (Fallback date format)' => '1942-06-18',
@@ -94,7 +93,6 @@ class WebformElementFormatTest extends WebformElementBrowserTestBase {
       'Color (Color swatch): #ffffcc',
       'Email (Link): example@example.com',
       'Email multiple (Link): example@example.com, test@test.com, random@random.com',
-      'Toggle (Value): Yes',
       'URL (Link): http://example.com',
       'Date (Raw value): 1942-06-18',
       'Date (Fallback date format): 1942-06-18',
@@ -183,6 +181,7 @@ class WebformElementFormatTest extends WebformElementBrowserTestBase {
       'Checkboxes (And)' => 'One, Two, and Three',
       'Checkboxes (Ordered list)' => '<div class="item-list"><ol><li>One</li><li>Two</li><li>Three</li></ol>',
       'Checkboxes (Unordered list)' => '<div class="item-list"><ul><li>One</li><li>Two</li><li>Three</li></ul>',
+      'Checkboxes (Checklist)' => '<span style="font-size: 1.4em; line-height: 1em">☑</span> One<br /><span style="font-size: 1.4em; line-height: 1em">☑</span> Two<br /><span style="font-size: 1.4em; line-height: 1em">☑</span> Three<br />',
     ];
     foreach ($elements as $label => $value) {
       $this->assertContains('<b>' . $label . '</b><br />' . $value, $body, new FormattableMarkup('Found @label: @value', [
@@ -216,6 +215,10 @@ class WebformElementFormatTest extends WebformElementBrowserTestBase {
 - One
 - Two
 - Three',
+      'Checkboxes (Checklist):
+☑ One
+☑ Two
+☑ Three',
     ];
     foreach ($elements as $value) {
       $this->assertContains($value, $body, new FormattableMarkup('Found @value', ['@value' => $value]));

@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Collects available webform elements.
  */
-interface WebformElementManagerInterface extends PluginManagerInterface, CachedDiscoveryInterface, FallbackPluginManagerInterface, CategorizingPluginManagerInterface {
+interface WebformElementManagerInterface extends PluginManagerInterface, CachedDiscoveryInterface, FallbackPluginManagerInterface, CategorizingPluginManagerInterface, WebformPluginManagerExcludedInterface {
 
   /**
    * Get all available webform element plugin instances.
@@ -60,6 +60,21 @@ interface WebformElementManagerInterface extends PluginManagerInterface, CachedD
    *   The processed form element with webform element specific enhancements.
    */
   public function processElement(array &$element);
+
+  /**
+   * Process form elements and apply webform element specific enhancements.
+   *
+   * This method allows any form API elements to be enhanced using webform
+   * specific features include custom validation, external libraries,
+   * accessibility improvements, etc…
+   *
+   * @param array $elements
+   *   An associative array containing form elements.
+   *
+   * @return array
+   *   The processed form elements with webform element specific enhancements.
+   */
+  public function processElements(array &$elements);
 
   /**
    * Invoke a method for a Webform element.
@@ -125,17 +140,6 @@ interface WebformElementManagerInterface extends PluginManagerInterface, CachedD
    *   An array of plugin definitions, sorted by category and label.
    */
   public function getSortedDefinitions(array $definitions = NULL, $sort_by = 'label');
-
-  /**
-   * Remove excluded plugin definitions.
-   *
-   * @param array $definitions
-   *   The plugin definitions to filter.
-   *
-   * @return array
-   *   An array of plugin definitions with excluded plugins removed.
-   */
-  public function removeExcludeDefinitions(array $definitions);
 
   /**
    * Get all translatable properties from all elements.
