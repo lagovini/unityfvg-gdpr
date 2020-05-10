@@ -1,0 +1,318 @@
+{#
+/**
+ * @file
+ * Default view template to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{#
+/* ************************************
+{% for field in fields -%}
+  {{ field.separator }}
+  {%- if field.wrapper_element -%}
+    <{{ field.wrapper_element }}{{ field.wrapper_attributes }}>
+  {%- endif %}
+  {%- if field.label -%}
+    {%- if field.label_element -%}
+      <{{ field.label_element }}{{ field.label_attributes }}>{{ field.label }}{{ field.label_suffix }}</{{ field.label_element }}>
+    {%- else -%}
+      {{ field.label }}{{ field.label_suffix }}
+    {%- endif %}
+  {%- endif %}
+  {%- if field.element_type -%}
+    <{{ field.element_type }}{{ field.element_attributes }}>{{ field.content }}</{{ field.element_type }}>
+  {%- else -%}
+    {{ field.content }}
+  {%- endif %}
+  {%- if field.wrapper_element -%}
+    </{{ field.wrapper_element }}>
+  {%- endif %}
+{%- endfor %}
+************************* */
+#}
+
+
+  <style type="text/css">
+.tg  {
+         border-collapse:collapse;border-spacing:0;
+     }
+
+.tg td {
+         font-family:Arial, sans-serif;font-size:14px;
+         padding:10px 5px;
+         border-style:solid;
+         border-width:1px;
+         overflow:hidden; 
+         border-color:black;
+         background-color: white;
+         }
+.tg th { 
+         font-family:Arial, sans-serif;font-size:14px;
+         font-weight:normal;
+         padding:10px 5px;
+         border-style:solid;
+         border-width:1px;
+         overflow:hidden;        
+         border-color:black;
+         background-color: #0099aa;
+        }
+.tg .tg-0lax {
+         text-align:left;
+         vertical-align:top;
+       }
+
+</style>
+
+
+{# ############################
+
+Mappaggio campi views<-->campi webform, 1.8.1 alla data del: 8.5.2020.
+
+webform_submission_value    --> titolo_trattamento_o_attivita
+webform_submission_value_1  --> titolare_del_trattamento  (label)
+webform_submission_value_2  --> sede_legale_titolare (computed in webform)
+webform_submission_value_3  --> email_contatto       (computed in webform)
+webform_submission_value_4  --> telefono_titolare    (computed in webform)
+webform_submission_value_5  --> email_dp             (computed in webform)
+webform_submission_value_6  --> sintesi_finalita_trattamento
+webform_submission_value_7  --> sintesi_piu_adeguata
+webform_submission_value_8  --> sintesi_periodo_trattamento
+webform_submission_value_9  --> dati_trattati_esterno
+webform_submission_value_10  --> 010output (striptags + webform: output html, altrimenti aggiunge un <br>)
+webform_submission_value_11  --> finalita_e_basi  (elenco di finalita associate a basi giuridiche; da strutturare meglio)
+webform_submission_value_12  --> dati_trattati_automatico
+webform_submission_value_13  --> profilazione
+webform_submission_value_14  --> finalita_e_durata  (elenco di finalita associate a durata; da strutturare meglio)
+webform_submission_value_15  --> destinatari_terzi
+webform_submission_value_16  --> responsabili_esterni
+webform_submission_value_17  --> quali_sono_i_contitolari_del_trattamento_dei_dati_
+webform_submission_value_18  --> trasferimento_extra_ue  (Booleano Yes/No)
+webform_submission_value_19  --> 52output
+webform_submission_value_20  --> 53output
+webform_submission_value_21  --> 61output (striptags + webform: output html, altrimenti aggiunge un <br>)
+webform_submission_value_22  --> dati_esterni_e_fonti_output
+
+
+############################# #}
+
+
+<hr>
+<h2>Informativa sul trattamento dei dati personali</h2>
+<div>
+Le rendiamo noto che Lei come "Interessato", ai sensi degli art.13/14 del Regolamento (UE) 679/2016 (Regolamento Generale sulla Protezione dei Dati) ha diritto di ricevere le seguenti informazioni in relazione ai dati personali di cui il Titolare del trattamento entra in possesso ai fini del trattamento nell’ambito delle attività di
+ <br/><strong>{{ fields.webform_submission_value.content }} </strong> <br />
+</div>
+<br>
+
+<h3>Chi tratta i miei dati personali?</h3>
+<ul>
+  <li>Titolare del trattamento: {{ fields.webform_submission_value_1.content }}</li>
+  <li>Sede legale: {{ fields.webform_submission_value_2.content }}</li>
+  <li>Punto di contatto: 
+  <ul>
+    <li>Email contatto:{{ fields.webform_submission_value_3.content }}</li>
+    <li>Numero telefono:{{ fields.webform_submission_value_4.content }}</li>
+  </ul>
+</ul>
+
+<h3>Responsabile per la protezione dei dati</h3>
+<ul>
+<li>{{ fields.webform_submission_value_5.content }}</li>
+<li>
+Il Titolare del trattamento si avvale dell’RPD per rispondere alle istanze relative all’esercizio dei diritti degli interessati.
+</li>
+</ul>
+
+<h3>In breve...</h3>
+<ul>
+<li>Perchè: {{ fields.webform_submission_value_6.content }} </li>
+<li>Come: {{ fields.webform_submission_value_7.content }} </li>
+<li>Quando: {{ fields.webform_submission_value_8.content }} </li>
+<li>A chi: {{ fields.webform_submission_value_9.content }} </li>
+<li>Dove: {{ fields.webform_submission_value_10.content|striptags }}</li>
+</ul>
+
+
+
+</ul>
+  
+ <h3>1. Perchè vengono trattati i miei dati personali?</h3>
+ I dati personali vengono trattati limitatamente e in modo proporzionale ai seguenti scopi.
+<ul>
+  <li>Finalità dei trattamenti e relative basi giuridiche:  {{ fields.webform_submission_value_11.content }}</li>
+</ul>
+
+<h4>Cosa succede se mi rifiuto di dare i miei dati?</h4>
+<p>
+Quando il trattamento è fondato su un contratto o su un obbligo di legge, il mancato conferimento impedisce la prestazione del servizio.
+</p>
+<p>
+Quando le viene richiesto il consenso al trattamento, non subirà nessuna conseguenza in caso di negato consenso.
+</p>
+<p>
+Nei moduli cartacei o online sono indicate le categorie di dati per le quali il conferimento è obbligatorio o facoltativo.
+</p>
+
+
+<h2>2. Come vengono trattati i miei dati personali?</h2>
+<p>Di seguito vengono indicate le modalità e le logiche del trattamento dei dati personali.</p>
+<h3>In breve...</h3>
+<ul>
+<li>{{ fields.webform_submission_value_7.content }}</li>
+</ul>
+ <p>
+ Il Titolare si avvale di soggetti autorizzati al trattamento di dati personali, formati e istruiti sulle precauzioni da adottare per assicurare la riservatezza, integrità e disponibilità dei dati personali. Alcune figure hanno dei compiti specifici per garantire la sicurezza delle informazioni e la protezione dei dati personali, in qualità di responsabili interni.
+ </p>
+ <h3>Processo decisionale automatizzato</h3>
+ <p>
+ {{ fields.webform_submission_value_12.content }}
+ </p>
+ <h3>Profilazione</h3>
+ <p>
+ {{ fields.webform_submission_value_13.content }}
+ </p>
+
+<h2>3. Per quanto tempo vengono conservati i miei dati?</h2>
+<p>I dati personali vengono trattati per le finalità indicate solo fino a quando sia necessario.</p>
+<h3>In breve...</h3>
+<ul>
+<li>{{ fields.webform_submission_value_8.content }} </li>
+</ul>
+<ul>
+  <li>Finalità dei trattamenti e relative durate:  {{ fields.webform_submission_value_14.content }}</li>
+</ul>
+
+<h2>4. Chi potrà trattare i miei dati personali</h2>
+ <h3>In breve...</h3>
+  <ul>
+    <li>{{ fields.webform_submission_value_9.content }}</li>
+  </ul>
+  
+{% if fields.webform_submission_value_15.content|trim(' ') != "" %} 
+  I dati personali saranno comunicati a terzi titolari, esclusivamente per esigenze tecniche ed operative strettamente collegate alle finalità sopra enunciate:
+  <ul>
+    <li>{{ fields.webform_submission_value_15.content }} </li> 
+   </ul>
+{% endif %}
+
+{% if fields.webform_submission_value_16.content|render| striptags | trim | raw  != "" %} 
+Il Titolare del trattamento si avvale di responsabili del trattamento dei dati personali, chiamati a rispettare misure di sicurezza previsto in un accordo stipulato ai sensi dell’art. 28 GDPR. I responsabili del trattamento sono:
+  <ul>
+    <li>{{  fields.webform_submission_value_16.content }}</li> 
+    <li>{{  fields.webform_submission_value_17.content }}</li> 
+  </ul>
+  
+  <p>
+  📌La comunicazione dei dati ad altri titolari del trattamento e la diffusione dei dati sono fondate su precisi obblighi di legge, anche ai fini adempiere a compiti di interesse pubblico.
+  </p>
+  <p>
+Quando sia necessario per compiti di interesse pubblico o funzioni istituzionali qualora non vi sia un obbligo di legge, viene data comunicazione al Garante per la protezione dei dati personali prima della comunicazione dei dati.
+</p>
+{% endif %}
+
+<h2>5. Dove sono trattati i miei dati personali?</h2>
+ <h3>In breve...</h3>
+  <ul>
+    <li>{{ fields.webform_submission_value_10.content }}</li>
+
+  </ul>
+
+
+{% if fields.webform_submission_value_18.content|striptags | trim| raw  == "Yes" %} 
+<h3>Quale meccanismo tutela il trasferimento dei miei dati extra UE?</h3>
+ <ul>
+ {% if fields.webform_submission_value_19.content|striptags|trim|raw  != "" %}
+ <li>{{ fields.webform_submission_value_19.content }}</li>
+ {% endif %}
+   <li>[Norme vincolanti d'impresa ai sensi dell'articolo 47]</li>
+   <li>[Clausole tipo di protezione dei dati ai sensi dell'articolo 46]</li>
+ {% if fields.webform_submission_value_20.content|striptags|trim|raw  != "" %}
+   <li>{{ fields.webform_submission_value_20.content }}</li>
+ {% endif %}
+ </ul>
+
+{% endif %}
+
+<h2>6. Da chi avete ottenuto i miei dati personali?</h2>
+  <ul>
+    <li>{{ fields.webform_submission_value_21.content|striptags  }}</li>
+
+  </ul>
+ {% if fields.webform_submission_value_22.content|render| striptags | trim | raw  != "" %} 
+   {{ fields.webform_submission_value_22.content  }}</li>
+ {% endif %}
+ <hr>
+
+ {# #################################  #}
+ 
+ <h2>7. Quali sono i miei diritti?</h2>
+Ai sensi degli articoli 15-22 GDPR l’interessato ha il diritto di ...
+ <ul>
+ <li><label>Diritto di accedere ai dati</label>: ️Può ottenere conferma e informazioni sul trattamento</li>
+ <li><label>Diritto di rettifica</label>: ️Può rettificare dati inesatti o integrarli</li>
+ <li><label>Diritto di cancellazione</label>: ️Nei casi di legge può chiedere l’oblio</li>
+ <li><label>Diritto di limitazione al trattamento</label>: ️Nei casi di legge può chiedere di limitare il trattamento</li>
+ <li><label>Diritto alla portabilità dei dati</label>: 
+         <ul>
+         <li>Può ricevere i dati in formato strutturato, di uso comune, leggibile da dispositivo automatico e interoperabile quando i dati da lei conferiti sono trattati con mezzi automatizzati e sono trattati con il suo consenso o sulla base di un contratto.</li>
+         <li>Non ha il diritto alla portabilità dei suoi dati quando il trattamento è necessario per eseguire un compito di interesse pubblico o nell’esercizio di funzioni pubbliche o adempiere a obblighi legali.</li>
+         </ul>
+  </li>
+ <li><label>Diritto di opporsi al trattamento</label>: Per particolari motivi può opporsi  al trattamento per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri o fondato sul legittimo interesse</li>
+ </ul>
+
+<strong>Quando il trattamento è fondato sul consenso, lei ha diritto di revocare il consenso in ogni momento.</strong>
+ 
+ <h3>Come posso esercitare i miei diritti?</h3>
+Per esercitare i suoi diritti potrà rivolgersi al Titolare del trattamento al seguente punto di contatto:
+  <ul>
+    <li>Email contatto:{{ fields.webform_submission_value_3.content }}</li>
+    <li>Numero telefono:{{ fields.webform_submission_value_4.content }}</li>
+  </ul>
+
+  <h3>Lei ha facoltà di proporre reclamo al Garante per la Protezione dei dati personali [Autorità di controllo italiana]</h3>
+
+  [QR qui]
+
+  <a href="https://bit.ly/2w1mcjS">https://bit.ly/2w1mcjS</a><br />
+  
+  Lei ha anche il diritto di presentare reclamo all’Autorità di controllo dello Stato membro in cui risiede o lavora abitualmente.
+ 
+ 
+ <h2>Come posso ottenere maggiori informazioni?</h2>
+
+ [QR qui]
+<br/>
+L’interessato può ottenere maggiori informazioni su [link sito web].<br />
+
+Sullo stesso sito web verranno forniti gli aggiornamenti alle informazioni rese con la presente informativa.
+
+ 
+ 
