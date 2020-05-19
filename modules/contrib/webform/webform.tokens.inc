@@ -832,7 +832,7 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
         $key_exists = NULL;
         $value = NestedArray::getValue($webform_handler, $parents, $key_exists);
         // A handler response is always considered safe markup.
-        $replacements[$original] = ($key_exists) ? Markup::create($value) : $original;
+        $replacements[$original] = ($key_exists && is_scalar($value)) ? Markup::create($value) : $original;
       }
     }
 
@@ -1142,7 +1142,8 @@ function _webform_token_get_interval_wait($interval_setting, BubbleableMetadata 
   // Get last submission completed time.
   /** @var \Drupal\webform\WebformSubmissionStorageInterface $submission_storage */
   $submission_storage = \Drupal::entityTypeManager()->getStorage('webform_submission');
-  $last_submission = $submission_storage->getLastSubmission($webform, $source_entity, $account);
+  $options = ['access_check' => FALSE];
+  $last_submission = $submission_storage->getLastSubmission($webform, $source_entity, $account, $options);
   if (!$last_submission) {
     return '';
   }
