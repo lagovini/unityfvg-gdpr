@@ -3,6 +3,7 @@
 namespace Drupal\webform\Plugin\WebformElement;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\Utility\WebformHtmlHelper;
@@ -71,9 +72,16 @@ abstract class TextBase extends WebformElementBase {
         'counter_maximum_message',
       ];
       foreach ($data_attributes as $data_attribute) {
-        if (!empty($element['#' . $data_attribute])) {
-          $element['#attributes']['data-' . str_replace('_', '-', $data_attribute)] = $element['#' . $data_attribute];
+        if (empty($element['#' . $data_attribute])) {
+          continue;
         }
+
+        $data_attribute_name = 'data-' . str_replace('_', '-', $data_attribute);
+        $data_attribute_value = $element['#' . $data_attribute];
+        if (in_array($data_attribute, ['counter_minimum_message', 'counter_maximum_message'])) {
+          $data_attribute_value = WebformHtmlEditor::stripTags($data_attribute_value);
+        }
+        $element['#attributes'][$data_attribute_name] = $data_attribute_value;
       }
 
       $element['#attributes']['class'][] = 'js-webform-counter';
@@ -162,9 +170,9 @@ abstract class TextBase extends WebformElementBase {
     $form['validation']['pattern'] = [
       '#type' => 'webform_checkbox_value',
       '#title' => $this->t('Pattern'),
-      '#description' => $this->t('A <a href=":href">regular expression</a> that the element\'s value is checked against.', [':href' => 'http://www.w3schools.com/js/js_regexp.asp']),
+      '#description' => $this->t('A <a href=":href">regular expression</a> that the element\'s value is checked against.', [':href' => 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions']),
       '#value__title' => $this->t('Pattern regular expression'),
-      '#value__description' => $this->t('Enter a <a href=":href">regular expression</a> that the element\'s value should match.', [':href' => 'http://www.w3schools.com/js/js_regexp.asp']),
+      '#value__description' => $this->t('Enter a <a href=":href">regular expression</a> that the element\'s value should match.', [':href' => 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions']),
       '#value__maxlength' => NULL,
     ];
     $form['validation']['pattern_error'] = [

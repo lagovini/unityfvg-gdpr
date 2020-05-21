@@ -324,7 +324,7 @@ abstract class OptionsBase extends WebformElementBase {
     $format = $this->getItemFormat($element);
     switch ($format) {
       case 'raw':
-        return Markup::create($value);
+        return $value;
 
       case 'description':
         if (isset($element['#options'])) {

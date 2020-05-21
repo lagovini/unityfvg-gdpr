@@ -15,8 +15,10 @@ use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 use Drupal\views\Entity\View;
+use Drupal\webform\Element\WebformSignature as WebformSignatureElement;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformOptions;
+use Drupal\webform\Entity\WebformSubmission;
 use Drupal\webform\Plugin\WebformHandler\EmailWebformHandler;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\Plugin\WebformHandler\RemotePostWebformHandler;
@@ -3297,7 +3299,7 @@ function webform_update_8177() {
 }
 
 /**
- * Issue #3095275: Allow webform management filter by default category and states to be customized
+ * Issue #3095275: Allow webform management category/state to be customized.
  */
 function webform_update_8178() {
   _webform_update_admin_settings();
@@ -3364,7 +3366,7 @@ function webform_update_8180() {
 }
 
 /**
- * Issue #3103032: Move deprecated location geocomplete element into a sub-module
+ * Issue #3103032: Move deprecated geocomplete element into a sub-module.
  */
 function webform_update_8181() {
   $config_factory = \Drupal::configFactory();
@@ -3661,4 +3663,65 @@ function webform_update_8191() {
   Database::getConnection()
     ->schema()
     ->addIndex('webform_submission', 'webform_submission__token', ['token'], $spec);
+}
+
+/**
+ * Unsafe HMAC construction.
+ */
+function webform_update_8192() {
+  $invalid_signatures = [];
+  $files = file_scan_directory('public://webform/', '/signature-/');
+  foreach ($files as $file) {
+    $value = file_get_contents($file->uri);
+    $value = 'data:image/png;base64,' . base64_encode($value);
+    if (WebformSignatureElement::isSignatureValid($value)) {
+      continue;
+    }
+
+    // Get invalid signature's submission id.
+    if (preg_match('#public://webform/[a-z0-9_]+/signature/(\d+)/#', $file->uri, $match)) {
+      $invalid_signatures[] = $match[1];
+    }
+
+    // Delete invalid invalid signature file.
+    file_unmanaged_delete($file->uri);
+  }
+
+  // Exit if all signatures are valid.
+  if (!$invalid_signatures) {
+    return NULL;
+  }
+
+  // Load invalid signature's submissions.
+  $webform_submissions = WebformSubmission::loadMultiple($invalid_signatures);
+  if (!$webform_submissions) {
+    return NULL;
+  }
+
+  // Return plain text or HTML notice.
+  if (PHP_SAPI === 'cli') {
+    $text = t('Invalid signature file detected and deleted. (@see @url)', ['@url' => 'https://www.drupal.org/security/psa']) . PHP_EOL;
+    foreach ($webform_submissions as $webform_submission) {
+      $text .= '- ' . $webform_submission->label() . ' (' . $webform_submission->toUrl()->setAbsolute()->toString() . ')' . PHP_EOL;
+    }
+    return $text;
+  }
+  else {
+    $links = [];
+    foreach ($webform_submissions as $webform_submission) {
+      $links[] = $webform_submission->toLink()->toRenderable();
+    }
+
+    $t_args = [':href' => 'https://www.drupal.org/security/psa'];
+    $build = [
+      'title' => [
+        '#markup' => t('Invalid signature file detected and deleted. (@see <a href=":href">PSA-XXXXX</a>)', $t_args),
+      ],
+      'links' => [
+        '#theme' => 'item_list',
+        '#items' => $links,
+      ],
+    ];
+    return \Drupal::service('renderer')->renderPlain($build);
+  }
 }

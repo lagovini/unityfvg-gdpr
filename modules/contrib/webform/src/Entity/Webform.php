@@ -1188,7 +1188,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
   public function getElementsOriginalDecoded() {
     $this->elementsOriginal;
     try {
-      $elements = Yaml::decode($this->elementsOriginal);
+      $elements = WebformYaml::decode($this->elementsOriginal);
       return (is_array($elements)) ? $elements : [];
     }
     catch (\Exception $exception) {
@@ -1434,7 +1434,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
         }
       }
       else {
-        $elements = Yaml::decode($this->elements);
+        $elements = WebformYaml::decode($this->elements);
       }
 
       // Since YAML supports simple values.
@@ -1453,6 +1453,7 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
     }
 
     if ($elements !== FALSE) {
+      $elements = WebformElementHelper::removeIgnoredProperties($elements);
       $this->initElementsRecursive($elements);
       $this->invokeHandlers('alterElements', $elements, $this);
     }
@@ -1500,9 +1501,6 @@ class Webform extends ConfigEntityBundleBase implements WebformInterface {
   protected function initElementsRecursive(array &$elements, $parent = '', $depth = 0) {
     /** @var \Drupal\webform\Plugin\WebformElementManagerInterface $element_manager */
     $element_manager = \Drupal::service('plugin.manager.webform.element');
-
-    // Remove ignored properties.
-    $elements = WebformElementHelper::removeIgnoredProperties($elements);
 
     foreach ($elements as $key => &$element) {
       if (!WebformElementHelper::isElement($element, $key)) {
