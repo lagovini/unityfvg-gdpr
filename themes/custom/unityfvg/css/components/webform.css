@@ -1,0 +1,46 @@
+@media (min-width: 992px) {
+.webform-submission-form {
+    position: inherit;
+    min-height: 600px;
+    padding-bottom: 10rem;
+  }
+
+  .webform-submission-form:not(.step-0) .form-actions {
+    position: absolute;
+    top: 650px;
+    left: -34%;
+    width: 30%;
+    border-top: 1px solid #d2d2d2;
+    background-color: #f9f9f9;
+    padding-top: 1rem;
+  }
+
+  .webform-submission-form:not(.step-0) .form-actions.fixed {
+    position: fixed;
+    top: 16px;
+    left: 9.3vw;
+  }
+
+  .webform-submission-form:not(.step-0) .form-actions.bottom {
+    top: inherit;
+    bottom: 85px;
+  }
+
+  .webform-submission-form:not(.step-0) .form-actions .btn {
+    display: block;
+    width: 80%;
+    margin: 1rem auto;
+    padding: 1rem;
+    position: relative;
+    text-align: center;
+  }
+
+  .webform-submission-form .webform-button--previous,
+  .webform-submission-form .webform-button--next {
+    border: 0;
+  }
+  .webform-submission-form .webform-button--previous:hover,
+  .webform-submission-form .webform-button--next:hover {
+    background-color: #ddd;
+  }
+}

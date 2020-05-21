@@ -23,5 +23,54 @@
       });
     }
   };
+
+  Drupal.behaviors.webform_actions = {
+    attach: function (context, settings) {
+      $('.webform-submission-form', context).once('webform-submission-form').each(function () {
+        var myForm = $(this);
+        var buttons = myForm.find('#edit-actions');
+        var marginActions = $('.main-container').css('margin-left')
+
+        var stepSelected = myForm.find('.webform-progress-bar__page--current');
+        if (stepSelected.data('webform-page') === 'page_premessa') {
+          buttons.find('.webform-button--draft').hide()
+          myForm.addClass('step-0')
+        } else {
+          myForm.removeClass('step-0')
+        }
+        // toggleclass fixed on scroll from
+
+        var start = myForm.height() - myForm.offset().top;
+        var end   = myForm.height() + 120;
+        $(window).scroll(function(){
+          console.log('SCROLL', $(window).scrollTop() )
+          console.log('offset', myForm.offset().top )
+          console.log('height', myForm.height() )
+          if($(window).scrollTop() > start && $(window).scrollTop() < end) {
+            buttons.addClass('fixed');
+            buttons.removeClass('bottom');
+            buttons.css('left', $('.main-container').css('margin-left'));
+          }
+          else if ($(window).scrollTop() > start && $(window).scrollTop() > end) {
+            buttons.removeClass('fixed');
+            buttons.addClass('bottom');
+            buttons.css('left', '-34%');
+          }
+          else {
+            buttons.removeClass('fixed');
+            buttons.removeClass('bottom');
+            buttons.css('left', '-34%');
+          }
+        });
+
+        $(window).resize(function(){
+          console.log('RESIZE');
+          if (buttons.hasClass('fixed')) {
+            buttons.css('left', $('.main-container').css('margin-left'));
+          }
+        });
+      });
+    }
+  };
 })(jQuery, Drupal);
 

@@ -8,6 +8,7 @@ framework:
       css/components/main-content.css: {}
       css/components/node.css: {}
       css/components/block.css: {}
+      css/components/webform.css: {}
       css/components/footer.css: {}
       css/components/view.css: {}
     theme:
