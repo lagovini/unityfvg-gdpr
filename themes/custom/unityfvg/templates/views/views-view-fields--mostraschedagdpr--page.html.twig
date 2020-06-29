@@ -30,7 +30,24 @@
  *
  * @ingroup themeable
  */
-#}
+
+
+/** versione di questo twig: 2.1.2 - 5/6/2020 13:30
+    History:
+     - 2.0.0, 17/5/2020: iniziato a modificare output su nuove indicazioni DPO. Output vecchio mantenuto per confronto (da rimuovere)
+     - 2.0.1, 20/5/2020: finito tabella di assegnazione variabili views-->variabili interne e aggiornato vecchio output. 
+                         Ripreso output, ma evidentemente implica alcune rivoluzioni nel form... 
+              24/5/2020  Iniziato applicazioni  modifiche webform 2.*. Nuovi campi. 
+     - 2.0.3  25/5/2020: output nuovo completo, salvo errori, e salvo modifiche ultime aree (in attesa)
+     - 2.0.4  25/5/2020 18:50: aggiunto sezione "duffusione"
+     - 2.0.5  28/5/2020 11:30: aggiornato per campi si/no (ora custom, non yes/no)
+     - 2.0.6 : no changes
+     - 2.0.7  1/6/2020  12:30: riordinato campi "trattamenti esterni". 
+     - 2.0.8-->2.1.0: no changes
+     - 2.1.2 5/6/2020 13:30; supportato nuovo campo garanzie_appropriate_output (25). Aggiornato gli output sezione trattamenti extra ue
+     
+*/ 
+ #}
 
 {#
 /* ************************************
@@ -59,260 +76,306 @@
 #}
 
 
-  <style type="text/css">
-.tg  {
-         border-collapse:collapse;border-spacing:0;
-     }
-
-.tg td {
-         font-family:Arial, sans-serif;font-size:14px;
-         padding:10px 5px;
-         border-style:solid;
-         border-width:1px;
-         overflow:hidden; 
-         border-color:black;
-         background-color: white;
-         }
-.tg th { 
-         font-family:Arial, sans-serif;font-size:14px;
-         font-weight:normal;
-         padding:10px 5px;
-         border-style:solid;
-         border-width:1px;
-         overflow:hidden;        
-         border-color:black;
-         background-color: #0099aa;
-        }
-.tg .tg-0lax {
-         text-align:left;
-         vertical-align:top;
-       }
-
-</style>
 
 
 {# ############################
+Mappaggio campi views<-->campi webform, 2.0.4 alla data del: 25.5.2020.
+###}
+{% set titolo_trattamento_o_attivita = fields.webform_submission_value.content    %}
+{% set titolare_del_trattamento      = fields.webform_submission_value_1.content  %}
+{% set sede_legale_titolare          = fields.webform_submission_value_2.content  %}
+{% set email_contatto                = fields.webform_submission_value_3.content  %}
+{% set telefono_titolare             = fields.webform_submission_value_4.content  %}
+{% set email_dp                      = fields.webform_submission_value_5.content  %}
+{% set pec_titolare                  = fields.webform_submission_value_6.content  %}
+{% set telefono_responsabile_interno = fields.webform_submission_value_7.content  %}
+{% set email_responsabile_interno    = fields.webform_submission_value_8.content  %}
+{% set dati_trattati_esterno         = fields.webform_submission_value_9.content | striptags |trim %}
 
-Mappaggio campi views<-->campi webform, 1.8.1 alla data del: 8.5.2020.
+{# ######  campo 010output: qui diventa output010 (in twig non inizia con numeri).
+               (striptags + webform: output html, altrimenti aggiunge un <br>)       ###### #}
+{% set output010                     = fields.webform_submission_value_10.content|striptags  %}
 
-webform_submission_value    --> titolo_trattamento_o_attivita
-webform_submission_value_1  --> titolare_del_trattamento  (label)
-webform_submission_value_2  --> sede_legale_titolare (computed in webform)
-webform_submission_value_3  --> email_contatto       (computed in webform)
-webform_submission_value_4  --> telefono_titolare    (computed in webform)
-webform_submission_value_5  --> email_dp             (computed in webform)
-webform_submission_value_6  --> sintesi_finalita_trattamento
-webform_submission_value_7  --> sintesi_piu_adeguata
-webform_submission_value_8  --> sintesi_periodo_trattamento
-webform_submission_value_9  --> dati_trattati_esterno
-webform_submission_value_10  --> 010output (striptags + webform: output html, altrimenti aggiunge un <br>)
-webform_submission_value_11  --> finalita_e_basi  (elenco di finalita associate a basi giuridiche; da strutturare meglio)
-webform_submission_value_12  --> dati_trattati_automatico
-webform_submission_value_13  --> profilazione
-webform_submission_value_14  --> finalita_e_durata  (elenco di finalita associate a durata; da strutturare meglio)
-webform_submission_value_15  --> destinatari_terzi
-webform_submission_value_16  --> responsabili_esterni
-webform_submission_value_17  --> quali_sono_i_contitolari_del_trattamento_dei_dati_
-webform_submission_value_18  --> trasferimento_extra_ue  (Booleano Yes/No)
-webform_submission_value_19  --> 52output
-webform_submission_value_20  --> 53output
-webform_submission_value_21  --> 61output (striptags + webform: output html, altrimenti aggiunge un <br>)
-webform_submission_value_22  --> dati_esterni_e_fonti_output
+{% set finalita_e_basi               = fields.webform_submission_value_11.content  %}
+{% set dati_trattati_automatico      = fields.webform_submission_value_12.content  %}
+{% set profilazione                  = fields.webform_submission_value_13.content  %}
+{% set finalita_e_durata             = fields.webform_submission_value_14.content  %}
+{% set destinatari_terzi             = fields.webform_submission_value_15.content|striptags %}
+{% set responsabili_esterni          = fields.webform_submission_value_16.content|striptags  %}
+{% set quali_sono_i_contitolari_del_trattamento_dei_dati_  = fields.webform_submission_value_17.content|striptags  %}
+{% set trasferimento_extra_ue        = fields.webform_submission_value_18.content | striptags | trim  %} 
+
+{# ######  campo 52output: qui diventa output52(in twig non inizia con numeri). #### #}
+{% set output52                      = fields.webform_submission_value_19.content  %}
+
+{# ######  campo 53output: qui diventa output53(in twig non inizia con numeri). #### #}
+{% set output53                      = fields.webform_submission_value_20.content  %}
+
+{# ######  campo 61output: qui diventa output61 (in twig non inizia con numeri).
+               (striptags + webform: output html, altrimenti aggiunge un <br>)       ###### #}
+{% set output61                     = fields.webform_submission_value_21.content|striptags  %}
+
+{% set dati_esterni_e_fonti_output  = fields.webform_submission_value_22.content  %}
+{% set elenco_finalita              = fields.webform_submission_value_23.content  %} {# nuovo 2.x #}
+
+{# #####  non uso il campo si/no diffusione, perchè è sufficiente il test su ambito_diffusione   #####  #}
+{% set ambito_diffusione            = fields.webform_submission_value_24.content|striptags  %} {# nuovo 2.x #}
+
+{% set garanzie_appropriate_output  = fields.webform_submission_value_25.content|striptags  %} {# nuovo 2.x #}
 
 
-############################# #}
-
+{# ###################################################### #}
 
 <hr>
-<h2>Informativa sul trattamento dei dati personali</h2>
-<div>
-Le rendiamo noto che Lei come "Interessato", ai sensi degli art.13/14 del Regolamento (UE) 679/2016 (Regolamento Generale sulla Protezione dei Dati) ha diritto di ricevere le seguenti informazioni in relazione ai dati personali di cui il Titolare del trattamento entra in possesso ai fini del trattamento nell’ambito delle attività di
- <br/><strong>{{ fields.webform_submission_value.content }} </strong> <br />
-</div>
-<br>
+<div class="container-fluid">
 
-<h3>Chi tratta i miei dati personali?</h3>
-<ul>
-  <li>Titolare del trattamento: {{ fields.webform_submission_value_1.content }}</li>
-  <li>Sede legale: {{ fields.webform_submission_value_2.content }}</li>
-  <li>Punto di contatto: 
-  <ul>
-    <li>Email contatto:{{ fields.webform_submission_value_3.content }}</li>
-    <li>Numero telefono:{{ fields.webform_submission_value_4.content }}</li>
-  </ul>
-</ul>
-
-<h3>Responsabile per la protezione dei dati</h3>
-<ul>
-<li>{{ fields.webform_submission_value_5.content }}</li>
-<li>
-Il Titolare del trattamento si avvale dell’RPD per rispondere alle istanze relative all’esercizio dei diritti degli interessati.
-</li>
-</ul>
-
-<h3>In breve...</h3>
-<ul>
-<li>Perchè: {{ fields.webform_submission_value_6.content }} </li>
-<li>Come: {{ fields.webform_submission_value_7.content }} </li>
-<li>Quando: {{ fields.webform_submission_value_8.content }} </li>
-<li>A chi: {{ fields.webform_submission_value_9.content }} </li>
-<li>Dove: {{ fields.webform_submission_value_10.content|striptags }}</li>
-</ul>
-
-
-
-</ul>
+  <h2>Informazioni sul trattamento dei dati personali</h2>
+    <p>
+      Ai sensi dell’art. 13 e 14 del Regolamento (UE) 679/2016 (Regolamento Generale sulla Protezione dei Dati) le forniamo le seguenti informazioni in relazione ai suoi dati personali che trattiamo nell’ambito delle attività di 
+      <strong>{{ titolo_trattamento_o_attivita }}</strong>
+    </p>
   
- <h3>1. Perchè vengono trattati i miei dati personali?</h3>
- I dati personali vengono trattati limitatamente e in modo proporzionale ai seguenti scopi.
-<ul>
-  <li>Finalità dei trattamenti e relative basi giuridiche:  {{ fields.webform_submission_value_11.content }}</li>
-</ul>
+  {# ############Prima parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Chi tratta i miei dati personali?</h3>
+    </div>
+    <div class="panel-body">
+     <h4>Titolare del trattamento: <small>{{ titolare_del_trattamento }}</small> </h4>
+     <div><span class="text-uppercase">Sede Legale Titolare:</span> {{ sede_legale_titolare }}</div>
+     <div><span class="text-uppercase">Telefono Titolare:</span> {{ telefono_titolare }}</div>
+     <div><span class="text-uppercase">Email Titolare:</span> {{ email_contatto }}</div>
+     <div><span class="text-uppercase">PEC Titolare:</span>{{ pec_titolare }} </div>
 
-<h4>Cosa succede se mi rifiuto di dare i miei dati?</h4>
+     <h4>Punti di contatto del Titolare</h4>
+     <div>Tramite i form disponibili sul sito: 
+         <a href="https://gdpr.unityfvg.it/aiuto-contatti">https://gdpr.unityfvg.it/aiuto-contatti</a>
+     <br />
+     <u>Oppure</u>
+     <h5>RESPONSABILE INTERNO:</h5>
+     <div><span class="text-uppercase">TELEFONO:</span> {{ telefono_responsabile_interno }} </div>
+     <div><span class="text-uppercase">EMAIL:</span>  {{ email_responsabile_interno }} </div>
+ 
+     <h4>RESPONSABILE PER LA PROTEZIONE DEI DATI</h4>
+     Puoi contattare l’RPD al seguente indirizzo email:  {{ email_dp }}</div> 
+
+     <h4>PERCHE’ VENGONO TRATTATI I MIEI DATI PERSONALI?</h4>
+     <div>Trattiamo i suoi dati per adempiere alle seguenti attività:<br/>
+        {{ elenco_finalita }}
+     </div>
+    </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine prima parte ######## #}
+ <br />
+  {# ############Seconda parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">PERCHÉ VENGONO TRATTATI I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body"> 
+Trattiamo i suoi dati personali secondo le finalità esplicitate e sulla base di specifiche condizioni di legittimità del trattamento che indichiamo come segue:
+<br />
+{{ finalita_e_basi }}  
 <p>
-Quando il trattamento è fondato su un contratto o su un obbligo di legge, il mancato conferimento impedisce la prestazione del servizio.
+Nel caso in cui si rifiutasse di fornire i suoi dati, quando il trattamento è basato su un <strong>contratto</strong> o su un <strong>obbligo di legge</strong>, il mancato conferimento impedisce la prestazione del servizio.
 </p>
 <p>
-Quando le viene richiesto il consenso al trattamento, non subirà nessuna conseguenza in caso di negato consenso.
+Quando le viene richiesto il <strong>consenso</strong> al trattamento, non subirà nessuna conseguenza in caso di negato consenso.
 </p>
 <p>
 Nei moduli cartacei o online sono indicate le categorie di dati per le quali il conferimento è obbligatorio o facoltativo.
 </p>
-
-
-<h2>2. Come vengono trattati i miei dati personali?</h2>
-<p>Di seguito vengono indicate le modalità e le logiche del trattamento dei dati personali.</p>
-<h3>In breve...</h3>
-<ul>
-<li>{{ fields.webform_submission_value_7.content }}</li>
-</ul>
- <p>
- Il Titolare si avvale di soggetti autorizzati al trattamento di dati personali, formati e istruiti sulle precauzioni da adottare per assicurare la riservatezza, integrità e disponibilità dei dati personali. Alcune figure hanno dei compiti specifici per garantire la sicurezza delle informazioni e la protezione dei dati personali, in qualità di responsabili interni.
- </p>
+    </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine seconda parte ######## #}
+ 
+  {# ############Terza parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">COME VENGONO TRATTATI I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body"> 
+    
+    <p>
+    Il trattamento potrà essere effettuato sia con il supporto di documenti cartacei che di strumenti informatici.
+    </p>
+    <p>
+    Il Titolare si avvale di soggetti autorizzati al trattamento di dati personali, formati e istruiti sulle precauzioni da adottare per assicurare la riservatezza, integrità e disponibilità dei dati personali. Alcune figure hanno dei compiti specifici per garantire la sicurezza delle informazioni e la protezione dei dati personali, in qualità di responsabili interni.
+    </p>
+    <p>
  <h3>Processo decisionale automatizzato</h3>
  <p>
- {{ fields.webform_submission_value_12.content }}
- </p>
+ {{ dati_trattati_automatico }}
+    </p>
  <h3>Profilazione</h3>
  <p>
- {{ fields.webform_submission_value_13.content }}
+ {{ profilazione }}
+    </p>
+    
+    </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine terza  parte ######## #}
+ 
+ 
+   {# ############Quarta parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">PER QUANTO TEMPO VENGONO CONSERVATI I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body">
+ <p>
+ I dati personali verranno trattati per il tempo richiesto e da norme di legge e/o per esecuzione degli obblighi contrattuali.
  </p>
+ {{ finalita_e_durata }}
+ </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine quarta  parte ######## #} 
 
-<h2>3. Per quanto tempo vengono conservati i miei dati?</h2>
-<p>I dati personali vengono trattati per le finalità indicate solo fino a quando sia necessario.</p>
-<h3>In breve...</h3>
-<ul>
-<li>{{ fields.webform_submission_value_8.content }} </li>
-</ul>
-<ul>
-  <li>Finalità dei trattamenti e relative durate:  {{ fields.webform_submission_value_14.content }}</li>
-</ul>
-
-<h2>4. Chi potrà trattare i miei dati personali</h2>
- <h3>In breve...</h3>
-  <ul>
-    <li>{{ fields.webform_submission_value_9.content }}</li>
-  </ul>
+ {# ############Quinta parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">CHI POTRÀ TRATTARE I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body">
+ <p>
+  I dati possono essere comunicati, messi a disposizione e condivisi ai sensi di legge, o in adempimento a specifiche istanze dell’interessato, anche con soggetti terzi autonomi titolari del trattamento. Ci sono casi in cui l’Ateneo li può anche diffondere, cioè comunicare, mettere a disposizione o in consultazione a soggetti indeterminati. In alcuni casi l’Ateneo può concludere accordi di contitolarità con altri soggetti e in relazione a determinati trattamenti. Inoltre l’Ateneo opera, per il suo funzionamento tramite soggetti vincolati all’Ateneo tramite accordi di responsabilità, In questa sezione Ti forniamo una panoramica su chi potrà venire a conoscenza dei tuoi dati in quanto destinatari di tali comunicazioni. In qualunque momento puoi fare richiesta specifica in relazione a tale punto chiedendo espressamente di conoscere a chi sono stati comunicati i tuoi dati.</p>
   
-{% if fields.webform_submission_value_15.content|trim(' ') != "" %} 
-  I dati personali saranno comunicati a terzi titolari, esclusivamente per esigenze tecniche ed operative strettamente collegate alle finalità sopra enunciate:
-  <ul>
-    <li>{{ fields.webform_submission_value_15.content }} </li> 
-   </ul>
+  <h3>COMUNICAZIONE A TITOLARI TERZI</h3>
+
+  {% if dati_trattati_esterno == "NO" %}
+ I dati personali non saranno comunicati a terzi.
+{% else %}
+  I dati personali saranno comunicati a terzi titolari, esclusivamente per esigenze tecniche ed operative strettamente collegate alle finalità sopra enunciate. Possiamo comunicare i tuoi dati a altre pubbliche amministrazioni, enti previdenziali, soggetti privati qualora la comunicazione dei dati sia prevista per legge o resa necessaria per adempiere a compiti di interesse pubblico.
+
+  
+  <br>
+  {% if destinatari_terzi|trim != "" %}
+    Inoltre, per le finalità del presente trattamento, i dati verranno comunicati a: <br/>
+    {{ destinatari_terzi }}
+  {% endif %}
+
+{% endif %}  <!-- qui o giu? -->
+<h3>Contitolari</h3>
+
+{% if quali_sono_i_contitolari_del_trattamento_dei_dati_|trim == "" %}
+Non ci sono contitolari
+{% else %}
+Con riferimento al presente trattamento, l’Ateneo ha sottoscritto un accordo con un Contitolare ai sensi dell’art. 26 GDPR, con il quale condivide finalità e modalità del trattamento. Per esercitare i suoi diritti rivolgendosi al punto di contatto di Ateneo.
+Il Contitolare del trattamento è:<br />
+{{ quali_sono_i_contitolari_del_trattamento_dei_dati_ }}
 {% endif %}
 
-{% if fields.webform_submission_value_16.content|render| striptags | trim | raw  != "" %} 
-Il Titolare del trattamento si avvale di responsabili del trattamento dei dati personali, chiamati a rispettare misure di sicurezza previsto in un accordo stipulato ai sensi dell’art. 28 GDPR. I responsabili del trattamento sono:
-  <ul>
-    <li>{{  fields.webform_submission_value_16.content }}</li> 
-    <li>{{  fields.webform_submission_value_17.content }}</li> 
-  </ul>
-  
-  <p>
-  📌La comunicazione dei dati ad altri titolari del trattamento e la diffusione dei dati sono fondate su precisi obblighi di legge, anche ai fini adempiere a compiti di interesse pubblico.
-  </p>
-  <p>
-Quando sia necessario per compiti di interesse pubblico o funzioni istituzionali qualora non vi sia un obbligo di legge, viene data comunicazione al Garante per la protezione dei dati personali prima della comunicazione dei dati.
+
+
+<h3>RESPONSABILI DEL TRATTAMENTO</h3>
+<p>
+Il Titolare del trattamento si avvale di responsabili del trattamento dei dati personali, chiamati a rispettare misure di sicurezza previsto in un accordo stipulato ai sensi dell’art. 28 GDPR. 
 </p>
+<p>
+I responsabili del trattamento forniscono servizi tecnologici, effettuano attività per conto del Titolare, accedono ai dati per manutenzione o elaborazione di dati, ad esempio per la fornitura di servizi relativi alla didattica o altre attività necessarie per poter adempiere ai servizi offerti dall’Ateneo o adempiere agli obblighi contrattuali.
+</p>
+<p>L’elenco può sempre essere richiesto all’Ateneo.</p>
+{% if responsabili_esterni | trim | raw  != "" %} 
+ I responsabili del trattamento per le finalità della presente informativa sono:
+<br />
+{{ responsabili_esterni }}
 {% endif %}
 
-<h2>5. Dove sono trattati i miei dati personali?</h2>
- <h3>In breve...</h3>
-  <ul>
-    <li>{{ fields.webform_submission_value_10.content }}</li>
-
-  </ul>
-
-
-{% if fields.webform_submission_value_18.content|striptags | trim| raw  == "Yes" %} 
-<h3>Quale meccanismo tutela il trasferimento dei miei dati extra UE?</h3>
- <ul>
- {% if fields.webform_submission_value_19.content|striptags|trim|raw  != "" %}
- <li>{{ fields.webform_submission_value_19.content }}</li>
- {% endif %}
-   <li>[Norme vincolanti d'impresa ai sensi dell'articolo 47]</li>
-   <li>[Clausole tipo di protezione dei dati ai sensi dell'articolo 46]</li>
- {% if fields.webform_submission_value_20.content|striptags|trim|raw  != "" %}
-   <li>{{ fields.webform_submission_value_20.content }}</li>
- {% endif %}
- </ul>
-
+ <h3>DIFFUSIONE</h3>
+  {% if ambito_diffusione|trim == "" %}
+    I dati personali non saranno diffusi.
+{% else %}
+I dati personali saranno diffusi per i seguenti motivi o nel seguente ambito:<br />
+{{ ambito_diffusione }}
 {% endif %}
 
-<h2>6. Da chi avete ottenuto i miei dati personali?</h2>
-  <ul>
-    <li>{{ fields.webform_submission_value_21.content|striptags  }}</li>
+ </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine quinta  parte ######## #}
 
-  </ul>
- {% if fields.webform_submission_value_22.content|render| striptags | trim | raw  != "" %} 
-   {{ fields.webform_submission_value_22.content  }}</li>
+ 
+ {# ############Sesta parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">DOVE SONO TRATTATI I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body">
+    <p>{{ output010 }}</p>
+
+{% if trasferimento_extra_ue   == "SI" %} 
+  {% if output52|striptags|trim|raw  != "" %}
+    <h3>Trasferimenti tutelati da decisione di adeguatezza</h3>
+    <p>{{ output52 }}</p>
+  {% endif %}
+ 
+  {% if  garanzie_appropriate_output|trim|raw != ""%}
+    <h3>Garanzie adeguate art. 46 o condizioni in deroga art. 49</h3>
+    <p>{{  garanzie_appropriate_output|trim|raw }}</p>
+  {% endif %}
+
+  {% if output53|striptags|trim|raw  != "" %}
+    <h3>Trasferimenti non tutelati da decisioni di adeguatezza</h3>
+    <p>{{ output53 }}</p>
+  {% endif %}
+ 
+{% endif %}
+
+ </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine sesta  parte ######## #}
+
+ 
+ {# ############Settima parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">DA CHI AVETE OTTENUTO I MIEI DATI?</h3>
+    </div>
+    <div class="panel-body">
+    {{ output61|striptags  }}
+
+ {% if dati_esterni_e_fonti_output|render| striptags | trim | raw  != "" %} 
+   {{ dati_esterni_e_fonti_output  }}
  {% endif %}
- <hr>
 
- {# #################################  #}
+ </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine settima  parte ######## #}
+
  
- <h2>7. Quali sono i miei diritti?</h2>
-Ai sensi degli articoli 15-22 GDPR l’interessato ha il diritto di ...
- <ul>
- <li><label>Diritto di accedere ai dati</label>: ️Può ottenere conferma e informazioni sul trattamento</li>
- <li><label>Diritto di rettifica</label>: ️Può rettificare dati inesatti o integrarli</li>
- <li><label>Diritto di cancellazione</label>: ️Nei casi di legge può chiedere l’oblio</li>
- <li><label>Diritto di limitazione al trattamento</label>: ️Nei casi di legge può chiedere di limitare il trattamento</li>
- <li><label>Diritto alla portabilità dei dati</label>: 
-         <ul>
-         <li>Può ricevere i dati in formato strutturato, di uso comune, leggibile da dispositivo automatico e interoperabile quando i dati da lei conferiti sono trattati con mezzi automatizzati e sono trattati con il suo consenso o sulla base di un contratto.</li>
-         <li>Non ha il diritto alla portabilità dei suoi dati quando il trattamento è necessario per eseguire un compito di interesse pubblico o nell’esercizio di funzioni pubbliche o adempiere a obblighi legali.</li>
-         </ul>
-  </li>
- <li><label>Diritto di opporsi al trattamento</label>: Per particolari motivi può opporsi  al trattamento per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri o fondato sul legittimo interesse</li>
- </ul>
+ {# ############Ottava parte ####### #}
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">QUALI SONO I MIEI DIRITTI?</h3>
+    </div>
+    <div class="panel-body">
+  Ai sensi degli articoli 15-22 GDPR l’interessato ha il diritto di ...<br />
+<strong>Diritto di accedere ai dati</strong><br/>
+✔️Può ottenere conferma e informazioni sul trattamento.<br/>
+<strong>Diritto di rettifica</strong><br />
+✔️Può rettificare dati inesatti o integrarli.<br />
+<strong>Diritto di cancellazione</strong><br />
+✔️Nei casi di legge può chiedere l’oblio.<br/>
+<strong>Diritto alla portabilità dei dati</strong><br />
+✔️Può ricevere i dati in formato strutturato, di uso comune, leggibile da dispositivo automatico e interoperabile quando i dati da lei conferiti sono trattati con mezzi automatizzati e sono trattati con il suo consenso o sulla base di un contratto.<br />
+❌Non ha il diritto alla portabilità dei suoi dati quando il trattamento è necessario per eseguire un compito di interesse pubblico o nell’esercizio di funzioni pubbliche o adempiere a obblighi legali.<br />
+<strong>Diritto di opporsi al trattamento</strong><br />
+✔️Per particolari motivi può opporsi  al trattamento per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri.<br />
+Quando il trattamento è fondato sul consenso, lei ha diritto di revocare il consenso in ogni momento.<br />
+Ha facoltà di proporre reclamo al Garante per la Protezione dei dati personali o all’Autorità di controllo dello Stato membro in cui risiede o lavora abitualmente.<br />
 
-<strong>Quando il trattamento è fondato sul consenso, lei ha diritto di revocare il consenso in ogni momento.</strong>
- 
- <h3>Come posso esercitare i miei diritti?</h3>
-Per esercitare i suoi diritti potrà rivolgersi al Titolare del trattamento al seguente punto di contatto:
-  <ul>
-    <li>Email contatto:{{ fields.webform_submission_value_3.content }}</li>
-    <li>Numero telefono:{{ fields.webform_submission_value_4.content }}</li>
-  </ul>
-
-  <h3>Lei ha facoltà di proporre reclamo al Garante per la Protezione dei dati personali [Autorità di controllo italiana]</h3>
-
-  [QR qui]
-
-  <a href="https://bit.ly/2w1mcjS">https://bit.ly/2w1mcjS</a><br />
-  
-  Lei ha anche il diritto di presentare reclamo all’Autorità di controllo dello Stato membro in cui risiede o lavora abitualmente.
- 
- 
- <h2>Come posso ottenere maggiori informazioni?</h2>
-
- [QR qui]
-<br/>
-L’interessato può ottenere maggiori informazioni su [link sito web].<br />
-
-Sullo stesso sito web verranno forniti gli aggiornamenti alle informazioni rese con la presente informativa.
+<strong>Come posso esercitare i miei diritti?</strong><br />
+Per esercitare i suoi diritti potrà rivolgersi al Titolare del trattamento tramite i form disponibili sul sito: <br />
+<a href="https://gdpr.unityfvg.it/aiuto-contatti">https://gdpr.unityfvg.it/aiuto-contatti</a><br />
+Per presentare un reclamo si possono seguire le informazioni sul sito:<br />
+<a href="https://www.garanteprivacy.it/home/diritti/come-agire-per-tutelare-i-tuoi-dati-personali">https://www.garanteprivacy.it/home/diritti/come-agire-per-tutelare-i-tuoi-dati-personali</a>
 
  
  
+ 
+ </div> {# ################ end panel-body ############### #}
+  </div>
+ {# ############# Fine ottava  parte ######## #}
+
+ 
+</div> {#  container: fluid  #}
+
