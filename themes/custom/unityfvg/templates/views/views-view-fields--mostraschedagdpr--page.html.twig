@@ -32,7 +32,7 @@
  */
 
 
-/** versione di questo twig: 2.1.14 - 21/7/2020 
+/** versione di questo twig: 2.1.15 - 27/7/2020 
     History:
      - 2.0.0, 17/5/2020: iniziato a modificare output su nuove indicazioni DPO. Output vecchio mantenuto per confronto (da rimuovere)
      - 2.0.1, 20/5/2020: finito tabella di assegnazione variabili views-->variabili interne e aggiornato vecchio output. 
@@ -55,6 +55,7 @@ m...
      - 2.1.12: no changes
      - 2.1.13: piccoli aggiustamenti estetici. Si coordina con webform 2.1.13 (view: no changes)
      - 2.1.14: aggiustamenti estetici e di struttura. No changer per views e webform (va bene con 2.1.13)
+     - 2.1.15: aggiunto id mostraschedagdpr su div contenitore (si coordina con entity-print-view*.twig 2.1.15 e succ.)
 */ 
  #}
 
@@ -113,13 +114,13 @@ Mappaggio campi views<-->campi webform, 2.1.6 alla data del: 17.6.2020.
 {# ###################################################### #}
 
 <hr>
-<div class="container-fluid">
+<div class="container-fluid" id="mostraschedagdpr">
 
   <h2>Informazioni sul trattamento dei dati personali</h2>
     <p>
       Ai sensi dell'art. 13 e 14 del Regolamento (UE) 679/2016 (Regolamento Generale sulla Protezione dei Dati) le forniamo le seguenti informazioni in relazione ai suoi dati personali che trattiamo nell’ambito delle attività di:
       <br />
-      <div class="text-center"><strong>{{ titolo_trattamento_o_attivita }}</strong></div>
+      <div id="titolo_attivita" class="text-center"><strong>{{ titolo_trattamento_o_attivita }}</strong></div>
     </p>
   
   {# ############Prima parte ####### #}
@@ -362,16 +363,16 @@ I dati personali saranno diffusi per i seguenti motivi o nel seguente ambito:<br
     <div class="panel-body">
   Ai sensi degli articoli 15-22 GDPR l’interessato ha il diritto di ...<br />
 <strong>Diritto di accedere ai dati</strong><br/>
-✔️Può ottenere conferma e informazioni sul trattamento.<br/>
+- Può ottenere conferma e informazioni sul trattamento.<br/>
 <strong>Diritto di rettifica</strong><br />
-✔️Può rettificare dati inesatti o integrarli.<br />
+- Può rettificare dati inesatti o integrarli.<br />
 <strong>Diritto di cancellazione</strong><br />
-✔️Nei casi di legge può chiedere l’oblio.<br/>
+- Nei casi di legge può chiedere l’oblio.<br/>
 <strong>Diritto alla portabilità dei dati</strong><br />
-✔️Può ricevere i dati in formato strutturato, di uso comune, leggibile da dispositivo automatico e interoperabile quando i dati da lei conferiti sono trattati con mezzi automatizzati e sono trattati con il suo consenso o sulla base di un contratto.<br />
-❌Non ha il diritto alla portabilità dei suoi dati quando il trattamento è necessario per eseguire un compito di interesse pubblico o nell’esercizio di funzioni pubbliche o adempiere a obblighi legali.<br />
+- Può ricevere i dati in formato strutturato, di uso comune, leggibile da dispositivo automatico e interoperabile quando i dati da lei conferiti sono trattati con mezzi automatizzati e sono trattati con il suo consenso o sulla base di un contratto.<br />
+- Non ha il diritto alla portabilità dei suoi dati quando il trattamento è necessario per eseguire un compito di interesse pubblico o nell’esercizio di funzioni pubbliche o adempiere a obblighi legali.<br />
 <strong>Diritto di opporsi al trattamento</strong><br />
-✔️Per particolari motivi può opporsi  al trattamento per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri.<br />
+- Per particolari motivi può opporsi  al trattamento per l'esecuzione di un compito di interesse pubblico o connesso all'esercizio di pubblici poteri.<br />    
 Quando il trattamento è fondato sul consenso, lei ha diritto di revocare il consenso in ogni momento.<br />
 Ha facoltà di proporre reclamo al Garante per la Protezione dei dati personali o all’Autorità di controllo dello Stato membro in cui risiede o lavora abitualmente.<br />
 
