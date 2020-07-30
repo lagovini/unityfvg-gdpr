@@ -3,41 +3,49 @@
   <meta charset="utf-8">
   <title>{{ title }}</title>
   {{ entity_print_css }}
-  
+  {#
+  /**
+  V. 2.1.15. 27/7/2020 - aggiunto id mostraschedagdpr; si coordina con twig mostrascheda 2.1.15 e successivi  
+  **/
+  #}
   
     <style>
-body {
+/*body { */
+#mostraschedagdpr {
   font-size: 70%;
   font-family:Montserrat, Lato, Helvetica, Arial, sans-serif;
 }
-.panel-heading h3  {
-color: white;
-background-color: blue;
-padding:10px; margin: 0;
-border-radius: 5px 5px 0 0;
-
+ #mostraschedagdpr .panel-heading h3  {
+  color: white;
+  background-color: blue;
+  padding:10px; margin: 0;
+  border-radius: 5px 5px 0 0;
 }
 
+ #mostraschedagdpr .panel {
+   border: 1px solid blue;
+   border-radius: 5px 5px 0 0; 
 
-.panel {
-border: 1px solid blue;
-border-radius: 5px 5px 0 0;
+   padding-right: 5px;
+   padding-left: 5px;
+   padding-bottom: 5px;
+   padding-top: 0;
+   padding: 0;
+   /*page-break-before:auto;*/
+   margin-bottom: 15px;
+ }
+ 
+ #mostraschedagdpr .panel-body {
+   padding: 12px;
+ } 
+ 
+ #mostraschedagdpr #titolo_attivita {
+   text-align: center;
+ }
 
-padding-right: 5px;
-padding-left: 5px;
-padding-bottom: 5px;
-padding-top: 0;
-padding: 0;
-/*page-break-before:auto;*/
-margin-bottom: 15px;
-}
-.panel-body {
-padding: 12px;
-}
-
-.panel > div {
+ #mostraschedagdpr .panel > div {
   text-align: justify;
-}
+ }
 
 </style>
 </head>
