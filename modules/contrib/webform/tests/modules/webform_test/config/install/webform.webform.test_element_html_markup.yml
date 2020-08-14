@@ -127,9 +127,6 @@ elements: |
       '#required': true
       '#terms_type': slideout
       '#terms_content': '<em>These are the terms of service.</em>'
-    webform_toggle:
-      '#type': webform_toggle
-      '#title': '<u>Toggle</u>'
     url:
       '#type': url
       '#title': '<u>URL</u>'
@@ -354,13 +351,6 @@ elements: |
     webform_table_sort:
       '#type': webform_table_sort
       '#title': '<u>Table sort</u>'
-      '#options':
-        one: One
-        two: Two
-        three: Three
-    webform_toggles:
-      '#type': webform_toggles
-      '#title': '<u>Toggles</u>'
       '#options':
         one: One
         two: Two
@@ -648,6 +638,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -698,3 +689,4 @@ access:
     users: {  }
     permissions: {  }
 handlers: {  }
+variants: {  }

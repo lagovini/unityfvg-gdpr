@@ -115,6 +115,7 @@ function _webform_update_webform_setting(array $data) {
     'settings' => [],
     'access' => [],
     'handlers' => [],
+    'variants' => [],
   ];
 
   $default_settings = Webform::getDefaultSettings();

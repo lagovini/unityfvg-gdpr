@@ -125,7 +125,7 @@ class WebformThemeManager implements WebformThemeManagerInterface {
   public function getActiveThemeNames() {
     $active_theme = $this->themeManager->getActiveTheme();
     // Note: Reversing the order so that base themes are first.
-    return array_reverse(array_merge([$active_theme->getName()], array_keys($active_theme->getBaseThemes())));
+    return array_reverse(array_merge([$active_theme->getName()], array_keys($active_theme->getBaseThemeExtensions())));
   }
 
   /**

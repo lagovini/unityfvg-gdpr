@@ -18,6 +18,29 @@ elements: |
   signature:
     '#type': webform_signature
     '#title': signature
+    '#states':
+      disabled:
+        ':input[name="disable"]':
+          checked: true
+      readonly:
+        ':input[name="readonly"]':
+          checked: true
+  disable:
+    '#type': checkbox
+    '#title': disable
+    '#test': false
+  readonly:
+    '#type': checkbox
+    '#title': readonly
+    '#test': false
+  signature_disabled:
+    '#type': webform_signature
+    '#title': signature_disabled
+    '#disabled': true
+  signature_readonly:
+    '#type': webform_signature
+    '#title': signature_readonly
+    '#readonly': true
   
 css: ''
 javascript: ''
@@ -132,6 +155,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -190,3 +214,4 @@ handlers:
     conditions: {  }
     weight: 1
     settings: {  }
+variants: {  }

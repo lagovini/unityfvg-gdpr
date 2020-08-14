@@ -9,6 +9,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityViewBuilder;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\webform\Plugin\WebformElementAttachmentInterface;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
 use Drupal\webform\Twig\WebformTwigExtension;
 use Drupal\webform\Utility\WebformElementHelper;
@@ -100,6 +101,12 @@ class WebformSubmissionViewBuilder extends EntityViewBuilder implements WebformS
     if ($webform_submissions_view_mode = \Drupal::request()->request->get('_webform_submissions_view_mode')) {
       $view_mode = $webform_submissions_view_mode;
     }
+
+    // Apply variants.
+    /** @var \Drupal\webform\WebformSubmissionInterface $entity */
+    /** @var \Drupal\webform\WebformInterface $webform */
+    $webform = $entity->getWebform();
+    $webform->applyVariants($entity);
 
     return parent::view($entity, $view_mode, $langcode);
   }
@@ -294,6 +301,15 @@ class WebformSubmissionViewBuilder extends EntityViewBuilder implements WebformS
     // Checked excluded elements.
     if (isset($element['#webform_key']) && isset($options['excluded_elements'][$element['#webform_key']])) {
       return FALSE;
+    }
+
+    // Checked excluded attachments.
+    if (!empty($options['exclude_attachments'])) {
+      /** @var \Drupal\webform\Plugin\WebformElementInterface $webform_element */
+      $webform_element = $this->elementManager->getElementInstance($element, $webform_submission);
+      if ($webform_element instanceof WebformElementAttachmentInterface) {
+        return FALSE;
+      }
     }
 
     // Check if the element is conditionally hidden.

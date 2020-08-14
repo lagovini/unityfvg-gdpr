@@ -14,11 +14,9 @@ use Drupal\webform\WebformSubmissionInterface;
  *
  * @WebformElement(
  *   id = "tel",
- *   api =
- *   "https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Render!Element!Tel.php/class/Tel",
- *   label = @Translation("Telephone"), description = @Translation("Provides a
- *   form element for entering a telephone number."), category =
- *   @Translation("Advanced elements"),
+ *   api = "https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Render!Element!Tel.php/class/Tel",
+ *   label = @Translation("Telephone"), description = @Translation("Provides a form element for entering a telephone number."),
+ *   category = @Translation("Advanced elements"),
  * )
  */
 class Telephone extends TextBase {
@@ -26,15 +24,14 @@ class Telephone extends TextBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     $properties = [
         'input_hide' => FALSE,
         'multiple' => FALSE,
         'international' => FALSE,
         'international_initial_country' => '',
-        'international_preferred_countries' => '',
-      ] + parent::getDefaultProperties();
-
+        'international_preferred_countries' => [],
+      ] + parent::defineDefaultProperties() + $this->defineDefaultMultipleProperties();
     // Add support for telephone_validation.module.
     if (\Drupal::moduleHandler()->moduleExists('telephone_validation')) {
       $properties += [
@@ -43,9 +40,17 @@ class Telephone extends TextBase {
         'telephone_validation_countries' => [],
       ];
     }
-
     return $properties;
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineTranslatableProperties() {
+    return array_merge(parent::defineTranslatableProperties(), ['international_initial_country']);
+  }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -132,7 +137,7 @@ class Telephone extends TextBase {
       '#title' => $this->t('Preferred countries'),
       '#type' => 'select',
       '#options' => CountryManager::getStandardList(),
-      '#description' => t('Specify the countries to appear at the top of the list.'),
+      '#description' => $this->t('Specify the countries to appear at the top of the list.'),
       '#select2' => TRUE,
       '#multiple' => TRUE,
       '#states' => [
@@ -177,7 +182,7 @@ class Telephone extends TextBase {
       $form['telephone']['telephone_validation_countries'] = [
         '#type' => 'select',
         '#title' => $this->t('Valid countries'),
-        '#description' => t('If no country selected all countries are valid.'),
+        '#description' => $this->t('If no country selected all countries are valid.'),
         '#options' => \Drupal::service('telephone_validation.validator')
           ->getCountryList(),
         '#select2' => TRUE,
@@ -220,7 +225,7 @@ class Telephone extends TextBase {
     switch ($format) {
       case 'link':
         $t_args = [':tel' => 'tel:' . $value, '@tel' => $value];
-        return t('<a href=":tel">@tel</a>', $t_args);
+        return $this->t('<a href=":tel">@tel</a>', $t_args);
 
       default:
         return parent::formatHtmlItem($element, $webform_submission, $options);

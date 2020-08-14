@@ -240,7 +240,7 @@ class WebformElementStates extends FormElement {
       if ($triggers) {
         $element['disabled_message'] = [
           '#type' => 'webform_message',
-          '#message_message' => t('<a href="https://www.w3schools.com/tags/att_input_disabled.asp">Disabled</a> elements do not submit data back to the server and the element\'s server-side default or current value will be preserved and saved to the database.'),
+          '#message_message' => t('<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-disabled">Disabled</a> elements do not submit data back to the server and the element\'s server-side default or current value will be preserved and saved to the database.'),
           '#message_type' => 'warning',
           '#states' => ['visible' => $triggers],
         ];
@@ -484,6 +484,8 @@ class WebformElementStates extends FormElement {
           [$trigger_selector => ['value' => 'greater']],
           'or',
           [$trigger_selector => ['value' => 'less']],
+          'or',
+          [$trigger_selector => ['value' => 'between']],
         ],
       ],
       '#wrapper_attributes' => ['class' => ['webform-states-table--value']],
@@ -492,12 +494,21 @@ class WebformElementStates extends FormElement {
     ];
     $row['condition']['pattern'] = [
       '#type' => 'container',
-      'description' => ['#markup' => t('Enter a <a href=":href">regular expression</a>', [':href' => 'http://www.w3schools.com/js/js_regexp.asp'])],
+      'description' => ['#markup' => t('Enter a <a href=":href">regular expression</a>', [':href' => 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'])],
       '#states' => [
         'visible' => [
           [$trigger_selector => ['value' => 'pattern']],
           'or',
           [$trigger_selector => ['value' => '!pattern']],
+        ],
+      ],
+    ];
+    $row['condition']['pattern'] = [
+      '#type' => 'container',
+      'description' => ['#markup' => t('Enter a number range (1:100)')],
+      '#states' => [
+        'visible' => [
+          [$trigger_selector => ['value' => 'between']],
         ],
       ],
     ];
@@ -920,7 +931,7 @@ class WebformElementStates extends FormElement {
       if (in_array($trigger, ['value', '!value'])) {
         $value = $condition['value'];
       }
-      elseif (in_array($trigger, ['pattern', '!pattern', 'less', 'greater'])) {
+      elseif (in_array($trigger, ['pattern', '!pattern', 'less', 'greater', 'between'])) {
         $value = [$trigger => $condition['value']];
         $trigger = 'value';
       }
@@ -1082,6 +1093,7 @@ class WebformElementStates extends FormElement {
       '!pattern' => t('Not Pattern'),
       'less' => t('Less than'),
       'greater' => t('Greater than'),
+      'between' => t('Between'),
     ];
   }
 

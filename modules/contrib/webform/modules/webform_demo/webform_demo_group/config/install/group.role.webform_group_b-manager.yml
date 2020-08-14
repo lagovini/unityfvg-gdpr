@@ -21,4 +21,3 @@ permissions:
   - 'view group_node:webform content'
   - 'view group_node:webform entity'
   - 'view unpublished group_node:webform entity'
-

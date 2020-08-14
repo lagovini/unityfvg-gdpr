@@ -389,7 +389,6 @@ elements: |
           two: Two
           three: Three
         '#options_display': side_by_side
-        '#multiple': true
         '#default_value':
           - one
           - two
@@ -403,7 +402,6 @@ elements: |
           two: Two
           three: Three
         '#options_display': side_by_side
-        '#multiple': true
         '#default_value':
           - one
           - two
@@ -417,7 +415,6 @@ elements: |
           two: Two
           three: Three
         '#options_display': side_by_side
-        '#multiple': true
         '#default_value':
           - one
           - two
@@ -431,7 +428,6 @@ elements: |
           two: Two
           three: Three
         '#options_display': side_by_side
-        '#multiple': true
         '#default_value':
           - one
           - two
@@ -445,12 +441,23 @@ elements: |
           two: Two
           three: Three
         '#options_display': side_by_side
-        '#multiple': true
         '#default_value':
           - one
           - two
           - three
         '#format_items': ul
+      checkboxes_checklist:
+        '#type': checkboxes
+        '#title': 'Checkboxes (Checklist)'
+        '#options':
+          one: One
+          two: Two
+          three: Three
+        '#default_value':
+          - one
+          - two
+          - three
+        '#format_items': 'checklist:boxes'
     webform_checkboxes_other:
       '#type': details
       '#title': 'Checkboxes other'
@@ -993,69 +1000,6 @@ elements: |
       webform_table_sort_ul:
         '#type': webform_table_sort
         '#title': 'Table sort (Unordered list)'
-        '#options':
-          one: One
-          two: Two
-          three: Three
-        '#default_value':
-          - one
-          - two
-          - three
-        '#format_items': ul
-    webform_toggles:
-      '#type': details
-      '#title': Toggles
-      webform_toggles_comma:
-        '#type': webform_toggles
-        '#title': 'Toggles (Comma)'
-        '#options':
-          one: One
-          two: Two
-          three: Three
-        '#default_value':
-          - one
-          - two
-          - three
-        '#format_items': comma
-      webform_toggles_semicolon:
-        '#type': webform_toggles
-        '#title': 'Toggles (Semicolon)'
-        '#options':
-          one: One
-          two: Two
-          three: Three
-        '#default_value':
-          - one
-          - two
-          - three
-        '#format_items': semicolon
-      webform_toggles_and:
-        '#type': webform_toggles
-        '#title': 'Toggles (And)'
-        '#options':
-          one: One
-          two: Two
-          three: Three
-        '#default_value':
-          - one
-          - two
-          - three
-        '#format_items': and
-      webform_toggles_ol:
-        '#type': webform_toggles
-        '#title': 'Toggles (Ordered list)'
-        '#options':
-          one: One
-          two: Two
-          three: Three
-        '#default_value':
-          - one
-          - two
-          - three
-        '#format_items': ol
-      webform_toggles_ul:
-        '#type': webform_toggles
-        '#title': 'Toggles (Unordered list)'
         '#options':
           one: One
           two: Two
@@ -1622,7 +1566,7 @@ elements: |
         '#multiple': true
         '#file_extensions': txt
         '#format_items': ul
-  
+
 css: ''
 javascript: ''
 settings:
@@ -1736,6 +1680,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -1811,6 +1756,7 @@ handlers:
       ignore_access: false
       exclude_empty: true
       exclude_empty_checkbox: false
+      exclude_attachments: false
       html: false
       attachments: false
       twig: false
@@ -1846,6 +1792,7 @@ handlers:
       ignore_access: false
       exclude_empty: true
       exclude_empty_checkbox: false
+      exclude_attachments: false
       html: true
       attachments: false
       twig: false
@@ -1856,3 +1803,4 @@ handlers:
       return_path: ''
       sender_mail: ''
       sender_name: ''
+variants: {  }

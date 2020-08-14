@@ -9,9 +9,9 @@ use Drupal\webform\Entity\WebformSubmission;
 /**
  * Tests for webform group access submission views.
  *
- * @group WebformAccess
+ * @group webform_group
  */
-class WebformAccessSubmissionViewsTest extends WebformGroupBrowserTestBase {
+class WebformGroupSubmissionAccessTest extends WebformGroupBrowserTestBase {
 
   use WebformSubmissionViewAccessTrait;
 
@@ -20,7 +20,7 @@ class WebformAccessSubmissionViewsTest extends WebformGroupBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['views', 'webform_test_views'];
+  public static $modules = ['webform_group', 'webform_group_test', 'views', 'webform_test_views'];
 
   /**
    * Tests webform group access submission views.

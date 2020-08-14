@@ -6,6 +6,14 @@ entity.webform.references:
   requirements:
     _entity_access: 'webform.update'
 
+entity.webform.references.add_form:
+  path: '/admin/structure/webform/manage/{webform}/references/add'
+  defaults:
+    _form: '\Drupal\webform_node\Form\WebformNodeReferencesAddForm'
+    _title: 'Add reference'
+  requirements:
+    _entity_access: 'webform.update'
+
 entity.node.webform.confirmation:
   path: '/node/{node}/webform/confirmation'
   defaults:
@@ -144,6 +152,21 @@ entity.node.webform.results_submissions.custom:
     _title: 'Customize table'
     operation: webform_submission_view
     entity_access: 'webform.submission_view_any'
+  options:
+    parameters:
+      node:
+        type: 'entity:node'
+  requirements:
+    _custom_access: '\Drupal\webform_node\Access\WebformNodeAccess::checkWebformResultsAccess'
+
+entity.node.webform.results_submissions.custom.user:
+  path: '/node/{node}/webform/results/submissions/custom/user'
+  defaults:
+    _form: 'Drupal\webform\Form\WebformResultsCustomForm'
+    _title: 'Customize my table'
+    operation: webform_submission_view
+    entity_access: 'webform.submission_view_any'
+    type: 'user'
   options:
     parameters:
       node:

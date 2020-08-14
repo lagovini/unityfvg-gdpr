@@ -32,21 +32,6 @@
   };
 
   /**
-   * Autofocus first input.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~behaviorAttach} attach
-   *   Attaches the behavior for the webform autofocusing.
-   */
-  Drupal.behaviors.webformAutofocus = {
-    attach: function (context) {
-      $(context).find('.webform-submission-form.js-webform-autofocus :input:visible:enabled:first')
-        .focus();
-    }
-  };
-
-  /**
    * Autocomplete.
    *
    * @type {Drupal~behavior}
@@ -58,7 +43,7 @@
     attach: function (context) {
       if (isChrome) {
         $(context).find('.webform-submission-form input[autocomplete="off"]')
-          .attr('autocomplete', 'chrome-off');
+          .attr('autocomplete', 'chrome-off-' + Math.floor(Math.random() * 100000000));
       }
     }
   };
@@ -75,8 +60,10 @@
    */
   Drupal.behaviors.webformDisableAutoSubmit = {
     attach: function (context) {
+      // Not using context so that inputs loaded via Ajax will have autosubmit
+      // disabled.
       // @see http://stackoverflow.com/questions/11235622/jquery-disable-form-submit-on-enter
-      $(context).find('.webform-submission-form.js-webform-disable-autosubmit input')
+      $('.js-webform-disable-autosubmit input')
         .not(':button, :submit, :reset, :image, :file')
         .once('webform-disable-autosubmit')
         .on('keyup keypress', function (e) {
@@ -104,23 +91,6 @@
       $(context).find(':submit.js-webform-novalidate')
         .once('webform-novalidate')
         .attr('formnovalidate', 'formnovalidate');
-    }
-  };
-
-  /**
-   * Attach behaviors to trigger submit button from input onchange.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~behaviorAttach} attach
-   *   Attaches form trigger submit events.
-   */
-  Drupal.behaviors.webformSubmitTrigger = {
-    attach: function (context) {
-      $('[data-webform-trigger-submit]').once('webform-trigger-submit').on('change', function () {
-        var submit = $(this).attr('data-webform-trigger-submit');
-        $(submit).mousedown();
-      });
     }
   };
 

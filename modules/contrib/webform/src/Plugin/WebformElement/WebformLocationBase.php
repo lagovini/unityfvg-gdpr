@@ -12,7 +12,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
   /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  protected function defineDefaultProperties() {
     $properties = [
       'title' => '',
       'default_value' => [],
@@ -40,7 +40,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
       'format_items' => $this->getItemsDefaultFormat(),
       'format_items_html' => '',
       'format_items_text' => '',
-    ] + $this->getDefaultBaseProperties();
+    ] + $this->defineDefaultBaseProperties();
 
     $composite_elements = $this->getCompositeElements();
     foreach ($composite_elements as $composite_key => $composite_element) {
@@ -55,6 +55,8 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     }
     return $properties;
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -80,7 +82,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     $form['composite']['geolocation'] = [
       '#type' => 'checkbox',
       '#title' => $this->t("Use the browser's Geolocation as the default value"),
-      '#description' => $this->t('The <a href="http://www.w3schools.com/html/html5_geolocation.asp">HTML Geolocation API</a> is used to get the geographical position of a user. Since this can compromise privacy, the position is not available unless the user approves it.'),
+      '#description' => $this->t('The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API">HTML Geolocation API</a> is used to get the geographical position of a user. Since this can compromise privacy, the position is not available unless the user approves it.'),
       '#return_value' => TRUE,
     ];
     $form['composite']['hidden'] = [

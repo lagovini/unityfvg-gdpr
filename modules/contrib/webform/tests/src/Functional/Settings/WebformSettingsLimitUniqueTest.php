@@ -38,8 +38,10 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
 
     $user = $this->drupalCreateUser();
     $admin_user = $this->drupalCreateUser(['administer webform']);
-    $edit_any_user = $this->drupalCreateUser(['view any webform submission', 'edit any webform submission']);
-    $edit_own_user = $this->drupalCreateUser(['view own webform submission', 'edit own webform submission']);
+    $manage_any_user = $this->drupalCreateUser(['view any webform submission', 'edit any webform submission']);
+    $edit_any_user = $this->drupalCreateUser(['edit any webform submission']);
+    $manage_own_user = $this->drupalCreateUser(['view own webform submission', 'edit own webform submission']);
+    $edit_user_only = $this->drupalCreateUser(['edit own webform submission']);
 
     /**************************************************************************/
     // Total unique. (webform)
@@ -51,7 +53,7 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->assertNoFieldByName('name', '');
 
     // Check that access is allowed for edit any submission user.
-    $this->drupalLogin($edit_any_user);
+    $this->drupalLogin($manage_any_user);
     $this->drupalGet('/webform/test_form_limit_total_unique');
     $this->assertResponse(200);
     $this->assertFieldByName('name', '');
@@ -92,7 +94,7 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->assertNoRaw(' The below webform has been prepopulated with custom/random test data. When submitted, this information <strong>will still be saved</strong> and/or <strong>sent to designated recipients</strong>');
 
     // Check that edit any submission user can access and edit.
-    $this->drupalLogin($edit_any_user);
+    $this->drupalLogin($manage_any_user);
     $this->drupalGet('/webform/test_form_limit_total_unique');
     $this->assertFieldByName('name', 'John Smith');
     $this->assertRaw("<div><b>Submission ID:</b> $sid</div>");
@@ -122,7 +124,7 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->assertResponse(403);
 
     // Check that access is allowed for edit any submission user.
-    $this->drupalLogin($edit_any_user);
+    $this->drupalLogin($manage_any_user);
     $this->drupalGet('/node/' . $node_total_unique->id());
     $this->assertResponse(200);
     $this->assertFieldByName('name', '');
@@ -167,8 +169,18 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->drupalGet('/webform/test_form_limit_user_unique');
     $this->assertResponse(403);
 
+    // Check that access is denied for edit any user.
+    $this->drupalLogin($edit_any_user);
+    $this->drupalGet('/webform/test_form_limit_user_unique');
+    $this->assertResponse(403);
+
+    // Check that access is denied for edit own user.
+    $this->drupalLogin($edit_user_only);
+    $this->drupalGet('/webform/test_form_limit_user_unique');
+    $this->assertResponse(403);
+
     // Check that access is allowed for edit own submission user.
-    $this->drupalLogin($edit_own_user);
+    $this->drupalLogin($manage_own_user);
     $this->drupalGet('/webform/test_form_limit_user_unique');
     $this->assertFieldByName('name', '');
 
@@ -201,7 +213,7 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->assertRaw("<div><b>Submission ID:</b> $sid</div>");
 
     // Check that access is allowed for edit own submission user.
-    $this->drupalLogin($edit_own_user);
+    $this->drupalLogin($manage_own_user);
     $this->drupalGet('/webform/test_form_limit_user_unique');
     $this->assertFieldByName('name', '');
 

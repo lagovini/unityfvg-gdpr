@@ -55,6 +55,12 @@ elements: |
         - custom-draft
       style: 'font-weight: bold'
       data-custom-draft: true
+    '#update__label': '{Custom update}'
+    '#update__attributes':
+      class:
+        - custom-update
+      style: 'font-weight: bold'
+      data-custom-update: true
     '#wizard_prev__label': '{Custom wizard previous}'
     '#wizard_prev__attributes':
       class:
@@ -246,6 +252,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -296,3 +303,4 @@ access:
     users: {  }
     permissions: {  }
 handlers: {  }
+variants: {  }

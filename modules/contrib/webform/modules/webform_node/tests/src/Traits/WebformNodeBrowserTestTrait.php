@@ -3,7 +3,6 @@
 namespace Drupal\Tests\webform_node\Traits;
 
 use Drupal\node\NodeInterface;
-use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 use Drupal\webform\WebformInterface;
 
 /**

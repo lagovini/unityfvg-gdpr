@@ -216,6 +216,21 @@ trait WebformBrowserTestTrait {
     return $webform;
   }
 
+  /**
+   * Reload a test webform.
+   *
+   * @param string $id
+   *   Webform id.
+   *
+   * @return \Drupal\webform\WebformInterface|null
+   *   A webform.
+   */
+  protected function reloadWebform($id) {
+    $storage = \Drupal::entityTypeManager()->getStorage('webform');
+    $storage->resetCache([$id]);
+    return $storage->load($id);
+  }
+
   /****************************************************************************/
   // Submission.
   /****************************************************************************/
@@ -410,7 +425,7 @@ trait WebformBrowserTestTrait {
     if (!$message) {
       $message = new FormattableMarkup('Found @selector', ['@selector' => $selector]);
     }
-    $this->assertTrue(!empty($element), $message);
+    $this->assertNotEmpty($element, $message);
   }
 
   /**
@@ -418,7 +433,7 @@ trait WebformBrowserTestTrait {
    */
   protected function assertNoCssSelect($selector, $message = '') {
     $element = $this->cssSelect($selector);
-    $this->assertTrue(empty($element), $message);
+    $this->assertEmpty($element, $message);
   }
 
   /****************************************************************************/

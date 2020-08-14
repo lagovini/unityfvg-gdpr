@@ -2,11 +2,11 @@ name: 'Webform module exporter tests'
 type: module
 description: 'Support module for webform that provides exporter plugin tests.'
 package: Testing
-core: 8.x
+core_version_requirement: ^8.7.7 || ^9
 dependencies:
   - 'webform:webform'
 
-# Information added by Drupal.org packaging script on 2019-12-02
-version: '8.x-5.6'
+# Information added by Drupal.org packaging script on 2020-05-16
+version: '8.x-5.13'
 project: 'webform'
-datestamp: 1575331093
+datestamp: 1589661359

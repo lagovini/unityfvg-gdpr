@@ -64,7 +64,11 @@ elements: |
     '#file_extensions': txt
     '#file_placeholder': 'This is the multiple file upload placeholder'
     '#multiple': true
-  
+  managed_file_extensions:
+    '#type': managed_file
+    '#title': managed_file_extensions
+    '#file_extensions': 'txt, text'
+
 css: ''
 javascript: ''
 settings:
@@ -178,6 +182,7 @@ settings:
   purge_days: null
   results_disabled: false
   results_disabled_ignore: false
+  results_customize: false
   token_view: false
   token_update: false
 access:
@@ -228,3 +233,4 @@ access:
     users: {  }
     permissions: {  }
 handlers: {  }
+variants: {  }

@@ -5,9 +5,20 @@ namespace Drupal\webform\Plugin\WebformElement;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\webform\Element\WebformSignature as WebformSignatureElement;
 use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
+use Psr\Log\LoggerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Render\ElementInfoManagerInterface;
+use Drupal\webform\Plugin\WebformElementManagerInterface;
+use Drupal\webform\WebformTokenManagerInterface;
+use Drupal\webform\WebformLibrariesManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\File\FileSystemInterface;
 
 /**
  * Provides a 'signature' element.
@@ -22,16 +33,83 @@ use Drupal\webform\WebformSubmissionInterface;
 class WebformSignature extends WebformElementBase {
 
   /**
+   * The helpers that operate on files.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface
+   */
+  protected $fileSystem;
+
+  /**
+   * Constructs a WebformElementBase object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   A logger instance.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration factory.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   The current user.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\File\FileSystemInterface $file_system
+   *   The helpers that operate on files.
+   * @param \Drupal\Core\Render\ElementInfoManagerInterface $element_info
+   *   The element info manager.
+   * @param \Drupal\webform\Plugin\WebformElementManagerInterface $element_manager
+   *   The webform element manager.
+   * @param \Drupal\webform\WebformTokenManagerInterface $token_manager
+   *   The webform token manager.
+   * @param \Drupal\webform\WebformLibrariesManagerInterface $libraries_manager
+   *   The webform libraries manager.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, ConfigFactoryInterface $config_factory, AccountInterface $current_user, EntityTypeManagerInterface $entity_type_manager, FileSystemInterface $file_system, ElementInfoManagerInterface $element_info, WebformElementManagerInterface $element_manager, WebformTokenManagerInterface $token_manager, WebformLibrariesManagerInterface $libraries_manager) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $logger, $config_factory, $current_user, $entity_type_manager, $element_info, $element_manager, $token_manager, $libraries_manager);
+    $this->fileSystem = $file_system;
+  }
+
+  /**
    * {@inheritdoc}
    */
-  public function getDefaultProperties() {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('logger.factory')->get('webform'),
+      $container->get('config.factory'),
+      $container->get('current_user'),
+      $container->get('entity_type.manager'),
+      $container->get('file_system'),
+      $container->get('plugin.manager.element_info'),
+      $container->get('plugin.manager.webform.element'),
+      $container->get('webform.token_manager'),
+      $container->get('webform.libraries_manager')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineDefaultProperties() {
     $properties = [
       // General settings.
       'description' => $this->t('Sign above'),
-    ] + parent::getDefaultProperties();
-    unset($properties['disabled']);
+      'readonly' => FALSE,
+    ] + parent::defineDefaultProperties();
+    unset(
+      $properties['format_items'],
+      $properties['format_items_html'],
+      $properties['format_items_text']
+    );
     return $properties;
   }
+
+  /****************************************************************************/
 
   /**
    * {@inheritdoc}
@@ -58,16 +136,17 @@ class WebformSignature extends WebformElementBase {
           return '[' . $this->t('not signed') . ']';
         }
 
-        return [
+        $src = $this->getImageUrl($element, $webform_submission, $options);
+        return $src ? [
           '#type' => 'html_tag',
           '#tag' => 'img',
           '#attributes' => [
-            'src' => $this->getImageUrl($element, $webform_submission, $options),
+            'src' => $src,
             'alt' => $this->t('Signature'),
             'class' => ['webform-signature-image'],
           ],
           '#attached' => ['library' => ['webform/webform.element.signature']],
-        ];
+        ] : '[' . $this->t('not valid') . ']';
 
       default:
         return parent::formatHtmlItem($element, $webform_submission, $options);
@@ -200,7 +279,8 @@ class WebformSignature extends WebformElementBase {
     $image_base_directory = 'public://webform/' . $webform->id();
     $image_directory = "$image_base_directory/$element_key/$sid";
     if (file_exists($image_directory)) {
-      file_unmanaged_delete_recursive($image_directory);
+      $this->fileSystem->deleteRecursive($image_directory);
+      $this->fileSystem->deleteRecursive($image_directory);
     }
 
     // Please node, the signature image (no results) directory is deleted when
@@ -236,6 +316,11 @@ class WebformSignature extends WebformElementBase {
       return '';
     }
 
+    // Make sure existing signature values are valid.
+    if (!WebformSignatureElement::isSignatureValid($value)) {
+      return '';
+    }
+
     $webform = $webform_submission->getWebform();
     $element_key = $element['#webform_key'];
     $sid = $webform_submission->id();
@@ -244,23 +329,31 @@ class WebformSignature extends WebformElementBase {
 
     // Create signature image (no results) directory.
     $image_signature_directory = "$image_base_directory/$element_key";
-    file_prepare_directory($image_signature_directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+    $this->fileSystem->prepareDirectory($image_signature_directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
     $image_directory = $image_signature_directory;
 
     // Create signature image submission directory.
     if ($sid) {
       $image_submission_directory = "$image_base_directory/$element_key/$sid";
-      file_prepare_directory($image_submission_directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+      $this->fileSystem->prepareDirectory($image_submission_directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
       $image_directory = $image_submission_directory;
     }
 
-    $image_hash = Crypt::hmacBase64($value, Settings::getHashSalt());
+    // If a signature file was already created and shared using an
+    // unsafe image hash, then return it.
+    $unsafe_image_hash = Crypt::hmacBase64($value, Settings::getHashSalt());
+    $unsafe_image_uri = "$image_directory/signature-$unsafe_image_hash.png";
+    if (file_exists($unsafe_image_uri)) {
+      return file_create_url($unsafe_image_uri);
+    }
+
+    $image_hash = Crypt::hmacBase64('webform-signature-' . $value, Settings::getHashSalt());
     $image_uri = "$image_directory/signature-$image_hash.png";
 
     if (!file_exists($image_uri)) {
       // Copy existing file.
       if ($sid && file_exists("$image_signature_directory/signature-$image_hash.png")) {
-        file_unmanaged_move(
+        $this->fileSystem->move(
           "$image_signature_directory/signature-$image_hash.png",
           "$image_directory/signature-$image_hash.png"
         );

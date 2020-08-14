@@ -73,6 +73,12 @@ webform.config.handlers:
   parent_id: webform.config
   weight: 50
 
+webform.config.variants:
+  title: 'Variants'
+  route_name: webform.config.variants
+  parent_id: webform.config
+  weight: 55
+
 webform.config.exporters:
   title: 'Exporters'
   route_name: webform.config.exporters
@@ -197,6 +203,7 @@ entity.webform.settings_handlers:
   parent_id: entity.webform.settings
   weight: 40
 
+
 entity.webform.settings_assets:
   title: 'CSS / JS'
   route_name: entity.webform.settings_assets
@@ -209,13 +216,27 @@ entity.webform.settings_access:
   parent_id: entity.webform.settings
   weight: 60
 
+# Webform variants.
+entity.webform.variants:
+  title: 'Variants'
+  route_name: entity.webform.variants
+  base_route: entity.webform.canonical
+  weight: 45
+
 # Export
 
-entity.webform.export_form:
+entity.webform.export:
   title: 'Export'
   route_name: entity.webform.export_form
   base_route: entity.webform.canonical
   weight: 60
+
+entity.webform.export_form:
+  title: 'Config'
+  route_name: entity.webform.export_form
+  parent_id: entity.webform.export
+  base_route: entity.webform.canonical
+  weight: 0
 
 # Submission
 
@@ -312,6 +333,12 @@ webform.reports_plugins.handlers:
   route_name: webform.reports_plugins.handlers
   base_route: webform.reports_plugins.elements
   weight: 10
+
+webform.reports_plugins.variants:
+  title: 'Variants'
+  route_name: webform.reports_plugins.variants
+  base_route: webform.reports_plugins.elements
+  weight: 15
 
 webform.reports_plugins.exporters:
   title: 'Exporters'

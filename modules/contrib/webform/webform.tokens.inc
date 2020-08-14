@@ -6,23 +6,24 @@
  */
 
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Component\Utility\Xss;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Datetime\Entity\DateFormat;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
 use Drupal\webform\Plugin\WebformElementEntityReferenceInterface;
 use Drupal\webform\Plugin\WebformElement\WebformComputedBase;
+use Drupal\webform\Plugin\WebformElement\WebformMarkupBase;
 use Drupal\webform\Utility\WebformDateHelper;
+use Drupal\webform\Utility\WebformHtmlHelper;
 use Drupal\webform\Utility\WebformLogicHelper;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
-use Drupal\Core\Url;
 
 /**
  * Implements hook_token_info().
@@ -91,11 +92,11 @@ function webform_token_info() {
   ];
   $webform_submission['current-page'] = [
     'name' => t('Current page'),
-    'description' => t('The current (wizard) page of the webform submission.'),
+    'description' => t('The current (last submitted) wizard page of the webform submission.'),
   ];
   $webform_submission['current-page:title'] = [
     'name' => t('Current page title'),
-    'description' => t('The current (wizard) page title of the webform submission.'),
+    'description' => t('The current (last submitted) wizard page title of the webform submission.'),
   ];
   $webform_submission['in-draft'] = [
     'name' => t('In draft'),
@@ -817,7 +818,7 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
             $token_value = \Drupal::service('renderer')->renderPlain($token_value);
           }
           else {
-            $token_value = Markup::create(Xss::filter($token_value));
+            $token_value = WebformHtmlHelper::toHtmlMarkup($token_value);
           }
           $replacements[$original] = $token_value;
         }
@@ -831,7 +832,7 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
         $key_exists = NULL;
         $value = NestedArray::getValue($webform_handler, $parents, $key_exists);
         // A handler response is always considered safe markup.
-        $replacements[$original] = ($key_exists) ? Markup::create($value) : $original;
+        $replacements[$original] = ($key_exists && is_scalar($value)) ? Markup::create($value) : $original;
       }
     }
 
@@ -927,6 +928,14 @@ function _webform_token_get_submission_value($value_token, array $options, Webfo
   // Always get value for a computed element.
   if ($element_plugin instanceof WebformComputedBase) {
     return $element_plugin->getValue($element, $webform_submission);
+  }
+
+  // Always get rendered markup for a markup element.
+  if ($element_plugin instanceof WebformMarkupBase) {
+    $format_method = (empty($options['html'])) ? 'buildText' : 'buildHtml';
+    $element['#display_on'] = WebformMarkupBase::DISPLAY_ON_BOTH;
+    $token_value = $element_manager->invokeMethod($format_method, $element, $webform_submission, $options);
+    return \Drupal::service('renderer')->renderPlain($token_value);
   }
 
   // Exit if no submission data and form element is not a container.
@@ -1090,6 +1099,24 @@ function _webform_token_render_more($more_title, $more) {
     '#more' => $more,
     '#more_title' => $more_title,
   ];
+
+  // Token info might be called via CLI and not all modules are loaded
+  // or an active theme is defined.
+  //
+  // Prevent the below expections:
+  // - The theme implementations may not be rendered until all modules
+  //   are loaded.
+  // - Call to a member function setParser() on array in Twig\Parser->parse().
+  //
+  // @see \Drupal\Core\Theme\ThemeManager::render
+  /** @var \Drupal\Core\Extension\ModuleHandlerInterface $module_handler */
+  $module_handler = \Drupal::service('module_handler');
+  /** @var \Drupal\webform\WebformThemeManagerInterface $theme_manager */
+  $theme_manager = \Drupal::service('webform.theme_manager');
+  if (!$module_handler->isLoaded() || !$theme_manager->hasActiveTheme()) {
+    return '';
+  }
+
   return (string) \Drupal::service('renderer')->renderPlain($build);
 }
 
@@ -1115,7 +1142,8 @@ function _webform_token_get_interval_wait($interval_setting, BubbleableMetadata 
   // Get last submission completed time.
   /** @var \Drupal\webform\WebformSubmissionStorageInterface $submission_storage */
   $submission_storage = \Drupal::entityTypeManager()->getStorage('webform_submission');
-  $last_submission = $submission_storage->getLastSubmission($webform, $source_entity, $account);
+  $options = ['access_check' => FALSE];
+  $last_submission = $submission_storage->getLastSubmission($webform, $source_entity, $account, $options);
   if (!$last_submission) {
     return '';
   }
