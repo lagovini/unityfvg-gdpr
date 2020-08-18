@@ -33,7 +33,7 @@ class GdprMenuManagementController extends ControllerBase {
    */
   public function informative() {
 
-    $view = Views::getView('le_mie_schede_gdpr');
+    $view = Views::getView('test');
     $render_array = $view->buildRenderable('page_1');
     
     return array(
