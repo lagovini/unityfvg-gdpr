@@ -1,0 +1,6 @@
+name: GDPR Menu Management
+type: module
+description: 'GDPR Menu Management'
+package: 'custom'
+core: 8.x
+

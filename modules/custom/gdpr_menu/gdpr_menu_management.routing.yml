@@ -1,0 +1,33 @@
+# This file contains routing entries which is then read by Drupal to match
+# a particular request which a corresponding path.  A particular route entry
+# is bound to the URI defined using 'path' key, the 'access content' permission
+# is checked on the accessing user and, if access is granted, the
+# MenuExampleController::{methodName} method is invoked and a page is displayed
+# with defined response.
+# '_controller' defines the controller class and it's method which Drupal's
+# autoload mechanism looks for, creating the response from.
+#
+
+gdpr_menu_management.docenti.le-mie-informative-gdpr: # This is a route name.
+  path: '/docenti/le-mie-informative-gdpr'
+  defaults:
+    _controller: '\Drupal\gdpr_menu_management\Controller\GdprMenuManagementController::informative'
+    _title: 'Le Mie Informative GDPR'
+  requirements:
+    _permission: 'access content'
+
+gdpr_menu_management.amministrazione.le-mie-informative-gdpr: # This is a route name.
+  path: '/amministrazione/le-mie-informative-gdpr'
+  defaults:
+    _controller: '\Drupal\gdpr_menu_management\Controller\GdprMenuManagementController::informative'
+    _title: 'Le Mie Informative GDPR'
+  requirements:
+    _permission: 'access content'
+
+gdpr_menu_management.ricerca.le-mie-informative-gdpr: # This is a route name.
+  path: '/ricerca/le-mie-informative-gdpr'
+  defaults:
+    _controller: '\Drupal\gdpr_menu_management\Controller\GdprMenuManagementController::informative'
+    _title: 'Le Mie Informative GDPR'
+  requirements:
+    _permission: 'access content'
