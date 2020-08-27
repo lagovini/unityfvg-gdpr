@@ -763,6 +763,8 @@ $settings['entity_update_batch_size'] = 50;
  */
 $settings['entity_update_backup'] = TRUE;
 
+$settings['file.settings']['make_unused_managed_files_temporary'] = TRUE;
+
 /**
  * Load local development override configuration, if available.
  *
