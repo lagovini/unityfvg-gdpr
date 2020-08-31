@@ -1,0 +1,25 @@
+From 23d66c7760abe0aa2c402d7cd4a4e4be3aed4fca Mon Sep 17 00:00:00 2001
+From: Nicola Dimatteo <nicola.dimatteo@interfase.it>
+Date: Mon, 31 Aug 2020 10:17:33 +0200
+Subject: [PATCH] integrazione nel modulo della libreria dompdf-dompdf
+
+---
+ modules/custom/entity_print/entity_print.module | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/modules/custom/entity_print/entity_print.module b/modules/custom/entity_print/entity_print.module
+index 0fa9bf4a..87d01732 100644
+--- a/modules/custom/entity_print/entity_print.module
++++ b/modules/custom/entity_print/entity_print.module
+@@ -5,6 +5,8 @@
+  * Print any entity.
+  */
+ 
++require_once('lib/dompdf-dompdf/v0.8.3/autoload.inc.php');
++
+ use Drupal\Core\Entity\ContentEntityInterface;
+ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+ use Drupal\Core\Entity\EntityInterface;
+-- 
+2.23.0
+
