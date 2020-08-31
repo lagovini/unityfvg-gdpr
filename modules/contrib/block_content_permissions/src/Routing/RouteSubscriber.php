@@ -16,7 +16,7 @@ class RouteSubscriber extends RouteSubscriberBase {
    *
    * @var string
    */
-  private $AccessControlHandlerClassName = 'Drupal\block_content_permissions\AccessControlHandler';
+  private $accessControlHandlerClassName = 'Drupal\block_content_permissions\AccessControlHandler';
 
   /**
    * {@inheritdoc}
@@ -30,7 +30,7 @@ class RouteSubscriber extends RouteSubscriberBase {
     foreach ($routeNames as $name) {
       if ($route = $collection->get($name)) {
         $route->addRequirements([
-          '_custom_access' => $this->AccessControlHandlerClassName . '::blockContentTypeAdministerAccess',
+          '_custom_access' => $this->accessControlHandlerClassName . '::blockContentTypeAdministerAccess',
         ]);
         // Remove required "administer blocks" permission.
         $this->removePermissionRequirement($route);
@@ -43,7 +43,7 @@ class RouteSubscriber extends RouteSubscriberBase {
     // Change access and controller callback for the block content add page.
     if ($route = $collection->get('block_content.add_page')) {
       $route->addRequirements([
-        '_custom_access' => $this->AccessControlHandlerClassName . '::blockContentAddPageAccess',
+        '_custom_access' => $this->accessControlHandlerClassName . '::blockContentAddPageAccess',
       ]);
       $route->setDefault(
         '_controller',
@@ -56,7 +56,7 @@ class RouteSubscriber extends RouteSubscriberBase {
     // Change access callback for the block content add forms.
     if ($route = $collection->get('block_content.add_form')) {
       $route->addRequirements([
-        '_custom_access' => $this->AccessControlHandlerClassName . '::blockContentAddFormAccess',
+        '_custom_access' => $this->accessControlHandlerClassName . '::blockContentAddFormAccess',
       ]);
       // Remove required "administer blocks" permission.
       $this->removePermissionRequirement($route);
