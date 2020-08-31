@@ -206,8 +206,7 @@ function webform_demo_group_uninstall() {
   }
 
   // Delete URL aliases.
-  // @todo Remove once Drupal 8.8.x is only supported.
-  $table_name = (floatval(\Drupal::VERSION) >= 8.8) ? 'path_alias' : 'url_alias';
+  $table_name = 'path_alias';
   $params = [':alias' => '/webform/group/%'];
   \Drupal::database()->query('DELETE FROM {' . $table_name . '} WHERE alias LIKE :alias', $params);
 }

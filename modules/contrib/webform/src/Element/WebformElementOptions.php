@@ -92,7 +92,7 @@ class WebformElementOptions extends FormElement {
       '#type' => 'select',
       '#description' => t('Please select <a href=":href">predefined @type</a> or enter custom @type.', $t_args),
       '#options' => [
-        self::CUSTOM_OPTION => t('Custom @type…', $t_args),
+        static::CUSTOM_OPTION => t('Custom @type…', $t_args),
       ] + $options,
 
       '#attributes' => [
@@ -130,7 +130,7 @@ class WebformElementOptions extends FormElement {
     if ($has_options) {
       $element['custom']['#states'] = [
         'visible' => [
-          'select.js-' . $element['#id'] . '-options' => ['value' => self::CUSTOM_OPTION],
+          'select.js-' . $element['#id'] . '-options' => ['value' => static::CUSTOM_OPTION],
         ],
       ];
     }
@@ -154,7 +154,7 @@ class WebformElementOptions extends FormElement {
     $custom_value = NestedArray::getValue($form_state->getValues(), $element['custom']['#parents']);
 
     $value = $options_value;
-    if ($options_value == self::CUSTOM_OPTION) {
+    if ($options_value === static::CUSTOM_OPTION) {
       try {
         $value = (is_string($custom_value)) ? Yaml::decode($custom_value) : $custom_value;
       }

@@ -17,7 +17,7 @@
    */
   Drupal.behaviors.webformSubmitOnce = {
     attach: function (context) {
-      $('.js-webform-submit-once', context).each(function () {
+      $('.js-webform-submit-once', context).once('webform-submit-once').each(function () {
         var $form = $(this);
         // Remove data-webform-submitted.
         $form.removeData('webform-submitted');

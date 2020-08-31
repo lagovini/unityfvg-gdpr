@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for webform (text) counter.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementCounterTest extends WebformElementBrowserTestBase {
 
@@ -38,7 +38,7 @@ class WebformElementCounterTest extends WebformElementBrowserTestBase {
       'counter_words_min' => 'one two three',
       'counter_words_max' => 'one two three four five six seven eight nine ten eleven',
     ];
-    $this->drupalPostForm('/webform/test_element_counter', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_counter', $edit, 'Submit');
     $this->assertRaw('counter_characters_min (5) must be longer than <em class="placeholder">5</em> characters but is currently <em class="placeholder">3</em> characters long.');
     $this->assertRaw('counter_characters_max (10) cannot be longer than <em class="placeholder">10</em> characters but is currently <em class="placeholder">13</em> characters long.');
     $this->assertRaw('counter_words_min (5) must be longer than <em class="placeholder">5</em> words but is currently <em class="placeholder">3</em> words long.');
@@ -51,7 +51,7 @@ class WebformElementCounterTest extends WebformElementBrowserTestBase {
       'counter_words_min' => 'one two three four five',
       'counter_words_max' => 'one two three four five six seven eight nine ten',
     ];
-    $this->drupalPostForm('/webform/test_element_counter', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_counter', $edit, 'Submit');
     $this->assertNoRaw('counter_characters_min (5) must be longer than <em class="placeholder">5</em> characters');
     $this->assertNoRaw('counter_characters_max (10) cannot be longer than <em class="placeholder">10</em> characters');
     $this->assertNoRaw('counter_words_min (5) must be longer than <em class="placeholder">5</em> words');

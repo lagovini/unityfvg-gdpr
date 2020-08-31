@@ -58,7 +58,7 @@ class WebformEditorialController extends ControllerBase implements ContainerInje
   protected $elementManager;
 
   /**
-   * The libraries manager.
+   * The webform libraries manager.
    *
    * @var \Drupal\webform\WebformLibrariesManagerInterface
    */

@@ -1,7 +1,21 @@
 /**
  * @file
- * Webform styles.
+ * Webform form styles.
  */
+
+/**
+ * This allows components to be hidden when a JS plugin provides the UI.
+ */
+html.js .js-webform-visually-hidden,
+html.js .js-webform-visually-hidden[style*="display: none"] {
+  display: inline !important;
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  word-wrap: normal;
+}
 
 /**
  * Element states.

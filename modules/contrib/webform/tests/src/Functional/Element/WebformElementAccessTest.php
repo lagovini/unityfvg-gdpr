@@ -8,7 +8,7 @@ use Drupal\webform\Entity\WebformSubmission;
 /**
  * Tests for webform element access.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementAccessTest extends WebformElementBrowserTestBase {
 

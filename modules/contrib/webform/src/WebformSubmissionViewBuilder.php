@@ -29,7 +29,7 @@ class WebformSubmissionViewBuilder extends EntityViewBuilder implements WebformS
   protected $routeMatch;
 
   /**
-   * Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */

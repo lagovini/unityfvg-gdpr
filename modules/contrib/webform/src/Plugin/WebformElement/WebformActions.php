@@ -111,10 +111,10 @@ class WebformActions extends ContainerBase {
       '#type' => 'fieldset',
       '#title' => $this->t('Buttons'),
     ];
-    $draft_enabled = ($webform->getSetting('draft') != WebformInterface::DRAFT_NONE);
+    $draft_enabled = ($webform->getSetting('draft') !== WebformInterface::DRAFT_NONE);
     $reset_enabled = $webform->getSetting('form_reset');
     $wizard_enabled = $webform->hasWizardPages();
-    $preview_enabled = ($webform->getSetting('preview') != DRUPAL_DISABLED);
+    $preview_enabled = ($webform->getSetting('preview') !== DRUPAL_DISABLED);
 
     $buttons = [
       'submit' => [

@@ -8,7 +8,7 @@ use Drupal\Tests\webform_node\Functional\WebformNodeBrowserTestBase;
 /**
  * Tests for webform submission form unique limit.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
 

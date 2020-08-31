@@ -424,12 +424,12 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
   }
 
   $replacements = [];
-  if ($type == 'webform_role' && !empty($data['webform_role'])) {
+  if ($type === 'webform_role' && !empty($data['webform_role'])) {
     $roles = $data['webform_role'];
     $any_role = in_array('authenticated', $roles) ? TRUE : FALSE;
     foreach ($tokens as $role_name => $original) {
       if ($any_role || in_array($role_name, $roles)) {
-        if ($role_name == 'authenticated') {
+        if ($role_name === 'authenticated') {
           // Get all active authenticated users.
           $query = \Drupal::database()->select('users_field_data', 'u');
           $query->fields('u', ['mail']);
@@ -455,7 +455,7 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
     }
 
   }
-  elseif ($type == 'webform_submission' && !empty($data['webform_submission'])) {
+  elseif ($type === 'webform_submission' && !empty($data['webform_submission'])) {
     /** @var \Drupal\webform\Plugin\WebformElementManagerInterface $element_manager */
     $element_manager = \Drupal::service('plugin.manager.webform.element');
 
@@ -758,7 +758,7 @@ function webform_tokens($type, $tokens, array $data, array $options, BubbleableM
     }
 
   }
-  elseif ($type == 'webform' && !empty($data['webform'])) {
+  elseif ($type === 'webform' && !empty($data['webform'])) {
 
     /** @var \Drupal\webform\WebformInterface $webform */
     $webform = $data['webform'];
@@ -894,7 +894,7 @@ function _webform_token_get_submission_value($value_token, array $options, Webfo
   $element_key = array_shift($keys);
 
   // Build HTML values.
-  if ($element_key == 'html' && empty($keys)) {
+  if ($element_key === 'html' && empty($keys)) {
     $options['html'] = TRUE;
     return _webform_token_get_submission_values($options, $webform_submission);
   }
@@ -966,7 +966,7 @@ function _webform_token_get_submission_value($value_token, array $options, Webfo
   /****************************************************************************/
 
   // Set entity reference chaining.
-  if ($keys && $keys[0] == 'entity' && $element_plugin instanceof WebformElementEntityReferenceInterface) {
+  if ($keys && $keys[0] === 'entity' && $element_plugin instanceof WebformElementEntityReferenceInterface) {
     // Remove entity from keys.
     array_shift($keys);
 

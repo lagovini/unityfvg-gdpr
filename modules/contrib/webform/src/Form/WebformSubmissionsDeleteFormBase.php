@@ -57,7 +57,7 @@ abstract class WebformSubmissionsDeleteFormBase extends WebformDeleteFormBase {
   protected $submissionStorage;
 
   /**
-   * Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */
@@ -213,7 +213,7 @@ abstract class WebformSubmissionsDeleteFormBase extends WebformDeleteFormBase {
     $context['message'] = $this->t('Deleting @count of @total submissions…', ['@count' => $context['sandbox']['progress'], '@total' => $context['sandbox']['max']]);
 
     // Track finished.
-    if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    if ($context['sandbox']['progress'] !== $context['sandbox']['max']) {
       $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
     }
   }

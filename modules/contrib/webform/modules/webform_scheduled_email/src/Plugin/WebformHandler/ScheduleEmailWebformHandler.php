@@ -80,7 +80,7 @@ class ScheduleEmailWebformHandler extends EmailWebformHandler {
         '#message_type' => $status_messages[$type]['type'],
       ];
 
-      if ($status_messages[$type]['type'] == 'warning') {
+      if ($status_messages[$type]['type'] === 'warning') {
         $cron_link = TRUE;
       }
     }

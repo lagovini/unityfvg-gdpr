@@ -175,7 +175,7 @@ class WebformLibrariesManager implements WebformLibrariesManagerInterface {
     $description = [
       'info' => $info,
     ];
-    if (!$cli && $severity == REQUIREMENT_WARNING) {
+    if (!$cli && $severity === REQUIREMENT_WARNING) {
       $description['cdn'] = ['#markup' => $this->t('<a href=":href">Disable CDN warning</a>', [':href' => Url::fromRoute('webform.config.advanced')->toString()])];
     }
 
@@ -329,9 +329,9 @@ class WebformLibrariesManager implements WebformLibrariesManagerInterface {
       'description' => $this->t('Code Mirror is a versatile text editor implemented in JavaScript for the browser.'),
       'notes' => $this->t('Code Mirror is used to provide a text editor for YAML, HTML, CSS, and JavaScript configuration settings and messages.'),
       'homepage_url' => Url::fromUri('http://codemirror.net/'),
-      'download_url' => Url::fromUri('https://github.com/components/codemirror/archive/5.51.0.zip'),
+      'download_url' => Url::fromUri('https://github.com/components/codemirror/archive/5.53.2.zip'),
       'issues_url' => Url::fromUri('https://github.com/codemirror/codemirror/issues'),
-      'version' => '5.51.0',
+      'version' => '5.53.2',
     ];
     $libraries['algolia.places'] = [
       'title' => $this->t('Algolia Places'),
@@ -342,8 +342,8 @@ class WebformLibrariesManager implements WebformLibrariesManagerInterface {
       // NOTE: Using NPM/JsDelivr because it contains the '/dist/cdn/' directory.
       // @see https://asset-packagist.org/package/detail?fullname=npm-asset/places.js
       // @see https://www.jsdelivr.com/package/npm/places.js
-      'download_url' => Url::fromUri('https://registry.npmjs.org/places.js/-/places.js-1.17.1.tgz'),
-      'version' => '1.17.1',
+      'download_url' => Url::fromUri('https://registry.npmjs.org/places.js/-/places.js-1.18.2.tgz'),
+      'version' => '1.18.2',
       'elements' => ['webform_location_places'],
     ];
     $libraries['jquery.inputmask'] = [
@@ -376,16 +376,16 @@ class WebformLibrariesManager implements WebformLibrariesManagerInterface {
       'description' => $this->t('A jQuery plugin for counting and limiting characters/words on text input, or textarea, elements.'),
       'notes' => $this->t('Word or character counting, with server-side validation, is available for text fields and text areas.'),
       'homepage_url' => Url::fromUri('https://github.com/ractoon/jQuery-Text-Counter'),
-      'download_url' => Url::fromUri('https://github.com/ractoon/jQuery-Text-Counter/archive/0.8.0.zip'),
-      'version' => '0.8.0',
+      'download_url' => Url::fromUri('https://github.com/ractoon/jQuery-Text-Counter/archive/0.9.0.zip'),
+      'version' => '0.9.0',
     ];
     $libraries['jquery.timepicker'] = [
-      'title' => $this->t('jQuery: Timepicker'),
+      'title' => $this->t('jQuery: Timepicker 1.13.10'),
       'description' => $this->t('A lightweight, customizable javascript timepicker plugin for jQuery, inspired by Google Calendar.'),
       'notes' => $this->t('Timepicker is used to provide a polyfill for HTML 5 time elements.'),
       'homepage_url' => Url::fromUri('https://github.com/jonthornton/jquery-timepicker'),
-      'download_url' => Url::fromUri('https://github.com/jonthornton/jquery-timepicker/archive/1.13.0.zip'),
-      'version' => '1.13.0',
+      'download_url' => Url::fromUri('https://github.com/jonthornton/jquery-timepicker/archive/1.13.10.zip'),
+      'version' => '1.13.10',
     ];
     $libraries['progress-tracker'] = [
       'title' => $this->t('Progress Tracker'),
@@ -409,8 +409,8 @@ class WebformLibrariesManager implements WebformLibrariesManagerInterface {
       'description' => $this->t('Select2 gives you a customizable select box with support for searching and tagging.'),
       'notes' => $this->t('Select2 is used to improve the user experience for select menus. Select2 is the recommended select menu enhancement library.'),
       'homepage_url' => Url::fromUri('https://select2.github.io/'),
-      'download_url' => Url::fromUri('https://github.com/select2/select2/archive/4.0.12.zip'),
-      'version' => '4.0.12',
+      'download_url' => Url::fromUri('https://github.com/select2/select2/archive/4.0.13.zip'),
+      'version' => '4.0.13',
       'module' => $this->moduleHandler->moduleExists('select2') ? 'select2' : '',
     ];
     $libraries['choices'] = [

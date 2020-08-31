@@ -66,6 +66,24 @@ interface WebformSubmissionInterface extends ContentEntityInterface, EntityOwner
   public function serial();
 
   /**
+   * Gets the langcode of the field values held in the object.
+   *
+   * @return string
+   *   The langcode.
+   */
+  public function getLangcode();
+
+  /**
+   * Sets the langcode of the field values held in the object.
+   *
+   * @param string $langcode
+   *   The langcode.
+   *
+   * @return $this
+   */
+  public function setLangcode($langcode);
+
+  /**
    * Returns the time that the submission was created.
    *
    * @return int

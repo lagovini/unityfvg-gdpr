@@ -30,14 +30,14 @@ class WebformEntityVariantsForm extends EntityForm {
   protected $entity;
 
   /**
-   * Webform element manager.
+   * The webform element manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
   protected $elementManager;
 
   /**
-   * Webform variant manager.
+   * The webform variant manager.
    *
    * @var \Drupal\webform\Plugin\WebformVariantManagerInterface
    */
@@ -204,6 +204,19 @@ class WebformEntityVariantsForm extends EntityForm {
             ),
           ];
         }
+        // Share.
+        if ($this->moduleHandler->moduleExists('webform_share')
+          && $webform->access('update')
+          && $webform->getSetting('share', TRUE)) {
+          $operations['share'] = [
+            'title' => t('Share'),
+            'url' => Url::fromRoute(
+              'entity.webform.share_embed',
+              ['webform' => $webform->id()],
+              ['query' => $query]
+            ),
+          ];
+        }
       }
       // Apply.
       $operations['apply'] = [
@@ -267,6 +280,19 @@ class WebformEntityVariantsForm extends EntityForm {
           'title' => $this->t('Test variants'),
           'url' => Url::fromRoute(
             'entity.webform.variant.test_form',
+            ['webform' => $webform->id()]
+          ),
+          'attributes' => WebformDialogHelper::getModalDialogAttributes(WebformDialogHelper::DIALOG_NARROW),
+        ];
+      }
+      // Share variants.
+      if ($this->moduleHandler->moduleExists('webform_share')
+        && $webform->access('update')
+        && $webform->getSetting('share', TRUE)) {
+        $operations['share'] = [
+          'title' => $this->t('Share variants'),
+          'url' => Url::fromRoute(
+            'entity.webform.variant.share_form',
             ['webform' => $webform->id()]
           ),
           'attributes' => WebformDialogHelper::getModalDialogAttributes(WebformDialogHelper::DIALOG_NARROW),

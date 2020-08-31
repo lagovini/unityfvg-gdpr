@@ -9,7 +9,7 @@ use Drupal\webform\Entity\WebformSubmission;
 /**
  * Tests for webform example element.
  *
- * @group Webform
+ * @group webform_example_element
  */
 class WebformExampleElementTest extends WebformBrowserTestBase {
 

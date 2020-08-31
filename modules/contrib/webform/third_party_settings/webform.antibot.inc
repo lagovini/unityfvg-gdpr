@@ -59,10 +59,11 @@ function _webform_antibot_form(array &$form, FormStateInterface $form_state, $an
     '#return_value' => TRUE,
   ];
 
-  if ($antibot_state != WEBFORM_ANTIBOT_NEUTRAL) {
+  $antibot_state = (int) $antibot_state;
+  if ($antibot_state !== WEBFORM_ANTIBOT_NEUTRAL) {
     $form['third_party_settings']['antibot']['antibot']['#attributes']['disabled'] = 'disabled';
     $form_state->set('antibot_disabled', TRUE);
-    if ($antibot_state == WEBFORM_ANTIBOT_ENABLED_WEBFORM) {
+    if ($antibot_state === WEBFORM_ANTIBOT_ENABLED_WEBFORM) {
       $form['third_party_settings']['antibot']['antibot']['#default_value'] = 1;
       $form['third_party_settings']['antibot']['antibot']['#description'] = t('<a href=":href_webform">Antibot protection</a> is enabled for all webforms.', $t_args);
     }

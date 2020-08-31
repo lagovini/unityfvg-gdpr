@@ -27,7 +27,7 @@ class WebformAttachmentController extends ControllerBase implements ContainerInj
   protected $elementInfo;
 
   /**
-   * A webform element plugin manager.
+   * The webform element plugin manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */

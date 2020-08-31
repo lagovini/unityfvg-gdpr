@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\Element\WebformElementBrowserTestBase;
 /**
  * Tests for toggles element.
  *
- * @group Webform
+ * @group webform_toggles
  */
 class WebformTogglesElementTest extends WebformElementBrowserTestBase {
 

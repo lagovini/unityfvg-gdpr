@@ -244,7 +244,7 @@ class WebformMapping extends WebformElementBase {
   public function buildExportHeader(array $element, array $options) {
     $header = [];
     foreach ($element['#source'] as $key => $label) {
-      $header[] = ($options['header_format'] == 'key') ? $key : $label;
+      $header[] = ($options['header_format'] === 'key') ? $key : $label;
     }
     return $this->prefixExportHeader($header, $element, $options);
   }

@@ -50,7 +50,7 @@ abstract class DateBase extends WebformElementBase {
     $element['#theme_wrappers'] = ['form_element'];
 
     // Must manually process #states.
-    // @see drupal_process_states().
+    // @see \Drupal\Core\Form\FormHelper::processStates
     if (!empty($element['#states'])) {
       $element['#attached']['library'][] = 'core/drupal.states';
       $element['#wrapper_attributes']['data-drupal-states'] = Json::encode($element['#states']);

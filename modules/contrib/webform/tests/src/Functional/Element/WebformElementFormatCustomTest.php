@@ -9,7 +9,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform submission webform element custom #format support.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementFormatCustomTest extends WebformElementBrowserTestBase {
 

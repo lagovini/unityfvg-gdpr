@@ -1,0 +1,8 @@
+/**
+ * @file
+ * Webform clientside validation styles.
+ */
+
+.webform-submission-form strong.error.form-item--error-message {
+  display: block;
+}

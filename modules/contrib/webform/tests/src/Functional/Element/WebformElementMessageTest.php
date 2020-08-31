@@ -7,7 +7,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for message webform element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementMessageTest extends WebformElementBrowserTestBase {
 

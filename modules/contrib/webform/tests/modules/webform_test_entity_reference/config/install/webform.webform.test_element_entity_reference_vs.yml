@@ -65,17 +65,17 @@ elements: |
     '#wrapper_attributes':
       class:
         - webform-entity-reference-options
-  
+
 css: |
   /* Autocomplete */
-  
+
   .ui-autocomplete {
     display: flex;
     flex-wrap: wrap !important;
     align-self: flex-start !important;
     max-width: 540px !important;
   }
-  
+
   .ui-autocomplete .ui-menu-item-wrapper {
     display: block !important;
     border: 1px solid #ccc !important;
@@ -84,57 +84,57 @@ css: |
     margin: 10px 0 0 10px !important;
     padding: 10px !important;
   }
-  
+
   .ui-autocomplete .ui-menu-item-wrapper.ui-state-active {
     background-color: blue !important;
   }
-  
+
   .ui-autocomplete .views-field views-field-field-image {
     display: block;
     margin: 0 0 5px 0;
   }
-  
+
   /* Checkboex and radios */
-  
+
   .webform-entity-reference-options .fieldset-wrapper > div {
     display: flex;
     flex-wrap: wrap;
     align-self: flex-start;
   }
-  
+
   .webform-entity-reference-options .form-item {
     position: relative;
   }
-  
+
   .webform-entity-reference-options .form-item input {
     position: absolute;
     top: 20px;
-    left: 20px; 
+    left: 20px;
   }
-  
+
   .webform-entity-reference-options .form-item label {
     display: block;
     border: 1px solid #ccc;
     background-color: #eee;
     width: 100px;
-    margin: 0 10px 10px 0;  
-    padding: 10px;  
+    margin: 0 10px 10px 0;
+    padding: 10px;
   }
-  
+
   .webform-entity-reference-options .form-item input:checked + label {
     display: block;
     border: 1px solid #ccc;
     background-color: #ffc;
     width: 100px;
-    margin: 0 10px 10px 0;  
-    padding: 10px;  
+    margin: 0 10px 10px 0;
+    padding: 10px;
   }
-  
+
   .webform-entity-reference-options label.option img {
     display: block;
-    margin: 0 0 5px 0;  
+    margin: 0 0 5px 0;
   }
-  
+
 javascript: ''
 settings:
   ajax: false
@@ -145,7 +145,7 @@ settings:
   page: true
   page_submit_path: ''
   page_confirm_path: ''
-  page_admin_theme: false
+  page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -175,6 +175,11 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
   submission_label: ''
   submission_log: false
   submission_views: {  }
@@ -200,11 +205,17 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
+  wizard_auto_forward: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
   wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
   preview: 1
   preview_label: ''
   preview_title: ''

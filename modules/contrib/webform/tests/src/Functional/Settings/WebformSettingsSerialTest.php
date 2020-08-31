@@ -9,7 +9,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform submission serial number.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsSerialTest extends WebformBrowserTestBase {
 
@@ -23,7 +23,7 @@ class WebformSettingsSerialTest extends WebformBrowserTestBase {
     $webform_contact = Webform::load('contact');
 
     // Set next serial to 99.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings/submissions', ['next_serial' => 99], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings/submissions', ['next_serial' => 99], 'Save');
 
     // Check next serial is 99.
     $sid = $this->postSubmissionTest($webform_contact);
@@ -31,7 +31,7 @@ class WebformSettingsSerialTest extends WebformBrowserTestBase {
     $this->assertEqual($webform_submission->serial(), 99);
 
     // Check that next serial is set to max serial.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings/submissions', ['next_serial' => 1], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings/submissions', ['next_serial' => 1], 'Save');
     $this->assertRaw('The next submission number was increased to 100 to make it higher than existing submissions.');
   }
 

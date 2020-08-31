@@ -7,7 +7,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for entity automcomplete element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementEntityAutocompleteTest extends WebformElementBrowserTestBase {
 

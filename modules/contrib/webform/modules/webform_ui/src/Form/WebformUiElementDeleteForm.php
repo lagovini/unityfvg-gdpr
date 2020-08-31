@@ -26,14 +26,14 @@ class WebformUiElementDeleteForm extends WebformDeleteFormBase {
   protected $renderer;
 
   /**
-   * Webform element manager.
+   * The webform element manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
   protected $elementManager;
 
   /**
-   * Webform element validator.
+   * The webform element validator.
    *
    * @var \Drupal\webform\WebformEntityElementsValidatorInterface
    */

@@ -31,7 +31,7 @@ class DelimitedWebformExporter extends TabularBaseWebformExporter {
    */
   public function setConfiguration(array $configuration) {
     parent::setConfiguration($configuration);
-    if ($this->configuration['delimiter'] == '\t') {
+    if ($this->configuration['delimiter'] === '\t') {
       $this->configuration['delimiter'] = "\t";
     }
     return $this;

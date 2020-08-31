@@ -28,7 +28,7 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
   protected $moduleHandler;
 
   /**
-   * The Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */
@@ -42,7 +42,7 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
   protected $translationManager;
 
   /**
-   * The Webform breadcrumb builder.
+   * The webform breadcrumb builder.
    *
    * @var \Drupal\webform\Breadcrumb\WebformBreadcrumbBuilder
    */
@@ -146,25 +146,6 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
   /****************************************************************************/
 
   /**
-   * Tests WebformBreadcrumbBuilder::__construct().
-   *
-   * @covers ::__construct
-   */
-  /*
-  public function testConstructor() {
-    // Reflect upon our properties, except for config which is a special case.
-    $property_names = [
-      'moduleHandler' => $this->moduleHandler,
-      'requestHandler' => $this->requestHandler,
-      'stringTranslation' => $this->translationManager,
-    ];
-    foreach ($property_names as $property_name => $property_value) {
-      $this->assertAttributeEquals($property_value, $property_name, $this->breadcrumbBuilder);
-    }
-  }
-  */
-
-  /**
    * Tests WebformBreadcrumbBuilder::applies().
    *
    * @param bool $expected
@@ -232,7 +213,7 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
   public function testType($expected, $route_name = NULL, array $parameter_map = []) {
     $route_match = $this->getMockRouteMatch($route_name, $parameter_map);
     $this->breadcrumbBuilder->applies($route_match);
-    $this->assertAttributeEquals($expected, 'type', $this->breadcrumbBuilder);
+    $this->assertEquals($expected, $this->breadcrumbBuilder->getType());
   }
 
   /**
@@ -335,7 +316,7 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
     $webform_submission_access->expects($this->any())
       ->method('access')
       ->will($this->returnCallback(function ($operation) {
-        return ($operation == 'view_own');
+        return ($operation === 'view_own');
       }));
     $route_match = $this->getMockRouteMatch('entity.node.webform_submission.canonical', [
       ['webform_submission', $webform_submission_access],

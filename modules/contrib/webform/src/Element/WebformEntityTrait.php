@@ -71,8 +71,8 @@ trait WebformEntityTrait {
 
     // If the selection handler is not using views, then translate
     // the entity reference's options.
-    if ($element['#selection_handler'] != 'views') {
-      $options = self::translateOptions($options, $element);
+    if ($element['#selection_handler'] !== 'views') {
+      $options = static::translateOptions($options, $element);
     }
 
     if ($element['#type'] === 'webform_entity_select') {
@@ -108,7 +108,7 @@ trait WebformEntityTrait {
 
     foreach ($options as $key => $value) {
       if (is_array($value)) {
-        $options[$key] = self::translateOptions($value, $element);
+        $options[$key] = static::translateOptions($value, $element);
       }
       else {
         // Set the entity in the correct language for display.

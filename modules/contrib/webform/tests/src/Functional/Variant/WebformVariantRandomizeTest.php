@@ -8,7 +8,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for the webform variant randomize.
  *
- * @group Webform
+ * @group webform
  */
 class WebformVariantRandomizeTest extends WebformBrowserTestBase {
 

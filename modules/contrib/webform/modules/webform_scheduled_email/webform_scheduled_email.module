@@ -39,7 +39,7 @@ function webform_scheduled_email_entity_predelete(EntityInterface $entity) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_delete().
+ * Implements hook_ENTITY_TYPE_delete() for webform entities.
  */
 function webform_scheduled_email_webform_delete(WebformInterface $webform) {
   /** @var \Drupal\webform_scheduled_email\WebformScheduledEmailManagerInterface $webform_scheduled_email_manager */
@@ -48,7 +48,7 @@ function webform_scheduled_email_webform_delete(WebformInterface $webform) {
 }
 
 /**
- * Implements hook_ENTITY_TYPE_delete().
+ * Implements hook_ENTITY_TYPE_delete() for webform_submission entities.
  */
 function webform_scheduled_email_webform_submission_delete(WebformSubmissionInterface $webform_submission) {
   /** @var \Drupal\webform_scheduled_email\WebformScheduledEmailManagerInterface $webform_scheduled_email_manager */
@@ -77,7 +77,7 @@ function webform_scheduled_email_theme() {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter() for webform admin config handlers form.
  */
 function webform_scheduled_email_form_webform_admin_config_handlers_form_alter(&$form, FormStateInterface $form_state) {
   $form['webform_scheduled_email'] = [

@@ -56,7 +56,7 @@ class WebformOptionsHelper {
           return $has_value;
         }
       }
-      elseif ($value == $option_value) {
+      elseif ($value === $option_value) {
         return TRUE;
       }
     }

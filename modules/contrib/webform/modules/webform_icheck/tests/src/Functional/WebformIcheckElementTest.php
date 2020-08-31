@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\Element\WebformElementBrowserTestBase;
 /**
  * Tests for iCheck element.
  *
- * @group Webform
+ * @group webform_icheck
  */
 class WebformIcheckElementTest extends WebformElementBrowserTestBase {
 

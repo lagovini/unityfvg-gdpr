@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for view element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementViewTest extends WebformElementBrowserTestBase {
 
@@ -51,17 +51,17 @@ class WebformElementViewTest extends WebformElementBrowserTestBase {
 
     // Check view name validation.
     $edit = ['properties[name]' => 'xxx'];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, 'Save');
     $this->assertRaw('View <em class="placeholder">xxx</em> does not exist.');
 
     // Check view display id validation.
     $edit = ['properties[display_id]' => 'xxx'];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, 'Save');
     $this->assertRaw('View display <em class="placeholder">xxx</em> does not exist.');
 
     // Check view exposed filter validation.
     $edit = ['properties[display_id]' => 'embed_administer'];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, 'Save');
     $this->assertRaw('View display <em class="placeholder">embed_administer</em> has exposed filters which will break the webform.');
 
     // Check view exposed filter validation.
@@ -69,7 +69,7 @@ class WebformElementViewTest extends WebformElementBrowserTestBase {
       'properties[display_id]' => 'embed_administer',
       'properties[display_on]' => 'view',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_view/element/view/edit', $edit, 'Save');
     $this->assertNoRaw('View display <em class="placeholder">embed_administer</em> has exposed filters which will break the webform.');
   }
 

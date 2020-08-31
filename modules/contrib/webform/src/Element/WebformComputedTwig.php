@@ -43,7 +43,7 @@ class WebformComputedTwig extends WebformComputedBase {
 
     $template = ($whitespace === static::WHITESPACE_SPACELESS) ? '{% spaceless %}' . $element['#template'] . '{% endspaceless %}' : $element['#template'];
 
-    $options = ['html' => (static::getMode($element) === static::MODE_HTML)];
+    $options = ['html' => (static::getMode($element) === WebformComputedInterface::MODE_HTML)];
 
     $value = WebformTwigExtension::renderTwigTemplate($webform_submission, $template, $options);
 

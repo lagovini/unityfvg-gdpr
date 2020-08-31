@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for composite elements.
  *
- * @group Webform
+ * @group webform
  */
 class WebformCompositeTest extends WebformBrowserTestBase {
 
@@ -59,7 +59,7 @@ class WebformCompositeTest extends WebformBrowserTestBase {
     /* Processing */
 
     // Check contact composite value.
-    $this->drupalPostForm('/webform/test_composite', [], t('Submit'));
+    $this->drupalPostForm('/webform/test_composite', [], 'Submit');
     $this->assertRaw("contact_basic:
   name: 'John Smith'
   company: Acme
@@ -76,7 +76,7 @@ class WebformCompositeTest extends WebformBrowserTestBase {
     $edit = [
       'contact_basic[name]' => '',
     ];
-    $this->drupalPostForm('/webform/test_composite', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_composite', $edit, 'Submit');
     $this->assertRaw('Name field is required.');
 
     /* Custom options */
@@ -93,7 +93,7 @@ class WebformCompositeTest extends WebformBrowserTestBase {
     $this->assertRaw('<em>Custom options can only be updated via the <a href="' . base_path() . 'admin/structure/webform/manage/test_composite/source">YAML source</a>.</em>');
 
     // Save composite element with custom options.
-    $this->drupalPostForm('/admin/structure/webform/manage/test_composite/element/address_custom_options/edit', [], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_composite/element/address_custom_options/edit', [], 'Save');
 
     // Check editing custom options are not removed.
     $this->drupalGet('/webform/test_composite');

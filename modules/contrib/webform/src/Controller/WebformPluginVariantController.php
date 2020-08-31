@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 class WebformPluginVariantController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
-   * A webform variant plugin manager.
+   * The webform variant plugin manager.
    *
    * @var \Drupal\Component\Plugin\PluginManagerInterface
    */

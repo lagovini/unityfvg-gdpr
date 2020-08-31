@@ -8,7 +8,7 @@ use Drupal\Tests\webform\FunctionalJavascript\WebformWebDriverTestBase;
 /**
  * Tests for webform basic wizard.
  *
- * @group Webform
+ * @group webform_javascript
  */
 class WebformWizardBasicJavaScriptTest extends WebformWebDriverTestBase {
 

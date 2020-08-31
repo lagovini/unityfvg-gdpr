@@ -271,7 +271,7 @@ abstract class WebformUiElementTypeFormBase extends FormBase {
     // modal, then clicking the image button opens another modal,
     // which closes the original modal.
     // @todo Remove the below workaround once this issue is resolved.
-    if ($webform_element->getTypeName() == 'processed_text' && !WebformDialogHelper::useOffCanvas()) {
+    if ($webform_element->getTypeName() === 'processed_text' && !WebformDialogHelper::useOffCanvas()) {
       unset($row['type']['#attributes']);
       unset($row['operation']['#attributes']);
       if (isset($row['operation'])) {

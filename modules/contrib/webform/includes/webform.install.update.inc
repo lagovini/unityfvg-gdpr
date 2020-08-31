@@ -5,7 +5,6 @@
  * Archived Webform update hooks.
  */
 
-use Drupal\Core\Path\Entity\PathAlias;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Component\Uuid\Php as Uuid;
 use Drupal\Core\Cache\Cache;
@@ -61,9 +60,9 @@ function webform_update_8001() {
   foreach ($schema as $item_name => $item) {
     foreach ($item as $table_name => $table_schema) {
       foreach ($table_schema as $schema_key => $schema_data) {
-        if ($schema_key == 'fields') {
+        if ($schema_key === 'fields') {
           foreach ($schema_data as $field_name => $field_data) {
-            if (preg_match('/_target_id$/', $field_name) && $field_data['description'] == 'The ID of the webform entity.' && $schema[$item_name][$table_name]['fields'][$field_name]['length'] === 255) {
+            if (preg_match('/_target_id$/', $field_name) && $field_data['description'] === 'The ID of the webform entity.' && $schema[$item_name][$table_name]['fields'][$field_name]['length'] === 255) {
               $schema[$item_name][$table_name]['fields'][$field_name]['length'] = 32;
               if ($database_schema->tableExists($table_name)) {
                 $database_schema->changeField($table_name, $field_name, $field_name, $schema[$item_name][$table_name]['fields'][$field_name]);
@@ -133,7 +132,7 @@ function webform_update_8006() {
   // Fix key_value.collection which was no updated during the migration.
   $module_handler = \Drupal::moduleHandler();
   $database_type = Database::getConnection('default')->databaseType();
-  if ($module_handler->moduleExists('webform') && !$module_handler->moduleExists('webform') && $database_type == 'mysql') {
+  if ($module_handler->moduleExists('webform') && !$module_handler->moduleExists('webform') && $database_type === 'mysql') {
     $database = \Drupal::database();
 
     $select = $database->select('key_value', 'kv');
@@ -511,10 +510,10 @@ function webform_update_8025() {
   foreach ($schema as $item_name => $item) {
     foreach ($item as $table_name => $table_schema) {
       foreach ($table_schema as $schema_key => $schema_data) {
-        if ($schema_key == 'fields') {
+        if ($schema_key === 'fields') {
           foreach ($schema_data as $field_name => $field_data) {
             $is_webform_field_status = (isset($webform_tables[$table_name]) && $field_name === $webform_tables[$table_name] . '_status');
-            $is_webform_field_integer = ($field_data['type'] == 'int');
+            $is_webform_field_integer = ($field_data['type'] === 'int');
             if ($is_webform_field_status && $is_webform_field_integer) {
               $temp_field_name = $field_name . '_temp';
 
@@ -631,7 +630,7 @@ function webform_update_8030() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $data = $webform_config->getRawData();
-    $data['settings']['draft'] = ($data['settings']['draft'] == TRUE) ? WebformInterface::DRAFT_AUTHENTICATED : WebformInterface::DRAFT_NONE;
+    $data['settings']['draft'] = ($data['settings']['draft'] === TRUE) ? WebformInterface::DRAFT_AUTHENTICATED : WebformInterface::DRAFT_NONE;
     $webform_config->setData($data)->save();
   }
 }
@@ -759,7 +758,7 @@ function webform_update_8035() {
     $data = $webform_config->getRawData();
     $has_handler = FALSE;
     foreach ($data['handlers'] as &$handler) {
-      if ($handler['id'] == 'email') {
+      if ($handler['id'] === 'email') {
         if (isset($handler['settings']['states']) && is_array($handler['settings']['states'])) {
           $handler['settings']['states'] = array_values(array_filter($handler['settings']['states']));
         }
@@ -830,7 +829,7 @@ function webform_update_8039() {
   foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
     $webform_config = $config_factory->getEditable($webform_config_name);
     $data = $webform_config->getRawData();
-    if (isset($data['dependencies']['enforced']['module']) && $data['dependencies']['enforced']['module'] == ['webform_templates']) {
+    if (isset($data['dependencies']['enforced']['module']) && $data['dependencies']['enforced']['module'] === ['webform_templates']) {
       if (!file_exists("$config_install_directory/$webform_config_name.yml")) {
         unset($data['dependencies']['enforced']['module']);
         if (empty($data['dependencies']['enforced'])) {
@@ -1040,7 +1039,7 @@ function _webform_update_8046_convert_data(array $data) {
   $actions_element = [];
   $settings = $data['settings'];
   foreach ($button_names as $button_name) {
-    $settings_prefix = ($button_name == 'submit') ? 'form_' . $button_name : $button_name . '_button';
+    $settings_prefix = ($button_name === 'submit') ? 'form_' . $button_name : $button_name . '_button';
     if (!empty($settings[$settings_prefix . '_label'])) {
       $actions_element['#' . $button_name . '__label'] = $settings[$settings_prefix . '_label'];
     }
@@ -1192,7 +1191,7 @@ function webform_update_8057() {
         $settings = [];
         foreach ($handler['settings'] as $settings_key => $setting_value) {
           $settings[$settings_key] = $setting_value;
-          if ($settings_key == 'excluded_elements') {
+          if ($settings_key === 'excluded_elements') {
             $settings['ignore_access'] = FALSE;
           }
         }
@@ -1334,7 +1333,7 @@ function webform_update_8065() {
         $settings = [];
         foreach ($handler['settings'] as $settings_key => $setting_value) {
           $settings[$settings_key] = $setting_value;
-          if ($settings_key == 'ignore_access') {
+          if ($settings_key === 'ignore_access') {
             $settings['exclude_empty'] = TRUE;
           }
         }
@@ -2002,7 +2001,7 @@ function webform_update_8107() {
 function webform_update_8108() {
   /** @var \Drupal\block\Entity\Block $block */
   foreach (\Drupal::entityTypeManager()->getStorage('block')->loadMultiple() as $block) {
-    if ($block->getPluginId() == 'webform_block') {
+    if ($block->getPluginId() === 'webform_block') {
       $webform_id = $block->getPlugin()->getConfiguration()['webform_id'];
       if (\Drupal::entityTypeManager()->getStorage('webform')->load($webform_id)) {
         $block->save();
@@ -3188,7 +3187,7 @@ function webform_update_8170() {
         unset($settings['draft_custom_data']);
       }
 
-      if ($handler['settings'] != $settings) {
+      if ($handler['settings'] !== $settings) {
         $handler_updated = TRUE;
         $handler['settings'] = $settings;
       }
@@ -3669,8 +3668,14 @@ function webform_update_8191() {
  * Unsafe HMAC construction.
  */
 function webform_update_8192() {
+  // Check if the webform directory exists.
+  $webform_uri = 'public://webform';
+  if (!\Drupal::service('file_system')->prepareDirectory($webform_uri)) {
+    return NULL;
+  }
+
   $invalid_signatures = [];
-  $files = file_scan_directory('public://webform/', '/signature-/');
+  $files = \Drupal::service('file_system')->scanDirectory('public://webform/', '/signature-/');
   foreach ($files as $file) {
     $value = file_get_contents($file->uri);
     $value = 'data:image/png;base64,' . base64_encode($value);
@@ -3684,7 +3689,7 @@ function webform_update_8192() {
     }
 
     // Delete invalid invalid signature file.
-    file_unmanaged_delete($file->uri);
+    \Drupal::service('file_system')->delete($file->uri);
   }
 
   // Exit if all signatures are valid.
@@ -3724,4 +3729,33 @@ function webform_update_8192() {
     ];
     return \Drupal::service('renderer')->renderPlain($build);
   }
+}
+
+/**
+ * Issue #3137964: Make it easier to embed/share a webform.
+ */
+function webform_update_8193() {
+  _webform_update_admin_settings();
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3144962: Webform cards.
+ */
+function webform_update_8195() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3153184: Allow a webform displayed as a page to have a custom theme.
+ */
+function webform_update_8196() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3144962: Webform cards.
+ */
+function webform_update_8197() {
+  _webform_update_admin_settings();
 }

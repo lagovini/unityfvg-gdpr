@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for webform element radios.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementRadiosTest extends WebformElementBrowserTestBase {
 
@@ -38,6 +38,12 @@ class WebformElementRadiosTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<input data-drupal-selector="edit-radios-buttons-yes" class="visually-hidden form-radio" type="radio" id="edit-radios-buttons-yes" name="radios_buttons" value="Yes" />');
     $this->assertRaw('<label class="webform-options-display-buttons-label option" for="edit-radios-buttons-yes">Yes</label>');
 
+    // Check radios displayed as buttons_horizontal.
+    $this->assertRaw('<div id="edit-radios-buttons-horizontal" class="js-webform-radios webform-options-display-buttons webform-options-display-buttons-horizontal form-radios"><div class="webform-options-display-buttons-wrapper">');
+
+    // Check radios displayed as buttons_vertical.
+    $this->assertRaw('<div id="edit-radios-buttons-vertical" class="js-webform-radios webform-options-display-buttons webform-options-display-buttons-vertical form-radios"><div class="webform-options-display-buttons-wrapper">');
+
     // Check radios displayed as buttons with description.
     $this->assertRaw('<label class="webform-options-display-buttons-label option" for="edit-radios-buttons-description-one"><div class="webform-options-display-buttons-title">One</div><div class="webform-options-display-buttons-description description">This is a description</div></label>');
 
@@ -61,7 +67,7 @@ class WebformElementRadiosTest extends WebformElementBrowserTestBase {
       'radios_description' => 'one',
       'radios_help' => 'two',
     ];
-    $this->drupalPostForm('/webform/test_element_radios', $edit, t('Preview'));
+    $this->drupalPostForm('/webform/test_element_radios', $edit, 'Preview');
     $this->assertPattern('#<label>radios_description</label>\s+One#');
     $this->assertPattern('#<label>radios_help</label>\s+Two#');
   }

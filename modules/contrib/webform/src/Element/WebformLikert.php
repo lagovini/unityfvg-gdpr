@@ -63,7 +63,7 @@ class WebformLikert extends FormElement {
         $answer_description = '';
       }
       else {
-        $answer_description_property_name = ($element['#answers_description_display'] == 'help') ? 'help' : 'description';
+        $answer_description_property_name = ($element['#answers_description_display'] === 'help') ? 'help' : 'description';
         list($answer_title, $answer_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $answer);
       }
       $answers[$answer_key] = [
@@ -121,7 +121,7 @@ class WebformLikert extends FormElement {
         $question_description = '';
       }
       else {
-        $question_description_property_name = ($element['#questions_description_display'] == 'help') ? '#help' : '#description';
+        $question_description_property_name = ($element['#questions_description_display'] === 'help') ? '#help' : '#description';
         list($question_title, $question_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $question);
       }
 

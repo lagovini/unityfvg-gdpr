@@ -8,7 +8,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform translation.
  *
- * @group Webform
+ * @group webform
  */
 class WebformEntityTranslationTest extends WebformBrowserTestBase {
 
@@ -22,7 +22,7 @@ class WebformEntityTranslationTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Place blocks.
@@ -37,8 +37,8 @@ class WebformEntityTranslationTest extends WebformBrowserTestBase {
     $this->drupalLogin($this->rootUser);
 
     // Set [site:name] to 'Test Website' and translate it into Spanish.
-    $this->drupalPostForm('/admin/config/system/site-information', ['site_name' => 'Test Website'], t('Save configuration'));
-    $this->drupalPostForm('/admin/config/system/site-information/translate/es/add', ['translation[config_names][system.site][name]' => 'Sitio web de prueba'], t('Save translation'));
+    $this->drupalPostForm('/admin/config/system/site-information', ['site_name' => 'Test Website'], 'Save configuration');
+    $this->drupalPostForm('/admin/config/system/site-information/translate/es/add', ['translation[config_names][system.site][name]' => 'Sitio web de prueba'], 'Save translation');
 
     /** @var \Drupal\webform\WebformTranslationManagerInterface $translation_manager */
     $translation_manager = \Drupal::service('webform.translation_manager');
@@ -69,7 +69,7 @@ class WebformEntityTranslationTest extends WebformBrowserTestBase {
     $this->assertNoLink('Campo de texto');
 
     // Check form builder is not translated when reset.
-    $this->drupalPostForm('/es/admin/structure/webform/manage/test_translation', [], t('Reset'));
+    $this->drupalPostForm('/es/admin/structure/webform/manage/test_translation', [], 'Reset');
     $this->assertLink('Text field');
     $this->assertNoLink('Campo de texto');
 
@@ -118,7 +118,7 @@ class WebformEntityTranslationTest extends WebformBrowserTestBase {
     $this->assertEqual($elements, $translation_element);
 
     // Translate [site:name] into French.
-    $this->drupalPostForm('/admin/config/system/site-information/translate/fr/add', ['translation[config_names][system.site][name]' => 'Site Web de test'], t('Save translation'));
+    $this->drupalPostForm('/admin/config/system/site-information/translate/fr/add', ['translation[config_names][system.site][name]' => 'Site Web de test'], 'Save translation');
 
     // Check default elements.
     $this->drupalGet('/admin/structure/webform/manage/test_translation/translate/fr/add');
@@ -180,7 +180,7 @@ actions:
     $edit = [
       'translation[config_names][webform.webform.test_translation][elements]' => Yaml::encode($translation_elements),
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_translation/translate/fr/add', $edit, t('Save translation'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_translation/translate/fr/add', $edit, 'Save translation');
 
     // Check French translation.
     $this->drupalGet('/fr/webform/test_translation');
@@ -273,7 +273,7 @@ actions:
       'title' => 'DUPLICATE',
       'id' => 'duplicate',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_translation/duplicate', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_translation/duplicate', $edit, 'Save');
 
     // Check duplicate English translation.
     $this->drupalGet('/webform/duplicate', ['language' => $language_manager->getLanguage('en')]);

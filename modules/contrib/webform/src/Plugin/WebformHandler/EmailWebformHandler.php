@@ -121,7 +121,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   protected $themeManager;
 
   /**
-   * A webform element plugin manager.
+   * The webform element plugin manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
@@ -573,7 +573,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#default_value' => $body_select_default_value,
     ];
     foreach ($body_default_values as $format => $default_value) {
-      if ($format == 'html') {
+      if ($format === 'html') {
         $form['message']['body_custom_' . $format] = [
           '#type' => 'webform_html_editor',
           '#format' => $this->configFactory->get('webform.settings')->get('html_editor.mail_format'),
@@ -592,11 +592,11 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         '#states' => [
           'visible' => [
             ':input[name="settings[body]"]' => ['value' => WebformSelectOther::OTHER_OPTION],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
           'required' => [
             ':input[name="settings[body]"]' => ['value' => WebformSelectOther::OTHER_OPTION],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
         ],
       ];
@@ -615,7 +615,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         '#states' => [
           'visible' => [
             ':input[name="settings[body]"]' => ['value' => static::DEFAULT_VALUE],
-            ':input[name="settings[html]"]' => ['checked' => ($format == 'html') ? TRUE : FALSE],
+            ':input[name="settings[html]"]' => ['checked' => ($format === 'html') ? TRUE : FALSE],
           ],
         ],
       ];
@@ -935,7 +935,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       list($configuration_name, $configuration_type) = (strpos($configuration_key, '_') !== FALSE) ? explode('_', $configuration_key) : [$configuration_key, 'text'];
 
       // Set options and continue.
-      if ($configuration_type == 'options') {
+      if ($configuration_type === 'options') {
         $message[$configuration_key] = $configuration_value;
         continue;
       }
@@ -949,13 +949,13 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       }
 
       // Set email addresses.
-      if ($configuration_type == 'mail') {
+      if ($configuration_type === 'mail') {
         $emails = $this->getMessageEmails($webform_submission, $configuration_name, $configuration_value);
         $configuration_value = implode(',', array_unique($emails));
       }
 
       // If Twig enabled render and body, render the Twig template.
-      if ($configuration_key == 'body' && $this->configuration['twig']) {
+      if ($configuration_key === 'body' && $this->configuration['twig']) {
         $message[$configuration_key] = WebformTwigExtension::renderTwigTemplate($webform_submission, $configuration_value, $token_options);
       }
       else {
@@ -1036,8 +1036,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $email_options = WebformOptionsHelper::decodeConfig($this->configuration[$configuration_name . '_options']);
 
       // Set default email address.
-      if (!empty($email_options[self::DEFAULT_OPTION])) {
-        $emails[] = $email_options[self::DEFAULT_OPTION];
+      if (!empty($email_options[static::DEFAULT_OPTION])) {
+        $emails[] = $email_options[static::DEFAULT_OPTION];
       }
 
       // Get submission email addresses as an array.
@@ -1051,8 +1051,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
 
       // Set empty email address.
       if (empty($options_values)) {
-        if (!empty($email_options[self::EMPTY_OPTION])) {
-          $emails[] = $email_options[self::EMPTY_OPTION];
+        if (!empty($email_options[static::EMPTY_OPTION])) {
+          $emails[] = $email_options[static::EMPTY_OPTION];
         }
       }
       // Loop through options values and collect email addresses.
@@ -1062,8 +1062,8 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
             $emails[] = $email_options[$option_value];
           }
           // Set other email address.
-          elseif (!empty($email_options[self::OTHER_OPTION])) {
-            $emails[] = $email_options[self::OTHER_OPTION];
+          elseif (!empty($email_options[static::OTHER_OPTION])) {
+            $emails[] = $email_options[static::OTHER_OPTION];
           }
         }
       }
@@ -1144,8 +1144,6 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     $from = $message['from_mail'];
 
     // Remove less than (<) and greater (>) than from name.
-    // @todo Figure out the proper way to encode special characters.
-    // Note: PhpMail call.
     $message['from_name'] = preg_replace('/[<>]/', '', $message['from_name']);
 
     if (!empty($message['from_name'])) {
@@ -1178,13 +1176,11 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     $theme_name = $this->configuration['theme_name'];
     $message['body'] = trim((string) $this->themeManager->renderPlain($build, $theme_name));
 
+    // Html body needs to be Markup so that relative URLs are converted
+    // to absolute.
+    // @see \Drupal\Core\Mail\MailManager::doMail
     if ($this->configuration['html']) {
-      switch ($this->getMailSystemFormatter()) {
-        case 'swiftmailer':
-          // SwiftMailer requires that the body be valid Markup.
-          $message['body'] = Markup::create($message['body']);
-          break;
-      }
+      $message['body'] = Markup::create($message['body']);
     }
 
     // Send message.
@@ -1361,7 +1357,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
   protected function supportsAttachments() {
     // If 'system.mail.interface.default' is 'test_mail_collector'
     // allow email attachments during testing.
-    if ($this->configFactory->get('system.mail')->get('interface.default') == 'test_mail_collector') {
+    if ($this->configFactory->get('system.mail')->get('interface.default') === 'test_mail_collector') {
       return TRUE;
     }
 
@@ -1411,7 +1407,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       'subject' => $this->t('Subject'),
     ];
     foreach ($values as $name => $title) {
-      if ($title == '---') {
+      if ($title === '---') {
         $build[$name] = ['#markup' => '<hr />'];
       }
       elseif (!empty($message[$name])) {
@@ -1538,7 +1534,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       '#other__title' => $title,
       '#other__title_display' => 'invisible',
       '#other__placeholder' => $this->t('Enter @label…', ['@label' => $label]),
-      '#other__type' => ($element_type == 'mail') ? 'webform_email_multiple' : 'textfield',
+      '#other__type' => ($element_type === 'mail') ? 'webform_email_multiple' : 'textfield',
       '#other__allow_tokens' => TRUE,
       '#required' => $required,
       '#default_value' => $this->configuration[$name],
@@ -1605,12 +1601,12 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
         $value = '<b>' . $value . '</b>';
       });
       if (preg_match('/_other$/', $options_element['#type'])) {
-        $mapping_options[self::OTHER_OPTION] = $this->t("Other (Used when 'other' value is entered)");
+        $mapping_options[static::OTHER_OPTION] = $this->t("Other (Used when 'other' value is entered)");
       }
       if (empty($options_element['#required'])) {
-        $mapping_options[self::EMPTY_OPTION] = $this->t('Empty (Used when no option is selected)');
+        $mapping_options[static::EMPTY_OPTION] = $this->t('Empty (Used when no option is selected)');
       }
-      $mapping_options[self::DEFAULT_OPTION] = $this->t('Default (This email address will always be included)');
+      $mapping_options[static::DEFAULT_OPTION] = $this->t('Default (This email address will always be included)');
 
       // Set placeholder emails.
       $destination_placeholder_emails = ['example@example.com', '[site:mail]'];

@@ -23,7 +23,6 @@
         return;
       }
 
-
       $(context).find('input.js-webform-signature').once('webform-signature').each(function () {
         var $input = $(this);
         var value = $input.val();
@@ -105,6 +104,14 @@
             $button.show();
           }
         });
+
+        // If the signature pad is not visible (i.e. in a modal dialog),
+        // recalculate the dimensions, after everything has rendered.
+        if (!$input.is(':visible')) {
+          setTimeout(function () {
+            calculateDimensions();
+          }, 1);
+        }
       });
     }
   };

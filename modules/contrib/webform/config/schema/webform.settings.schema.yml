@@ -87,6 +87,12 @@ webform.settings:
         default_wizard_confirmation_label:
           type: label
           label: 'Default wizard confirmation label'
+        default_wizard_toggle_show_label:
+          type: label
+          label: 'Default wizard show all elements label'
+        default_wizard_toggle_hide_label:
+          type: label
+          label: 'Default wizard hide all elements label'
         default_preview_next_button_label:
           type: label
           label: 'Default preview button label'
@@ -224,6 +230,15 @@ webform.settings:
         confirmation_back_classes:
           type: string
           label: 'Confirmation back link CSS classes'
+        default_share:
+          type: boolean
+          label: 'Enable form sharing'
+        default_share_node:
+          type: boolean
+          label: 'Enable form sharing for webform nodes'
+        default_share_theme_name:
+          type: string
+          label: 'Default shared form theme'
         dialog:
           type: boolean
           label: 'Enable webform dialog support'

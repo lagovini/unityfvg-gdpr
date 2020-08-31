@@ -91,7 +91,7 @@ abstract class WebformLocationBase extends WebformCompositeBase {
     // readonly elements to hidden elements.
     $composite_elements = static::getCompositeElements($element);
     foreach ($composite_elements as $composite_key => $composite_element) {
-      if ($composite_key != 'value') {
+      if ($composite_key !== 'value') {
         if (isset($element[$composite_key]['#access']) && $element[$composite_key]['#access'] === FALSE) {
           unset($element[$composite_key]['#access']);
           unset($element[$composite_key]['#pre_render']);

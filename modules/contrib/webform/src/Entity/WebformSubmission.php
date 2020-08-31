@@ -249,6 +249,21 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
   /**
    * {@inheritdoc}
    */
+  public function getLangcode() {
+    return $this->get('langcode')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setLangcode($langcode) {
+    $this->set('langcode', $langcode);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCreatedTime() {
     if (isset($this->get('created')->value)) {
       return $this->get('created')->value;
@@ -656,22 +671,22 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    */
   public function getState() {
     if (!$this->id()) {
-      return self::STATE_UNSAVED;
+      return WebformSubmissionInterface::STATE_UNSAVED;
     }
     elseif ($this->isConverting()) {
-      return self::STATE_CONVERTED;
+      return WebformSubmissionInterface::STATE_CONVERTED;
     }
     elseif ($this->isDraft()) {
-      return ($this->created->value === $this->changed->value) ? self::STATE_DRAFT_CREATED : self::STATE_DRAFT_UPDATED;
+      return ($this->created->value === $this->changed->value) ? WebformSubmissionInterface::STATE_DRAFT_CREATED : WebformSubmissionInterface::STATE_DRAFT_UPDATED;
     }
     elseif ($this->isLocked()) {
-      return self::STATE_LOCKED;
+      return WebformSubmissionInterface::STATE_LOCKED;
     }
     elseif ($this->completed->value === $this->changed->value) {
-      return self::STATE_COMPLETED;
+      return WebformSubmissionInterface::STATE_COMPLETED;
     }
     else {
-      return self::STATE_UPDATED;
+      return WebformSubmissionInterface::STATE_UPDATED;
     }
   }
 
@@ -772,7 +787,7 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
       $entity_reference_manager = \Drupal::service('webform.entity_reference_manager');
 
       if ($webform_field_name = $entity_reference_manager->getFieldName($source_entity)) {
-        if ($source_entity->$webform_field_name->target_id == $webform->id() && $source_entity->$webform_field_name->default_data) {
+        if ($source_entity->$webform_field_name->target_id === $webform->id() && $source_entity->$webform_field_name->default_data) {
           $values['data'] += Yaml::decode($source_entity->$webform_field_name->default_data);
         }
       }

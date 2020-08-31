@@ -67,7 +67,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
   protected $fileSystem;
 
   /**
-   * Webform access rules manager service.
+   * The webform access rules manager service.
    *
    * @var \Drupal\webform\WebformAccessRulesManagerInterface
    */
@@ -222,7 +222,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     $entity = reset($entities);
 
     // Make sure the submission is associated with the webform.
-    if ($entity->getWebform()->id() != $webform->id()) {
+    if ($entity->getWebform()->id() !== $webform->id()) {
       return NULL;
     }
 
@@ -281,11 +281,8 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     $query = $this->getQuery();
     $query->accessCheck(FALSE);
     $this->addQueryConditions($query, $webform, $source_entity, $account, $options);
-
-    // Issue: Query count method is not working for SQL Lite.
-    // return $query->count()->execute();
-    // Work-around: Manually count the number of entity ids.
-    return count($query->execute());
+    $query->count();
+    return $query->execute();
   }
 
   /**
@@ -311,6 +308,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
       ->fields('sd', ['sid'])
       ->condition('sd.webform_id', $webform->id())
       ->condition('sd.name', $element_key)
+      ->range(0, 1)
       ->execute();
     return $result->fetchAssoc() ? TRUE : FALSE;
   }
@@ -437,7 +435,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     if ($account) {
       $query->condition('uid', $account->id());
       // Add anonymous submission ids stored in $_SESSION.
-      if ($account->isAnonymous() && $account->id() == $this->currentUser->id()) {
+      if ($account->isAnonymous() && (int) $account->id() === (int) $this->currentUser->id()) {
         $sids = $this->getAnonymousSubmissionIds($account);
         if (empty($sids)) {
           // Look for NULL sid to force returning no results.
@@ -557,7 +555,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     $options += ['in_draft' => FALSE];
     $query = $this->getQuery();
     $this->addQueryConditions($query, $webform, $source_entity, $account, $options);
-    $query->sort('sid', ($terminus == 'first') ? 'ASC' : 'DESC');
+    $query->sort('sid', ($terminus === 'first') ? 'ASC' : 'DESC');
     $query->range(0, 1);
     return ($entity_ids = $query->execute()) ? $this->load(reset($entity_ids)) : NULL;
   }
@@ -585,7 +583,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
     $query = $this->getQuery();
     $this->addQueryConditions($query, $webform, $source_entity, $account, $options);
 
-    if ($direction == 'previous') {
+    if ($direction === 'previous') {
       $query->condition('sid', $webform_submission->id(), '<');
       $query->sort('sid', 'DESC');
     }
@@ -1168,7 +1166,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
           $file_directory = $stream_wrapper . '://webform/' . $webform->id() . '/' . $entity->id();
           // Clear empty webform submission directory.
           if (file_exists($file_directory)
-            && empty(file_scan_directory($file_directory, '/.*/'))) {
+            && empty($this->fileSystem->scanDirectory($file_directory, '/.*/'))) {
             $this->fileSystem->deleteRecursive($file_directory);
           }
         }
@@ -1224,7 +1222,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
 
     $query = $this->entityManager->getStorage('webform')->getQuery();
     $query->accessCheck(FALSE);
-    $query->condition('settings.purge', [self::PURGE_DRAFT, self::PURGE_COMPLETED, self::PURGE_ALL], 'IN');
+    $query->condition('settings.purge', [WebformSubmissionStorageInterface::PURGE_DRAFT, WebformSubmissionStorageInterface::PURGE_COMPLETED, WebformSubmissionStorageInterface::PURGE_ALL], 'IN');
     $query->condition('settings.purge_days', 0, '>');
     $webforms_to_purge = array_values($query->execute());
 
@@ -1241,11 +1239,11 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
         $query->condition('created', $this->time->getRequestTime() - ($webform->getSetting('purge_days') * $days_to_seconds), '<');
         $query->condition('webform_id', $webform->id());
         switch ($webform->getSetting('purge')) {
-          case self::PURGE_DRAFT:
+          case WebformSubmissionStorageInterface::PURGE_DRAFT:
             $query->condition('in_draft', 1);
             break;
 
-          case self::PURGE_COMPLETED:
+          case WebformSubmissionStorageInterface::PURGE_COMPLETED:
             $query->condition('in_draft', 0);
             break;
         }
@@ -1254,7 +1252,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
         if (!empty($result)) {
           $webform_submissions_to_purge = array_merge($webform_submissions_to_purge, $result);
         }
-        if (count($webform_submissions_to_purge) == $count) {
+        if (count($webform_submissions_to_purge) === $count) {
           // We've collected enough webform submissions for purging in this run.
           break;
         }
@@ -1520,7 +1518,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
    */
   public function getAnonymousSubmissionIds(AccountInterface $account) {
     // Make sure the account and current user are identical.
-    if ($account->id() != $this->currentUser->id()) {
+    if ((int) $account->id() !== (int) $this->currentUser->id()) {
       return NULL;
     }
 
@@ -1568,7 +1566,7 @@ class WebformSubmissionStorage extends SqlContentEntityStorage implements Webfor
    */
   protected function setAnonymousSubmission(WebformSubmissionInterface $webform_submission) {
     // Make sure the account and current user are identical.
-    if ($webform_submission->getOwnerId() != $this->currentUser->id()) {
+    if ((int)$webform_submission->getOwnerId() !== (int) $this->currentUser->id()) {
       return;
     }
 

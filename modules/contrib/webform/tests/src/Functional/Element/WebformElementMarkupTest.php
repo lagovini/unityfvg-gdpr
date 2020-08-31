@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for markup element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementMarkupTest extends WebformElementBrowserTestBase {
 
@@ -44,7 +44,7 @@ class WebformElementMarkupTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<p><em>Alter this markup.</em> <strong>This markup was altered.</strong></p>');
 
     // Check markup display on view.
-    $this->drupalPostForm('/webform/test_element_markup', [], t('Preview'));
+    $this->drupalPostForm('/webform/test_element_markup', [], 'Preview');
     $this->assertNoRaw('<p>This is normal markup</p>');
     $this->assertNoRaw('<p>This is only displayed on the form view.</p>');
     $this->assertRaw('<p>This is only displayed on the submission view.</p>');

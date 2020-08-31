@@ -7,7 +7,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform element multiple.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementMultipleTest extends WebformElementBrowserTestBase {
 
@@ -30,7 +30,7 @@ class WebformElementMultipleTest extends WebformElementBrowserTestBase {
     $webform = Webform::load('test_element_multiple');
 
     // Check processing for all elements.
-    $this->drupalPostForm('/webform/test_element_multiple', [], t('Submit'));
+    $this->drupalPostForm('/webform/test_element_multiple', [], 'Submit');
     $this->assertRaw("webform_multiple_default:
   - One
   - Two
@@ -176,7 +176,7 @@ webform_multiple_custom_attributes: {  }");
     $edit = [
       'webform_multiple_key[items][1][value]' => 'one',
     ];
-    $this->drupalPostForm('/webform/test_element_multiple', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_multiple', $edit, 'Submit');
     $this->assertRaw('The <em class="placeholder">Option value</em> \'one\' is already in use. It must be unique.');
 
     /**************************************************************************/

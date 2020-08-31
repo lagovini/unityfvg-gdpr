@@ -10,6 +10,7 @@
  * @ingroup themeable
  */
 #}
+
 {% if settings.debug %}<b class="color-error">{{ 'Debugging is enabled'|t }}</b><br />{% endif %}
 <b>{{ 'To:'|t }}</b> {{ settings.to_mail|replace({',': ', '}) }}<br />
 {% if settings.cc_mail %}<b>{{ 'CC:'|t }}</b> {{ settings.cc_mail|replace({',': ', '}) }}<br />{% endif %}

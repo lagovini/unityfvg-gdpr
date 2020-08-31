@@ -10,7 +10,7 @@ use Drupal\webform_image_select\Entity\WebformImageSelectImages;
 /**
  * Tests for webform image select image entity.
  *
- * @group Webform
+ * @group webform_image_select
  */
 class WebformImageSelectImagesTest extends WebformElementBrowserTestBase {
 
@@ -89,7 +89,7 @@ dog_4:
     $webform_images->set('images', "not\nvalid\nyaml")->save();
 
     // Check invalid images.
-    $this->assertFalse($webform_images->getImages());
+    $this->assertEqual([], $webform_images->getImages());
 
     // Check admin user access denied.
     $this->drupalGet('/admin/structure/webform/config/images/manage');
@@ -108,7 +108,7 @@ dog_4:
 
     // Check image altered message.
     $this->drupalGet('/admin/structure/webform/config/images/manage/animals/edit');
-    $this->assertRaw('The <em class="placeholder">Cute Animals</em> images are being altered by the <em class="placeholder">Webform Image Select Test</em> module.');
+    $this->assertRaw('The <em class="placeholder">Cute Animals</em> images are being altered by the <em class="placeholder">Webform Image Select test</em> module.');
 
     // Check hook_webform_image_select_images_alter().
     // Check hook_webform_image_select_images_WEBFORM_IMAGE_SELECT_IMAGES_ID_alter().

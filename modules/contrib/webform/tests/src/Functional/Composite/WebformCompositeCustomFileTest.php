@@ -10,7 +10,7 @@ use Drupal\Tests\webform\Functional\Element\WebformElementManagedFileTestBase;
 /**
  * Tests for custom composite element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformCompositeCustomFileTest extends WebformElementManagedFileTestBase {
 

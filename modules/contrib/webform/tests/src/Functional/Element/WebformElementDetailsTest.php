@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for details element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementDetailsTest extends WebformElementBrowserTestBase {
 

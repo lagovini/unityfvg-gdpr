@@ -85,7 +85,7 @@ class WebformImageSelectElementImages extends FormElement {
       '#type' => 'select',
       '#description' => t('Please select <a href=":href">predefined images</a> or enter custom image.', $t_args),
       '#options' => [
-        self::CUSTOM_OPTION => t('Custom images…'),
+        static::CUSTOM_OPTION => t('Custom images…'),
       ] + $webform_images,
       '#attributes' => [
         'class' => [$class_name],
@@ -126,7 +126,7 @@ class WebformImageSelectElementImages extends FormElement {
     $custom_value = NestedArray::getValue($form_state->getValues(), $element['custom']['#parents']);
 
     $value = $options_value;
-    if ($options_value == self::CUSTOM_OPTION) {
+    if ($options_value === static::CUSTOM_OPTION) {
       $value = $custom_value;
     }
 

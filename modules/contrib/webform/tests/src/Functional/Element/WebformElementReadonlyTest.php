@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for webform element readonly attribute.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementReadonlyTest extends WebformElementBrowserTestBase {
 

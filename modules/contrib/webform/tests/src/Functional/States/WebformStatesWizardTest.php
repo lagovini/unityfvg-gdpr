@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform states wizard server.
  *
- * @group Webform
+ * @group webform
  */
 class WebformStatesWizardTest extends WebformBrowserTestBase {
 
@@ -30,7 +30,7 @@ class WebformStatesWizardTest extends WebformBrowserTestBase {
     /**************************************************************************/
 
     // Go to default #states for page 02 with trigger-checkbox unchecked.
-    $this->postSubmission($webform, [], t('Next Page >'));
+    $this->postSubmission($webform, [], 'Next >');
 
     $this->assertRaw("page_01_trigger_checkbox: 0
 page_01_textfield_required: '{default_value}'
@@ -92,7 +92,7 @@ page_02_checkbox_unchecked: 0");
     $this->assertRaw('<details data-webform-details-nosave data-webform-key="page_02_details_collapsed" data-drupal-selector="edit-page-02-details-collapsed" aria-describedby="edit-page-02-details-collapsed--description" id="edit-page-02-details-collapsed" class="js-form-wrapper form-wrapper" open="open">');
 
     // Check submission data.
-    $this->drupalPostForm(NULL, [], t('Submit'));
+    $this->drupalPostForm(NULL, [], 'Submit');
     $this->assertRaw("page_01_trigger_checkbox: 0
 page_01_textfield_required: '{default_value}'
 page_01_textfield_optional: '{default_value}'
@@ -116,7 +116,7 @@ page_02_checkbox_unchecked: 1");
     /**************************************************************************/
 
     // Go to default #states for page 02 with trigger_checkbox checked.
-    $this->postSubmission($webform, ['page_01_trigger_checkbox' => TRUE], t('Next Page >'));
+    $this->postSubmission($webform, ['page_01_trigger_checkbox' => TRUE], 'Next >');
 
     $this->assertRaw("page_01_trigger_checkbox: 1
 page_01_textfield_required: '{default_value}'
@@ -182,7 +182,7 @@ page_02_checkbox_unchecked: 0");
     $this->assertRaw('<details data-webform-details-nosave data-webform-key="page_02_details_collapsed" data-drupal-selector="edit-page-02-details-collapsed" aria-describedby="edit-page-02-details-collapsed--description" id="edit-page-02-details-collapsed" class="js-form-wrapper form-wrapper">');
 
     // Check submission data.
-    $this->drupalPostForm(NULL, [], t('Submit'));
+    $this->drupalPostForm(NULL, [], 'Submit');
     $this->assertRaw("page_01_trigger_checkbox: 1
 page_01_textfield_required: '{default_value}'
 page_01_textfield_optional: '{default_value}'

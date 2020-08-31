@@ -13,7 +13,7 @@ use Drupal\webform\WebformSubmissionInterface;
 use Drupal\Core\Render\Markup;
 
 /**
- * Implements hook_ENTITY_TYPE_view_alter().
+ * Implements hook_ENTITY_TYPE_view_alter() for webform_submission entities.
  *
  * @see entity_print_entity_view_alter();
  */

@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform states hidden.
  *
- * @group Webform
+ * @group webform
  */
 class WebformStatesHiddenTest extends WebformBrowserTestBase {
 
@@ -28,7 +28,7 @@ class WebformStatesHiddenTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Create filters.
@@ -36,7 +36,7 @@ class WebformStatesHiddenTest extends WebformBrowserTestBase {
   }
 
   /**
-   * Tests states hidden..
+   * Tests states hidden.
    */
   public function testFormStatesHidden() {
     $this->drupalGet('/webform/test_states_server_hidden');

@@ -30,7 +30,7 @@ class WebformEntityHandlersForm extends EntityForm {
   protected $entity;
 
   /**
-   * Webform handler manager.
+   * The webform handler manager.
    *
    * @var \Drupal\webform\Plugin\WebformHandlerManagerInterface
    */

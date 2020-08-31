@@ -34,14 +34,14 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
   protected $configFactory;
 
   /**
-   * File system service.
+   * The file system service.
    *
    * @var \Drupal\Core\File\FileSystemInterface
    */
   protected $fileSystem;
 
   /**
-   * Webform submission storage.
+   * The webform submission storage.
    *
    * @var \Drupal\webform\WebformSubmissionStorageInterface
    */
@@ -62,14 +62,14 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
   protected $archiverManager;
 
   /**
-   * Webform element manager.
+   * The webform element manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
   protected $elementManager;
 
   /**
-   * Results exporter manager.
+   * The results exporter manager.
    *
    * @var \Drupal\webform\Plugin\WebformExporterManagerInterface
    */
@@ -521,10 +521,12 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
             '#input' => FALSE,
             '#title' => $this->t('Submitted to'),
             '#description' => $this->t('Select the entity type and then enter the entity id.'),
-            '#field_prefix' => '<div class="container-inline">',
-            '#field_suffix' => '</div>',
           ];
-          $form['export']['download']['submitted']['entity_type'] = [
+          $form['export']['download']['submitted']['container'] = [
+            '#prefix' => '<div class="container-inline">',
+            '#suffix' => '</div>',
+          ];
+          $form['export']['download']['submitted']['container']['entity_type'] = [
             '#type' => 'select',
             '#title' => $this->t('Entity type'),
             '#title_display' => 'invisible',
@@ -534,7 +536,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
           if ($export_options['entity_type']) {
             $source_entity_options = $this->entityStorage->getSourceEntityAsOptions($webform, $export_options['entity_type']);
             if ($source_entity_options) {
-              $form['export']['download']['submitted']['entity_id'] = [
+              $form['export']['download']['submitted']['container']['entity_id'] = [
                 '#type' => 'select',
                 '#title' => $this->t('Entity id'),
                 '#title_display' => 'invisible',
@@ -543,7 +545,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
               ];
             }
             else {
-              $form['export']['download']['submitted']['entity_id'] = [
+              $form['export']['download']['submitted']['container']['entity_id'] = [
                 '#type' => 'number',
                 '#title' => $this->t('Entity id'),
                 '#title_display' => 'invisible',
@@ -554,7 +556,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
             }
           }
           else {
-            $form['export']['download']['submitted']['entity_id'] = [
+            $form['export']['download']['submitted']['container']['entity_id'] = [
               '#type' => 'value',
               '#value' => '',
             ];
@@ -562,7 +564,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
           $this->buildAjaxElement(
             'webform-submission-export-download-submitted',
             $form['export']['download']['submitted'],
-            $form['export']['download']['submitted']['entity_type']
+            $form['export']['download']['submitted']['container']['entity_type']
           );
         }
       }
@@ -575,7 +577,9 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
           'latest' => $this->t('Latest'),
           'serial' => $this->t('Submission number'),
           'sid' => $this->t('Submission ID'),
-          'date' => $this->t('Date'),
+          'date' => $this->t('Created date'),
+          'date_completed' => $this->t('Completed date'),
+          'date_changed' => $this->t('Changed date'),
         ],
         '#default_value' => $export_options['range_type'],
       ];
@@ -598,6 +602,8 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
         'serial' => ['#type' => 'number'],
         'sid' => ['#type' => 'number'],
         'date' => ['#type' => 'date'],
+        'date_completed' => ['#type' => 'date'],
+        'date_changed' => ['#type' => 'date'],
       ];
       foreach ($ranges as $key => $range_element) {
         $form['export']['download'][$key] = [
@@ -655,7 +661,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
           'completed' => $this->t('Completed submissions only'),
           'draft' => $this->t('Drafts only'),
         ],
-        '#access' => ($webform->getSetting('draft') != WebformInterface::DRAFT_NONE),
+        '#access' => ($webform->getSetting('draft') !== WebformInterface::DRAFT_NONE),
       ];
     }
 
@@ -864,11 +870,16 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
         break;
 
       case 'date':
+      case 'date_completed':
+      case 'date_changed':
+        $date_field = preg_match('/date_(completed|changed)/', $export_options['range_type'], $match)
+          ? $match[1]
+          : 'created';
         if ($export_options['range_start']) {
-          $query->condition('created', strtotime($export_options['range_start']), '>=');
+          $query->condition($date_field, strtotime($export_options['range_start']), '>=');
         }
         if ($export_options['range_end']) {
-          $query->condition('created', strtotime('+1 day', strtotime($export_options['range_end'])), '<');
+          $query->condition($date_field, strtotime('+1 day', strtotime($export_options['range_end'])), '<');
         }
         break;
     }
@@ -891,7 +902,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
     }
 
     // Filter by latest.
-    if ($export_options['range_type'] == 'latest' && $export_options['range_latest']) {
+    if ($export_options['range_type'] === 'latest' && $export_options['range_latest']) {
       // Clone the query and use it to get latest sid starting sid.
       $latest_query = clone $query;
       $latest_query->sort('created', 'DESC');
@@ -980,7 +991,7 @@ class WebformSubmissionExporter implements WebformSubmissionExporterInterface {
    * {@inheritdoc}
    */
   public function getFileTempDirectory() {
-    return $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: file_directory_temp();
+    return $this->configFactory->get('webform.settings')->get('export.temp_directory') ?: $this->fileSystem->getTempDirectory();
   }
 
   /**

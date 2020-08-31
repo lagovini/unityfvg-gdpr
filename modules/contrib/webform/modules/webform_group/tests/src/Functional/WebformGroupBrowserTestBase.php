@@ -26,7 +26,7 @@ abstract class WebformGroupBrowserTestBase extends GroupBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function tearDown() {
+  protected function tearDown() {
     $this->purgeSubmissions();
     parent::tearDown();
   }

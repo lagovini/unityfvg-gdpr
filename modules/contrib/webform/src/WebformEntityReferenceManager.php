@@ -87,7 +87,8 @@ class WebformEntityReferenceManager implements WebformEntityReferenceManagerInte
       "entity.$entity_type.webform.api_form",
     ];
     return in_array($this->routeMatch->getRouteName(), $user_routes)
-      || (strpos($route_name, "entity.$entity_type.webform.results_") === 0);
+      || (strpos($route_name, "entity.$entity_type.webform.results_") === 0)
+      || (strpos($route_name, "entity.$entity_type.webform.share_") === 0);
   }
 
   /**
@@ -172,7 +173,7 @@ class WebformEntityReferenceManager implements WebformEntityReferenceManagerInte
     if ($entity instanceof ContentEntityInterface) {
       $fields = $entity->getFieldDefinitions();
       foreach ($fields as $field_name => $field_definition) {
-        if ($field_definition->getType() == 'webform') {
+        if ($field_definition->getType() === 'webform') {
           $field_names[$field_name] = $field_name;
         }
       }
@@ -245,7 +246,7 @@ class WebformEntityReferenceManager implements WebformEntityReferenceManagerInte
     $field_storage_configs = FieldStorageConfig::loadMultiple();
     $tables = [];
     foreach ($field_storage_configs as $field_storage_config) {
-      if ($field_storage_config->getType() == 'webform') {
+      if ($field_storage_config->getType() === 'webform') {
         $webform_field_table = $field_storage_config->getTargetEntityTypeId();
         $webform_field_name = $field_storage_config->getName();
         $tables[$webform_field_table . '__' . $webform_field_name] = $webform_field_name;
