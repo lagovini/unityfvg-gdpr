@@ -1,0 +1,13 @@
+name: 'SimpleSAMLPHP Authentication Test module'
+type: module
+description: 'Support module for SimpleSAMLPHP Authentication tests'
+# core: 8.x
+dependencies:
+  - drupal:user
+hidden: true
+
+# Information added by Drupal.org packaging script on 2019-08-06
+version: '8.x-3.1'
+core: '8.x'
+project: 'simplesamlphp_auth'
+datestamp: 1565118487
