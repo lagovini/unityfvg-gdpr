@@ -27,6 +27,11 @@ class PrintViewsTest extends BrowserTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * An array of nodes.
    *
    * @var \Drupal\node\Entity\Node[]
@@ -36,7 +41,7 @@ class PrintViewsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->nodes = [
       $this->drupalCreateNode(),

@@ -107,7 +107,7 @@ class ViewPrintController extends ControllerBase {
     catch (PrintEngineException $e) {
       // Build a safe markup string using Xss::filter() so that the instructions
       // for installing dependencies can contain quotes.
-      drupal_set_message(new FormattableMarkup('Error generating Print: ' . Xss::filter($e->getMessage()), []), 'error');
+      $this->messenger()->addError(new FormattableMarkup('Error generating Print: ' . Xss::filter($e->getMessage()), []));
 
       $url = $executable->hasUrl(NULL, $display_id) ? $executable->getUrl(NULL, $display_id)->toString() : Url::fromRoute('<front>');
       return new RedirectResponse($url);

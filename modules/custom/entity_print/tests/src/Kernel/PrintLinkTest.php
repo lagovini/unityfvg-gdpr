@@ -5,7 +5,7 @@ namespace Drupal\Tests\entity_print\Kernel;
 use Drupal\Core\Plugin\Context\Context;
 use Drupal\Core\Plugin\Context\ContextDefinition;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\BlockCreationTrait;
+use Drupal\Tests\block\Traits\BlockCreationTrait;
 
 /**
  * Test the print links block.
@@ -29,6 +29,7 @@ class PrintLinkTest extends KernelTestBase {
    */
   public function testPlaceBlock() {
     $this->placeBlock('print_links');
+    $this->assertTrue(TRUE);
   }
 
   /**
@@ -60,7 +61,7 @@ class PrintLinkTest extends KernelTestBase {
    */
   protected function getBlock(array $config = []) {
     $manager = $this->container->get('plugin.manager.block');
-    $entity = $this->getMock('Drupal\Core\Entity\EntityInterface');
+    $entity = $this->createMock('Drupal\Core\Entity\EntityInterface');
     $context = new Context(ContextDefinition::create(), $entity);
 
     /** @var \Drupal\entity_print\Plugin\Block\PrintLinks $block */

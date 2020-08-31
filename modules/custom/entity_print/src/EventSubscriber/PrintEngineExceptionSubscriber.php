@@ -53,7 +53,7 @@ class PrintEngineExceptionSubscriber implements EventSubscriberInterface {
   public function handleException(GetResponseForExceptionEvent $event) {
     $exception = $event->getException();
     if ($exception instanceof PrintEngineException) {
-      drupal_set_message(new FormattableMarkup($exception->getPrettyMessage(), []), 'error');
+      \Drupal::messenger()->addError(new FormattableMarkup($exception->getPrettyMessage(), []));
 
       if ($entity = $this->getEntity()) {
         $event->setResponse(new RedirectResponse($entity->toUrl()->toString()));

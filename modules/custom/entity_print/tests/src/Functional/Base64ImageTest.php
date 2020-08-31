@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\entity_print\Functional;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Render\RenderContext;
 use Drupal\field\Entity\FieldConfig;
@@ -25,6 +24,11 @@ class Base64ImageTest extends BrowserTestBase {
   public static $modules = ['user', 'node', 'image', 'entity_print_test'];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * The node we're printing.
    *
    * @var \Drupal\node\Entity\Node
@@ -41,7 +45,7 @@ class Base64ImageTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->createContentType(['type' => 'page']);
 
@@ -49,7 +53,7 @@ class Base64ImageTest extends BrowserTestBase {
     FieldStorageConfig::create([
       'entity_type' => 'node',
       'type' => 'image',
-      'field_name' => $field_name = Unicode::strtolower($this->randomMachineName()),
+      'field_name' => $field_name = mb_strtolower($this->randomMachineName()),
     ])->save();
     FieldConfig::create([
       'entity_type' => 'node',
@@ -94,7 +98,7 @@ class Base64ImageTest extends BrowserTestBase {
 
     // Ensure the image is rendered as a base64 encoded image.
     $base64_image = base64_encode($this->imageContents);
-    $this->assertContains("data:image/jpeg;charset=utf-8;base64,$base64_image", $html);
+    $this->assertStringContainsString("data:image/jpeg;charset=utf-8;base64,$base64_image", $html);
   }
 
 }

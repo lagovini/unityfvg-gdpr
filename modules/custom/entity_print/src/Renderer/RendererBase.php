@@ -69,7 +69,7 @@ abstract class RendererBase implements RendererInterface, EntityHandlerInterface
    * {@inheritdoc}
    */
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
-    return new static (
+    return new static(
       $container->get('renderer'),
       $container->get('entity_print.asset_renderer'),
       $container->get('entity_print.filename_generator'),

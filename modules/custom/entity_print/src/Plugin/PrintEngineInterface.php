@@ -3,13 +3,13 @@
 namespace Drupal\entity_print\Plugin;
 
 use Drupal\Component\Plugin\PluginInspectionInterface;
-use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Component\Plugin\ConfigurableInterface;
 use Drupal\Core\Plugin\PluginFormInterface;
 
 /**
  * Print engine interface.
  */
-interface PrintEngineInterface extends PluginInspectionInterface, PluginFormInterface, ConfigurablePluginInterface {
+interface PrintEngineInterface extends PluginInspectionInterface, PluginFormInterface, ConfigurableInterface {
 
   /**
    * Gets the export type.

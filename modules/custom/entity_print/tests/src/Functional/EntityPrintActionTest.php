@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\entity_print\Tests;
+namespace Drupal\Tests\entity_print\Functional;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test the Entity Print action tests.
  *
  * @group entity_print
  */
-class EntityPrintActionTest extends WebTestBase {
+class EntityPrintActionTest extends BrowserTestBase {
 
   /**
    * Modules to enable.
@@ -21,7 +21,12 @@ class EntityPrintActionTest extends WebTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected $defaultTheme = 'stark';
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
     parent::setUp();
     // Create a content type and a dummy node.
     $this->drupalCreateContentType([
@@ -30,7 +35,7 @@ class EntityPrintActionTest extends WebTestBase {
     ]);
     $this->node = $this->drupalCreateNode();
 
-    $account = $this->drupalCreateUser([
+    $account = $this->createUser([
       'bypass entity print access',
       'access content overview',
       'administer nodes',
@@ -49,11 +54,20 @@ class EntityPrintActionTest extends WebTestBase {
    */
   public function testDownloadPdfAction() {
     $this->drupalGet('/admin/content');
-    $this->drupalPostForm('/admin/content', [
+    $this->drupalPostForm(NULL, [
       'action' => 'entity_print_pdf_download_action',
       'node_bulk_form[0]' => 1,
     ], 'Apply to selected items');
-    $this->assertText('Using testprintengine');
+    $this->assertSession()->pageTextContains('Using testprintengine');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function checkForMetaRefresh() {
+    // A meta refresh is inserted when using the test PDF engine, but this is
+    // not present for real engines. So the test can assert the engine is
+    // invoked, do not follow the meta refresh.
   }
 
 }

@@ -6,7 +6,7 @@ use Drupal\entity_print\Controller\EntityPrintController;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\Entity\NodeType;
-use Drupal\simpletest\NodeCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * @coversDefaultClass \Drupal\entity_print\PrintBuilder
@@ -32,13 +32,13 @@ class TranslationTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installEntitySchema('node');
     $this->installEntitySchema('user');
     $this->installSchema('node', ['node_access']);
     $this->installConfig(['system', 'filter']);
-    $this->container->get('theme_handler')->install(['stark']);
+    $this->container->get('theme_installer')->install(['stark']);
     $node_type = NodeType::create(['name' => 'Page', 'type' => 'page']);
     $node_type->setDisplaySubmitted(FALSE);
     $node_type->save();
@@ -62,11 +62,11 @@ class TranslationTest extends KernelTestBase {
     $controller = EntityPrintController::create($this->container);
 
     // Ensure we get the English version of the node by default.
-    $this->assertContains('english', (string) $controller->viewPrintDebug('pdf', 'node', $node->id()));
+    $this->assertStringContainsString('english', (string) $controller->viewPrintDebug('pdf', 'node', $node->id()));
 
     // Change the default language and ensure we get the German version.
     $this->config('system.site')->set('default_langcode', 'de')->save();
-    $this->assertContains('german', (string) $controller->viewPrintDebug('pdf', 'node', $node->id()));
+    $this->assertStringContainsString('german', (string) $controller->viewPrintDebug('pdf', 'node', $node->id()));
   }
 
 }

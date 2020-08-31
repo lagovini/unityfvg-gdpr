@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "print_links",
  *   admin_label = @Translation("Print Links"),
  *   category = @Translation("Entity Print"),
- *   context = {
+ *   context_definitions = {
  *     "entity" = @ContextDefinition("entity:node")
  *   },
  * )

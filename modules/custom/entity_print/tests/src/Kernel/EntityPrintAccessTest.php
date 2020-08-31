@@ -5,9 +5,9 @@ namespace Drupal\Tests\entity_print\Kernel;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\entity_print\Controller\EntityPrintController;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\simpletest\NodeCreationTrait;
-use Drupal\simpletest\UserCreationTrait;
+use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * @coversDefaultClass \Drupal\entity_print\Controller\EntityPrintController
@@ -42,9 +42,9 @@ class EntityPrintAccessTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
-    $this->installSchema('system', ['router', 'sequences', 'key_value_expire']);
+    $this->installSchema('system', ['sequences', 'key_value_expire']);
     $this->installEntitySchema('user');
     $this->installEntitySchema('node');
     $this->installConfig(['system', 'node', 'filter', 'field']);

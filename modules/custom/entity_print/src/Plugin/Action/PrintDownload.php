@@ -121,7 +121,7 @@ class PrintDownload extends ConfigurableActionBase implements ContainerFactoryPl
       }))->send();
     }
     catch (PrintEngineException $e) {
-      drupal_set_message(new FormattableMarkup(Xss::filter($e->getMessage()), []), 'error');
+      $this->messenger()->addError(new FormattableMarkup(Xss::filter($e->getMessage()), []));
     }
   }
 

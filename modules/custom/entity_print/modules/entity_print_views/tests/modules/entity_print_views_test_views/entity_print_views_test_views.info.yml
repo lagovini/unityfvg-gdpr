@@ -1,15 +1,13 @@
 name: Entity Print Views Test Views
 description: 'Provides views for testing purposes'
 type: module
-# core: 8.x
 package: Testing
 configure: entity_print.settings
 hidden: true
 dependencies:
-  - entity_print_views
+  - entity_print:entity_print_views
 
-# Information added by Drupal.org packaging script on 2018-08-02
-version: '8.x-2.1'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2020-06-18
+version: '8.x-2.2'
 project: 'entity_print'
-datestamp: 1533220072
+datestamp: 1592473170

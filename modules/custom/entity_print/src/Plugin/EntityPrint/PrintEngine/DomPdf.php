@@ -3,6 +3,7 @@
 namespace Drupal\entity_print\Plugin\EntityPrint\PrintEngine;
 
 use Dompdf\Dompdf as DompdfLib;
+use Dompdf\Options as DompdfLibOptions;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\entity_print\Plugin\ExportTypeInterface;
@@ -37,6 +38,13 @@ class DomPdf extends PdfEngineBase implements ContainerFactoryPluginInterface {
   protected $dompdf;
 
   /**
+   * The Dompdf instance.
+   *
+   * @var \Dompdf\Options
+   */
+  protected $dompdfOptions;
+
+  /**
    * Keep track of HTML pages as they're added.
    *
    * @var string
@@ -55,13 +63,20 @@ class DomPdf extends PdfEngineBase implements ContainerFactoryPluginInterface {
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ExportTypeInterface $export_type, Request $request) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $export_type);
-    $this->dompdf = new DompdfLib($this->configuration);
-    $this->dompdf->setPaper($this->configuration['default_paper_size'], $this->configuration['orientation']);
-    $this->dompdf->set_option('temp_dir', file_directory_temp());
-    $this->dompdf->set_option('log_output_file', file_directory_temp() . DIRECTORY_SEPARATOR . self::LOG_FILE_NAME);
+
+    $this->dompdfOptions = new DompdfLibOptions($this->configuration);
+
+    $this->dompdfOptions->setTempDir(\Drupal::service('file_system')->getTempDirectory());
+    $this->dompdfOptions->setFontCache(\Drupal::service('file_system')->getTempDirectory());
+    $this->dompdfOptions->setFontDir(\Drupal::service('file_system')->getTempDirectory());
+    $this->dompdfOptions->setLogOutputFile(\Drupal::service('file_system')->getTempDirectory() . DIRECTORY_SEPARATOR . self::LOG_FILE_NAME);
+    $this->dompdfOptions->setIsRemoteEnabled($this->configuration['enable_remote']);
+
+    $this->dompdf = new DompdfLib($this->dompdfOptions);
     if ($this->configuration['disable_log']) {
-      $this->dompdf->set_option('log_output_file', '');
+      $this->dompdfOptions->setLogOutputFile('');
     }
+
     $this->dompdf
       ->setBaseHost($request->getHttpHost())
       ->setProtocol($request->getScheme() . '://');

@@ -26,6 +26,11 @@ class EntityPrintTest extends BrowserTestBase {
   ];
 
   /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * The node we're printing.
    *
    * @var \Drupal\node\Entity\Node
@@ -35,7 +40,7 @@ class EntityPrintTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->createContentType(['type' => 'page']);
     $this->node = $this->createNode();
@@ -58,11 +63,9 @@ class EntityPrintTest extends BrowserTestBase {
    */
   public function testExceptionOnRender() {
     $this->drupalGet('/entityprint/pdf/node/1');
-    $assert = $this->assertSession();
 
-    $text = $this->getSession()->getPage()->find('css', '.messages--error')->getText();
-    $this->assertContains('Exception thrown by PrintExceptionEngine', $text);
-    $assert->pageTextNotContains('The website encountered an unexpected error');
+    $this->assertSession()->elementContains('css', '[aria-label="Error message"]', 'Error generating document: Exception thrown by PrintExceptionEngine');
+    $this->assertSession()->pageTextNotContains('The website encountered an unexpected error');
   }
 
   /**
@@ -71,8 +74,8 @@ class EntityPrintTest extends BrowserTestBase {
   public function testViewsExceptionOnRender() {
     $this->drupalGet('/my-test-view');
     $this->clickLink('View PDF');
-    $text = $this->getSession()->getPage()->find('css', '.messages--error')->getText();
-    $this->assertContains('Error generating document: Exception thrown by PrintExceptionEngine', $text);
+
+    $this->assertSession()->elementContains('css', '[aria-label="Error message"]', 'Error generating document: Exception thrown by PrintExceptionEngine');
     $this->assertSession()->pageTextNotContains('The website encountered an unexpected error');
   }
 
