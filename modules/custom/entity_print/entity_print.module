@@ -5,6 +5,8 @@
  * Print any entity.
  */
 
+require_once('lib/dompdf-dompdf/v0.8.3/autoload.inc.php');
+
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
