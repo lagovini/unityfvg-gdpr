@@ -1,0 +1,7 @@
+name: GDPR File Formatter
+type: module
+description: 'GDPR File embed formatter.'
+core: 8.x
+package: 'custom'
+dependencies:
+  - field
