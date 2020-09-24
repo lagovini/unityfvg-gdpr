@@ -32,7 +32,7 @@
  */
 
 
-/** versione di questo twig: 2.1.17 - 21/8/2020 
+/** versione di questo twig: 2.1.18 - 24/9/2020 
     History:
      - 2.0.0, 17/5/2020: iniziato a modificare output su nuove indicazioni DPO. Output vecchio mantenuto per confronto (da rimuovere)
      - 2.0.1, 20/5/2020: finito tabella di assegnazione variabili views-->variabili interne e aggiornato vecchio output. 
@@ -58,6 +58,7 @@ m...
      - 2.1.15: aggiunto id mostraschedagdpr su div contenitore (si coordina con entity-print-view*.twig 2.1.15 e succ.)
      - 2.1.16: no mod
      - 2.1.17: correzione testo sezione "Quali sono i miei diritti"
+     - 2.1.18: il "responsabile interno" diventa "interno/del procedimento"
 */ 
  #}
 
@@ -144,7 +145,7 @@ Mappaggio campi views<-->campi webform, 2.1.17 alla data del: 21.8.2020.
          <a href="https://gdpr.unityfvg.it/aiuto-contatti">https://gdpr.unityfvg.it/aiuto-contatti</a>
      <br />
      <u>Oppure</u>
-     <h5>Responsabile interno:</h5>
+     <h5>Responsabile interno/del procedimento:</h5>
      <div><span class="text-uppercase">TELEFONO:</span> {{ telefono_responsabile_interno }} </div>
      <div><span class="text-uppercase">EMAIL:</span>  {{ email_responsabile_interno }} </div>
      {% if  ufficio_di_riferimento  != "" %}
