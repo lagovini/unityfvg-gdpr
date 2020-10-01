@@ -10,7 +10,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for remote post webform handler functionality.
  *
- * @group Webform
+ * @group webform
  */
 class WebformHandlerRemotePostTest extends WebformBrowserTestBase {
 
@@ -85,7 +85,7 @@ options:
     sleep(1);
 
     // Check 'updated' operation.
-    $this->drupalPostForm("admin/structure/webform/manage/test_handler_remote_post/submission/$sid/edit", [], t('Save'));
+    $this->drupalPostForm("admin/structure/webform/manage/test_handler_remote_post/submission/$sid/edit", [], 'Save');
     $this->assertRaw("form_params:
   custom_updated: true
   custom_data: true
@@ -95,7 +95,7 @@ options:
     $this->assertRaw('Processed updated request.');
 
     // Check 'deleted`' operation.
-    $this->drupalPostForm("admin/structure/webform/manage/test_handler_remote_post/submission/$sid/delete", [], t('Delete'));
+    $this->drupalPostForm("admin/structure/webform/manage/test_handler_remote_post/submission/$sid/delete", [], 'Delete');
     $this->assertRaw("form_params:
   custom_deleted: true
   custom_data: true
@@ -108,7 +108,7 @@ options:
     $this->drupalLogout();
 
     // Check 'draft' operation.
-    $this->postSubmission($webform, [], t('Save Draft'));
+    $this->postSubmission($webform, [], 'Save Draft');
     $this->assertRaw("form_params:
   custom_draft_created: true
   custom_data: true

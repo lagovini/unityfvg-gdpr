@@ -10,7 +10,7 @@ use Drupal\webform\Entity\WebformSubmission;
 /**
  * Test for webform element managed file handling.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementManagedFilePrivateTest extends WebformElementManagedFileTestBase {
 
@@ -87,7 +87,7 @@ class WebformElementManagedFilePrivateTest extends WebformElementManagedFileTest
     $edit = [
       'files[managed_file_single]' => \Drupal::service('file_system')->realpath($this->files[1]->uri),
     ];
-    $this->drupalPostForm('/webform/' . $webform->id(), $edit, t('Preview'));
+    $this->drupalPostForm('/webform/' . $webform->id(), $edit, 'Preview');
 
     $temp_file_uri = file_create_url('private://webform/test_element_managed_file/_sid_/' . basename($this->files[1]->uri));
 

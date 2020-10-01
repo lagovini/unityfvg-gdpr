@@ -21,7 +21,7 @@ class WebformHandlerPluginCollection extends DefaultLazyPluginCollection {
 
     $a_weight = $a->getWeight();
     $b_weight = $b->getWeight();
-    if ($a_weight == $b_weight) {
+    if ($a_weight === $b_weight) {
       return 0;
     }
 

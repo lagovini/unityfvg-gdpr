@@ -33,7 +33,7 @@ elements: |
     '#default_value': |
       <p>This is a <strong>text format</strong> string.</p>
       <p>It contains &quot;double&quot; and 'single' quotes with special characters like &lt;, &gt;, &lt;&gt;, and &gt;&lt;.</p>
-  
+
   xss:
     '#type': textfield
     '#title': xss
@@ -47,7 +47,7 @@ elements: |
       <b class="webform_computed_twig_auto">complex string:</b> {{ webform_token('[webform_submission:values:complex_string]', webform_submission) }}<br />
       <b class="webform_computed_twig_auto">text_format:</b> {{ webform_token('[webform_submission:values:text_format]', webform_submission) }}<br />
       <b class="webform_computed_twig_auto">xss:</b> {{ webform_token('[webform_submission:values:xss]', webform_submission) }}<br />
-  
+
   webform_computed_twig_html:
     '#type': webform_computed_twig
     '#title': webform_computed_twig_html
@@ -58,7 +58,7 @@ elements: |
       <b class="webform_computed_twig_html">complex string:</b> {{ webform_token('[webform_submission:values:complex_string]', webform_submission) }}<br />
       <b class="webform_computed_twig_html">text_format:</b> {{ webform_token('[webform_submission:values:text_format]', webform_submission) }}<br />
       <b class="webform_computed_twig_html">xss:</b> {{ webform_token('[webform_submission:values:xss]', webform_submission) }}<br />
-  
+
   webform_computed_twig_text:
     '#type': webform_computed_twig
     '#title': webform_computed_twig_text
@@ -69,7 +69,7 @@ elements: |
       complex string: {{ webform_token('[webform_submission:values:complex_string]', webform_submission) }}
       text_format: {{ webform_token('[webform_submission:values:text_format]', webform_submission) }}
       xss: {{ webform_token('[webform_submission:values:xss]', webform_submission) }}
-  
+
   webform_computed_twig_data:
     '#type': webform_computed_twig
     '#title': webform_computed_twig_data
@@ -79,7 +79,7 @@ elements: |
       <b class="webform_computed_twig_data">complex string:</b> {{ data.complex_string }}<br />
       <b class="webform_computed_twig_data">text_format:</b> {{ data.text_format.value }}<br />
       <b class="webform_computed_twig_data">xss:</b> {{ data.xss }}<br />
-  
+
   webform_computed_twig_store:
     '#type': webform_computed_twig
     '#title': webform_computed_twig_store
@@ -97,7 +97,7 @@ elements: |
     '#title': webform_computed_twig_spaceless
     '#whitespace': spaceless
     '#template': ' <em>This is spaceless</em>  <br/> '
-  
+
 css: ''
 javascript: ''
 settings:
@@ -109,7 +109,7 @@ settings:
   page: true
   page_submit_path: ''
   page_confirm_path: ''
-  page_admin_theme: false
+  page_theme_name: ''
   form_title: source_entity_webform
   form_submit_once: false
   form_exception_message: ''
@@ -139,6 +139,11 @@ settings:
   form_access_denied_message: ''
   form_access_denied_attributes: {  }
   form_file_limit: ''
+  share: false
+  share_node: false
+  share_theme_name: ''
+  share_title: true
+  share_page_body_attributes: {  }
   submission_label: ''
   submission_log: false
   submission_views: {  }
@@ -164,11 +169,17 @@ settings:
   wizard_progress_percentage: false
   wizard_progress_link: false
   wizard_progress_states: false
+  wizard_auto_forward: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
   wizard_confirmation_label: ''
   wizard_track: ''
+  wizard_prev_button_label: ''
+  wizard_next_button_label: ''
+  wizard_toggle: false
+  wizard_toggle_show_label: ''
+  wizard_toggle_hide_label: ''
   preview: 1
   preview_label: ''
   preview_title: ''

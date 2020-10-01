@@ -6,9 +6,9 @@ use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\Controller\NodeViewController;
-use Drupal\simpletest\ContentTypeCreationTrait;
-use Drupal\simpletest\NodeCreationTrait;
-use Drupal\simpletest\UserCreationTrait;
+use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * Tests the hook_extra_fields() implementation.
@@ -45,7 +45,7 @@ class ExtraFieldsTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     array_map([$this, 'installEntitySchema'], ['user', 'node']);
     $this->installConfig(['system', 'filter', 'node']);
@@ -78,7 +78,7 @@ class ExtraFieldsTest extends KernelTestBase {
     // The View PDF links are rendered.
     $build = $controller->view($this->node, 'default');
     $text = (string) $renderer->renderPlain($build);
-    $this->assertContains('View PDF', $text);
+    $this->assertStringContainsString('View PDF', $text);
 
     // Change to the anonymous user.
     $this->container->get('current_user')->setAccount(new AnonymousUserSession());
@@ -86,7 +86,7 @@ class ExtraFieldsTest extends KernelTestBase {
     // The View PDF links are not rendered because we don't have access.
     $build = $controller->view($this->node, 'default');
     $text = (string) $renderer->renderPlain($build);
-    $this->assertNotContains('View PDF', $text);
+    $this->assertStringNotContainsString('View PDF', $text);
   }
 
   /**

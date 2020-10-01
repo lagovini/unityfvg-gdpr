@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for webform terms of service element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementTermsOfServiceTest extends WebformElementBrowserTestBase {
 
@@ -43,7 +43,7 @@ class WebformElementTermsOfServiceTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<label for="edit-terms-of-service-slideout" class="option">I agree to the <a role="button" href="#terms">terms of service</a>. (slideout)</label>');
 
     // Check validation.
-    $this->drupalPostForm('/webform/test_element_terms_of_service', [], t('Preview'));
+    $this->drupalPostForm('/webform/test_element_terms_of_service', [], 'Preview');
     $this->assertRaw('I agree to the {terms of service}. (default) field is required.');
 
     // Check preview.
@@ -52,7 +52,7 @@ class WebformElementTermsOfServiceTest extends WebformElementBrowserTestBase {
       'terms_of_service_modal' => TRUE,
       'terms_of_service_slideout' => TRUE,
     ];
-    $this->drupalPostForm('/webform/test_element_terms_of_service', $edit, t('Preview'));
+    $this->drupalPostForm('/webform/test_element_terms_of_service', $edit, 'Preview');
     $this->assertRaw('I agree to the terms of service. (default)');
     $this->assertRaw('I agree to the terms of service. (modal)');
     $this->assertRaw('I agree to the terms of service. (slideout)');

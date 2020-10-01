@@ -16,7 +16,7 @@ use Drupal\webform\Utility\WebformElementHelper;
  * Webform submission conditions (#states) validator.
  *
  * @see \Drupal\webform\Element\WebformElementStates
- * @see drupal_process_states()
+ * @see \Drupal\Core\Form\FormHelper::processStates
  */
 class WebformSubmissionConditionsValidator implements WebformSubmissionConditionsValidatorInterface {
 
@@ -345,7 +345,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
 
       // Determine if the element is required.
       $is_required = $this->validateConditions($conditions, $webform_submission);
-      $is_required = ($state == 'optional') ? !$is_required : $is_required;
+      $is_required = ($state === 'optional') ? !$is_required : $is_required;
       if (!$is_required) {
         continue;
       }
@@ -721,7 +721,7 @@ class WebformSubmissionConditionsValidator implements WebformSubmissionCondition
     // Process trigger sub state used for custom #states API validation.
     // @see Drupal.behaviors.webformStatesComparisions
     // @see http://drupalsun.com/julia-evans/2012/03/09/extending-form-api-states-regular-expressions
-    if ($trigger_state == 'value' && is_array($trigger_value)) {
+    if ($trigger_state === 'value' && is_array($trigger_value)) {
       $trigger_substate = key($trigger_value);
       if (in_array($trigger_substate, ['pattern', '!pattern', 'less', 'greater', 'between'])) {
         $trigger_state = $trigger_substate;

@@ -18,7 +18,7 @@ class WebformEntityAddForm extends BundleEntityFormBase {
    * {@inheritdoc}
    */
   protected function prepareEntity() {
-    if ($this->operation == 'duplicate') {
+    if ($this->operation === 'duplicate') {
       $this->setEntity($this->getEntity()->createDuplicate());
     }
     parent::prepareEntity();
@@ -32,7 +32,7 @@ class WebformEntityAddForm extends BundleEntityFormBase {
     $webform = $this->getEntity();
 
     // Customize title for duplicate webform.
-    if ($this->operation == 'duplicate') {
+    if ($this->operation === 'duplicate') {
       // Display custom title.
       $form['#title'] = $this->t("Duplicate '@label' form", ['@label' => $webform->label()]);
     }

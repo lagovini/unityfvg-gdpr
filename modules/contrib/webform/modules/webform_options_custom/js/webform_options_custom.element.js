@@ -336,7 +336,7 @@
             content += '<div class="webform-options-custom-tooltip--description">' + option.description + '</div>';
           }
 
-          if (typeof $.ui.tooltip != 'undefined') {
+          if (typeof $.ui.tooltip !== 'undefined') {
             // jQuery UI tooltip support.
             var tooltipOptions = $.extend({
               content: content,
@@ -353,7 +353,7 @@
 
             $templateOption.tooltip(tooltipOptions);
           }
-          else if ((typeof $.fn.tooltip) != 'undefined') {
+          else if ((typeof $.fn.tooltip) !== 'undefined') {
             // Bootstrap tooltip support.
             var options = $.extend({
               html: true,

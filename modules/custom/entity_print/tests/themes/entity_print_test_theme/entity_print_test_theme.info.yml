@@ -1,9 +1,9 @@
 name: Entity Print Test Theme
 type: theme
 description: Test theme for testing Entity Print CSS
-# core: 8.x
 hidden: true
 package: Testing
+base theme: stark
 
 entity_print:
   all: entity_print_test_theme/all
@@ -11,8 +11,7 @@ entity_print:
     all: entity_print_test_theme/node
     page: entity_print_test_theme/page
 
-# Information added by Drupal.org packaging script on 2018-08-02
-version: '8.x-2.1'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2020-06-18
+version: '8.x-2.2'
 project: 'entity_print'
-datestamp: 1533220072
+datestamp: 1592473170

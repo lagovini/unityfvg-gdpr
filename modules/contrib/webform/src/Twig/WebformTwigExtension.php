@@ -228,7 +228,7 @@ class WebformTwigExtension extends \Twig_Extension {
    */
   public static function renderTwigTemplate(WebformSubmissionInterface $webform_submission, $template, array $options = [], array $context = []) {
     try {
-      $build = self::buildTwigTemplate($webform_submission, $template, $options, $context);
+      $build = static::buildTwigTemplate($webform_submission, $template, $options, $context);
       return \Drupal::service('renderer')->renderPlain($build);
     }
     catch (\Exception $exception) {

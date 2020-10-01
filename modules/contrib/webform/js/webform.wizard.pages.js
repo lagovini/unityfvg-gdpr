@@ -1,6 +1,6 @@
 /**
  * @file
- * JavaScript behaviors for webform wizard.
+ * JavaScript behaviors for webform wizard pages.
  */
 
 (function ($, Drupal) {
@@ -36,10 +36,16 @@
               .attr({
                 'role': 'link',
                 'title': title,
-                'aria-label': title
+                'aria-label': title,
+                'tabindex': '0'
               })
               .click(function () {
                 $button.click();
+              })
+              .keydown(function (event) {
+                if (event.which === 13) {
+                  $button.click();
+                }
               });
             // Only allow the marker to be tabbable.
             $progress.find('.progress-marker').attr('tabindex', 0);

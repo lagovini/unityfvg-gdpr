@@ -3,7 +3,7 @@
  * JavaScript behaviors for Ajax.
  */
 
-(function ($, Drupal) {
+(function ($, Drupal, drupalSettings) {
 
   'use strict';
 
@@ -288,7 +288,16 @@
         Drupal.behaviors.webformUnsaved.clear();
       }
 
-      this.redirect(ajax, response, status);
+      // For webform embedded in an iframe, open all redirects in the top
+      // of the browser window.
+      // @see \Drupal\webform_share\Controller\WebformShareController::page
+      if (drupalSettings.webform_share &&
+        drupalSettings.webform_share.page) {
+        window.top.location = response.url;
+      }
+      else {
+        this.redirect(ajax, response, status);
+      }
     }
   };
 
@@ -373,4 +382,4 @@
     return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
   }
 
-})(jQuery, Drupal);
+})(jQuery, Drupal, drupalSettings);

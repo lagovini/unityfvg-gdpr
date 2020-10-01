@@ -55,7 +55,7 @@ class WebformElementHelper {
    * @var array
    */
   public static $allowedProperties = [
-    # webform_validation.module.
+    // webform_validation.module.
     '#equal_stepwise_validate' => '#equal_stepwise_validate',
   ];
 
@@ -380,7 +380,7 @@ class WebformElementHelper {
             $ignored_properties[$key] = $key;
           }
         }
-        elseif ($key == '#element' && is_array($value) && isset($element['#type']) && $element['#type'] === 'webform_composite') {
+        elseif ($key === '#element' && is_array($value) && isset($element['#type']) && $element['#type'] === 'webform_composite') {
           foreach ($value as $composite_value) {
 
             // Multiple sub composite elements are not supported.
@@ -452,7 +452,7 @@ class WebformElementHelper {
       $allowedSubProperties = self::$allowedProperties;
       $ignoredSubProperties = self::$ignoredProperties;
       // Allow #weight as sub property. This makes it easier for developer to
-      // sort composite sub-elements
+      // sort composite sub-elements.
       unset($ignoredSubProperties['#weight']);
       self::$ignoredSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($ignoredSubProperties))) . ')$/';
       self::$allowedSubPropertiesRegExp = '/__(' . implode('|', array_keys(WebformArrayHelper::removePrefix($allowedSubProperties))) . ')$/';
@@ -578,7 +578,7 @@ class WebformElementHelper {
    */
   public static function &getElement(array &$elements, $name) {
     foreach (Element::children($elements) as $element_name) {
-      if ($element_name == $name) {
+      if ($element_name === $name) {
         return $elements[$element_name];
       }
       elseif (is_array($elements[$element_name])) {

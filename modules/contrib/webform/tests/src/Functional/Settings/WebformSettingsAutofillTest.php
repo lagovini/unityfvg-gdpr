@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform submission form autofill.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsAutofillTest extends WebformBrowserTestBase {
 

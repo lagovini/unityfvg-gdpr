@@ -2,6 +2,7 @@
 
 namespace Drupal\entity_print;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -96,7 +97,7 @@ class PrintBuilder implements PrintBuilderInterface {
     $uri = "$scheme://$filename";
 
     // Save the file.
-    return file_unmanaged_save_data($print_engine->getBlob(), $uri, FILE_EXISTS_REPLACE);
+    return \Drupal::service('file_system')->saveData($print_engine->getBlob(), $uri, FileSystemInterface::EXISTS_REPLACE);
   }
 
   /**

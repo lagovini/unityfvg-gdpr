@@ -513,7 +513,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
     $composite_elements = $this->getInitializedCompositeElement($element);
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
-      $composite_title = (isset($composite_element['#title']) && $format != 'raw') ? $composite_element['#title'] : $composite_key;
+      $composite_title = (isset($composite_element['#title']) && $format !== 'raw') ? $composite_element['#title'] : $composite_key;
       $composite_value = $this->formatCompositeHtml($element, $webform_submission, ['composite_key' => $composite_key] + $options);
       if ($composite_value !== '') {
         $items[$composite_key] = [
@@ -549,7 +549,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
     foreach (RenderElement::children($composite_elements) as $composite_key) {
       $composite_element = $composite_elements[$composite_key];
 
-      $composite_title = (isset($composite_element['#title']) && $format != 'raw') ? $composite_element['#title'] : $composite_key;
+      $composite_title = (isset($composite_element['#title']) && $format !== 'raw') ? $composite_element['#title'] : $composite_key;
 
       $composite_value = $this->formatCompositeText($element, $webform_submission, ['composite_key' => $composite_key] + $options);
       if (is_array($composite_value)) {
@@ -737,7 +737,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         continue;
       }
 
-      if ($options['header_format'] == 'label' && !empty($composite_element['#title'])) {
+      if ($options['header_format'] === 'label' && !empty($composite_element['#title'])) {
         $header[] = $composite_element['#title'];
       }
       else {
@@ -755,7 +755,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
     $value = $this->getValue($element, $webform_submission);
 
     if ($this->hasMultipleValues($element)) {
-      $element['#format'] = ($export_options['header_format'] == 'label') ? 'list' : 'raw';
+      $element['#format'] = ($export_options['header_format'] === 'label') ? 'list' : 'raw';
       $export_options['multiple_delimiter'] = PHP_EOL . '---' . PHP_EOL;
       return parent::buildExportRecord($element, $webform_submission, $export_options);
     }
@@ -768,7 +768,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         continue;
       }
 
-      if ($export_options['composite_element_item_format'] == 'label' && $composite_element['#type'] != 'textfield' && !empty($composite_element['#options'])) {
+      if ($export_options['composite_element_item_format'] === 'label' && $composite_element['#type'] !== 'textfield' && !empty($composite_element['#options'])) {
         $record[] = WebformOptionsHelper::getOptionText($value[$composite_key], $composite_element['#options']);
       }
       else {
@@ -1101,7 +1101,7 @@ abstract class WebformCompositeBase extends WebformElementBase implements Webfor
         ];
       }
 
-      if ($type == 'tel') {
+      if ($type === 'tel') {
         $row['settings']['data'][$composite_key . '__type'] = [
           '#type' => 'select',
           '#title' => $this->t('@title type', $t_args),

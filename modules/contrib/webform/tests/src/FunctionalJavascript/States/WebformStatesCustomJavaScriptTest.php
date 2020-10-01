@@ -7,7 +7,7 @@ use Drupal\Tests\webform\FunctionalJavascript\WebformWebDriverTestBase;
 /**
  * Tests for webform submission conditions (#states) validator.
  *
- * @group Webform
+ * @group webform_javascript
  */
 class WebformStatesCustomJavaScriptTest extends WebformWebDriverTestBase {
 

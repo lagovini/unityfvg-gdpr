@@ -138,7 +138,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     $result = $message_manager->get(WebformMessageManagerInterface::DRAFT_PENDING_SINGLE);
     $this->assertEquals($expected, $result);
 
-    // Check [none] for multiple message returns an empty string..
+    // Check [none] for multiple message returns an empty string.
     $result = $message_manager->get(WebformMessageManagerInterface::DRAFT_PENDING_MULTIPLE);
     $this->assertFalse($result);
   }

@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform token submission value.
  *
- * @group Webform
+ * @group webform
  */
 class WebformTokenSubmissionValueTest extends WebformBrowserTestBase {
 
@@ -29,7 +29,7 @@ class WebformTokenSubmissionValueTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Create 'tags' vocabulary.

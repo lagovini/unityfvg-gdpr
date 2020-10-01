@@ -154,7 +154,7 @@ class WebformImageSelect extends Select {
    * {@inheritdoc}
    */
   protected function formatTextItem(array $element, WebformSubmissionInterface $webform_submission, array $options = []) {
-    if ($this->getItemFormat($element) == 'image') {
+    if ($this->getItemFormat($element) === 'image') {
       $element['#format'] = 'value';
     }
     return parent::formatTextItem($element, $webform_submission, $options);

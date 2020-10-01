@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for fieldset element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementFieldsetTest extends WebformElementBrowserTestBase {
 
@@ -30,7 +30,12 @@ class WebformElementFieldsetTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<span class="field-prefix">prefix</span>');
     $this->assertRaw('<span class="field-suffix">suffix</span>');
     $this->assertRaw('<div class="description">');
-    $this->assertRaw('<div id="edit-fieldset--description" class="webform-element-description">This is a description.</div>');
+    if (floatval(\Drupal::VERSION) >= 9) {
+      $this->assertRaw('<div id="edit-fieldset--description" data-drupal-field-elements="description" class="webform-element-description">This is a description.</div>');
+    }
+    else {
+      $this->assertRaw('<div id="edit-fieldset--description" class="webform-element-description">This is a description.</div>');
+    }
     $this->assertRaw('<div id="edit-fieldset--more" class="js-webform-element-more webform-element-more">');
 
     // Check fieldset title_display: invisible.
@@ -41,7 +46,12 @@ class WebformElementFieldsetTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<span class="fieldset-legend"></span>');
 
     // Check fieldset description_display: before.
-    $this->assertRaw('<span class="field-prefix">prefix<div id="edit-fieldset-description-before--description" class="webform-element-description">This is a description before.</div>');
+    if (floatval(\Drupal::VERSION) >= 9) {
+      $this->assertRaw('<span class="field-prefix">prefix<div id="edit-fieldset-description-before--description" data-drupal-field-elements="description" class="webform-element-description">This is a description before.</div>');
+    }
+    else {
+      $this->assertRaw('<span class="field-prefix">prefix<div id="edit-fieldset-description-before--description" class="webform-element-description">This is a description before.</div>');
+    }
   }
 
 }

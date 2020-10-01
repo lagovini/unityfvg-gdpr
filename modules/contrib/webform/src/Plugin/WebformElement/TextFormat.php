@@ -189,6 +189,13 @@ class TextFormat extends WebformElementBase {
   }
 
   /**
+   * @inheritDoc
+   */
+  public static function trustedCallbacks() {
+    return array_merge(parent::trustedCallbacks(), ['preRenderFixTextFormatStates']);
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function setDefaultValue(array &$element) {

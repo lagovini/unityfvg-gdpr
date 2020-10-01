@@ -21,7 +21,7 @@ abstract class WebformVariantFormBase extends FormBase {
   use WebformDialogFormTrait;
 
   /**
-   * Machine name maxlenght.
+   * Machine name maxlength.
    */
   const MACHINE_NAME_MAXLENGHTH = 64;
 
@@ -189,7 +189,7 @@ abstract class WebformVariantFormBase extends FormBase {
       '#return_value' => TRUE,
       '#default_value' => $this->webformVariant->isEnabled(),
       // Disable broken plugins.
-      '#disabled' => ($this->webformVariant->getPluginId() == 'broken'),
+      '#disabled' => ($this->webformVariant->getPluginId() === 'broken'),
     ];
 
     $form['#parents'] = [];

@@ -7,7 +7,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform third party settings.
  *
- * @group Webform
+ * @group webform
  */
 class WebformThirdPartySettingsTest extends WebformBrowserTestBase {
 
@@ -52,7 +52,7 @@ class WebformThirdPartySettingsTest extends WebformBrowserTestBase {
     // Install test third party settings module.
     $this->drupalPostForm('admin/modules', [
       'modules[webform_test_third_party_settings][enable]' => TRUE,
-    ], t('Install'));
+    ], 'Install');
 
     // Check 'Webform: Settings' shows no modules installed.
     $this->drupalGet('/admin/structure/webform/config');
@@ -66,7 +66,7 @@ class WebformThirdPartySettingsTest extends WebformBrowserTestBase {
     $edit = [
       'third_party_settings[webform_test_third_party_settings][message]' => 'Message for all webforms',
     ];
-    $this->drupalPostForm('/admin/structure/webform/config', $edit, t('Save configuration'));
+    $this->drupalPostForm('/admin/structure/webform/config', $edit, 'Save configuration');
     $this->drupalGet('/webform/contact');
     $this->assertRaw('Message for all webforms');
 
@@ -80,7 +80,7 @@ class WebformThirdPartySettingsTest extends WebformBrowserTestBase {
     $edit = [
       'third_party_settings[webform_test_third_party_settings][message]' => 'Message for only this webform',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/settings', $edit, 'Save');
     $this->drupalGet('/webform/contact');
     $this->assertRaw('Message for only this webform');
 
@@ -91,8 +91,8 @@ class WebformThirdPartySettingsTest extends WebformBrowserTestBase {
     // Uninstall test third party settings module.
     $this->drupalPostForm('admin/modules/uninstall', [
       'uninstall[webform_test_third_party_settings]' => TRUE,
-    ], t('Uninstall'));
-    $this->drupalPostForm(NULL, [], t('Uninstall'));
+    ], 'Uninstall');
+    $this->drupalPostForm(NULL, [], 'Uninstall');
 
     // Check webform.
     $this->drupalGet('/webform/contact');

@@ -28,7 +28,7 @@ class WebformBrowserTestBaseTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
   }
 

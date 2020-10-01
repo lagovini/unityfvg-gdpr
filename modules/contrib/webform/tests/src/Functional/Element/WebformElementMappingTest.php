@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for mapping element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementMappingTest extends WebformElementBrowserTestBase {
 
@@ -45,7 +45,7 @@ class WebformElementMappingTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<input data-drupal-selector="edit-webform-mapping-textfield-one" type="text" id="edit-webform-mapping-textfield-one" name="webform_mapping_textfield[one]" value="" size="10" maxlength="128" class="form-text" />');
 
     // Check required.
-    $this->drupalPostForm('/webform/test_element_mapping', [], t('Submit'));
+    $this->drupalPostForm('/webform/test_element_mapping', [], 'Submit');
     $this->assertRaw('webform_mapping_required field is required.');
     $this->assertRaw('One field is required.');
     $this->assertRaw('Two field is required.');
@@ -86,13 +86,13 @@ class WebformElementMappingTest extends WebformElementBrowserTestBase {
     ];
 
     // Check preview.
-    $this->drupalPostForm('/webform/test_element_mapping', $edit, t('Preview'));
+    $this->drupalPostForm('/webform/test_element_mapping', $edit, 'Preview');
 
     // Check that source description is not displayed.
     $this->assertRaw('<li>Two &rarr; Five</li>');
 
     // Check submitted values.
-    $this->drupalPostForm('/webform/test_element_mapping', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_mapping', $edit, 'Submit');
     $this->assertRaw("webform_mapping:
   one: four
   three: six

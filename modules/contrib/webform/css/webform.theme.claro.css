@@ -35,13 +35,6 @@
 /* Messages */
 /*****************************************************************************   */
 
-.messages.messages--webform a.button {
-  margin: 0;
-  text-decoration: none;
-  color: #fff;
-  background-color: #003cc5;
-}
-
 html.js .webform-message--close .webform-message__link {
   opacity: inherit;
   color: #ffd23f;
@@ -54,6 +47,16 @@ html.js .webform-message--close .webform-message__link:focus,
 html.js .webform-message--close .webform-message__link:active {
   opacity: inherit;
   color: #fff;
+}
+
+/**
+ * Fix button link and background color.
+ */
+.webform-message a.button {
+  margin: 0;
+  text-decoration: none;
+  color: #fff;
+  background-color: #003cc5;
 }
 
 /**

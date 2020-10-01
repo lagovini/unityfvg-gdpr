@@ -117,9 +117,9 @@ class WebformTime extends FormElement {
     // @see https://github.com/jonthornton/jquery-timepicker
     // @see js/webform.element.time.js
     $is_valid_time = $time && (
-      $value == static::formatTime('H:i', $time) ||
-      $value == static::formatTime('H:i:s', $time) ||
-      $value == static::formatTime($element['#time_format'], $time)
+      $value === static::formatTime('H:i', $time) ||
+      $value === static::formatTime('H:i:s', $time) ||
+      $value === static::formatTime($element['#time_format'], $time)
     );
     if (!$is_valid_time) {
       if ($has_access) {

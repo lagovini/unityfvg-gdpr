@@ -6,7 +6,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\entity_print_views\Controller\ViewPrintController;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\UserCreationTrait;
+use Drupal\Tests\user\Traits\UserCreationTrait;
 
 /**
  * Views access test.
@@ -17,6 +17,9 @@ class ViewsAccessTest extends KernelTestBase {
 
   use UserCreationTrait;
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'system',
     'node',
@@ -30,9 +33,9 @@ class ViewsAccessTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
-    $this->installSchema('system', ['router', 'sequences', 'key_value_expire']);
+    $this->installSchema('system', ['sequences', 'key_value_expire']);
     $this->installEntitySchema('user');
     $this->installConfig('entity_print_views_test_views');
 

@@ -28,7 +28,7 @@ abstract class WebformAttachmentBase extends WebformElementBase implements Webfo
       // Form display.
       'title_display' => '',
       // Display settings.
-      'display_on' => static::DISPLAY_ON_NONE,
+      'display_on' => WebformElementDisplayOnInterface::DISPLAY_ON_NONE,
       // Attachment values.
       'filename' => '',
       'sanitize' => FALSE,

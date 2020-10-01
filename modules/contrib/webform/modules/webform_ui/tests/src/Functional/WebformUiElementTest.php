@@ -8,7 +8,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for webform UI element.
  *
- * @group WebformUi
+ * @group webform_ui
  */
 class WebformUiElementTest extends WebformBrowserTestBase {
 
@@ -29,7 +29,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
     // Disable description help icon.
     $this->config('webform.settings')->set('ui.description_help', FALSE)->save();
@@ -76,7 +76,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
       'webform_ui_elements[email][weight]' => 2,
       'webform_ui_elements[name][weight]' => 3,
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/contact', $edit, t('Save elements'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact', $edit, 'Save elements');
 
     \Drupal::entityTypeManager()->getStorage('webform_submission')->resetCache();
     \Drupal::entityTypeManager()->getStorage('webform')->resetCache();
@@ -114,7 +114,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $edit = [
       'webform_ui_elements[details_01][parent_key]' => 'details_01',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test', $edit, t('Save elements'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test', $edit, 'Save elements');
     $this->assertRaw('Parent <em class="placeholder">details_01</em> key is not valid.');
 
     // Check setting containers to one another displays an error.
@@ -122,7 +122,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
       'webform_ui_elements[details_01][parent_key]' => 'details_02',
       'webform_ui_elements[details_02][parent_key]' => 'details_01',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test', $edit, t('Save elements'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test', $edit, 'Save elements');
     $this->assertRaw('Parent <em class="placeholder">details_01</em> key is not valid.');
     $this->assertRaw('Parent <em class="placeholder">details_02</em> key is not valid.');
 
@@ -138,7 +138,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $edit = [
       'webform_ui_elements[name][required]' => FALSE,
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/contact', $edit, t('Save elements'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact', $edit, 'Save elements');
     $this->assertNoFieldChecked('edit-webform-ui-elements-name-required');
 
     /**************************************************************************/
@@ -152,19 +152,19 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertRaw('Save + Add element');
 
     // Create element.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], 'Save');
 
     // Check elements URL contains ?update query string parameter.
     $this->assertUrl('admin/structure/webform/manage/contact', ['query' => ['update' => 'test']]);
 
     // Check that save elements removes ?update query string parameter.
-    $this->drupalPostForm(NULL, [], t('Save elements'));
+    $this->drupalPostForm(NULL, [], 'Save elements');
 
     // Check that save elements removes ?update query string parameter.
     $this->assertUrl('admin/structure/webform/manage/contact', ['query' => ['update' => 'test']]);
 
     // Create validate unique element.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], 'Save');
     $this->assertRaw('The machine-readable name is already in use. It must be unique.');
 
     // Check read element.
@@ -173,7 +173,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertRaw('<input data-drupal-selector="edit-test" type="text" id="edit-test" name="test" value="" size="60" maxlength="255" class="form-text" />');
 
     // Update element.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', ['properties[title]' => 'Test 123', 'properties[default_value]' => 'This is a default value'], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', ['properties[title]' => 'Test 123', 'properties[default_value]' => 'This is a default value'], 'Save');
 
     // Check elements URL contains ?update query string parameter.
     $this->assertUrl('admin/structure/webform/manage/contact', ['query' => ['update' => 'test']]);
@@ -184,11 +184,11 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertRaw('<input data-drupal-selector="edit-test" type="text" id="edit-test" name="test" value="This is a default value" size="60" maxlength="255" class="form-text" />');
 
     // Check that 'test' element is being added to the webform_submission_data table.
-    $this->drupalPostForm('/webform/contact/test', [], t('Send message'));
+    $this->drupalPostForm('/webform/contact/test', [], 'Send message');
     $this->assertEqual(1, \Drupal::database()->query("SELECT COUNT(sid) FROM {webform_submission_data} WHERE webform_id='contact' AND name='test'")->fetchField());
 
     // Check delete element.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/delete', [], t('Delete'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/delete', [], 'Delete');
     $this->drupalGet('/webform/contact');
     $this->assertNoRaw('<label for="edit-test">Test 123</label>');
     $this->assertNoRaw('<input data-drupal-selector="edit-test" type="text" id="edit-test" name="test" value="This is a default value" size="60" maxlength="255" class="form-text" />');
@@ -209,7 +209,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     /**************************************************************************/
 
     // Check create element.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/textfield', ['key' => 'test', 'properties[title]' => 'Test'], 'Save');
 
     // Check element type.
     $this->drupalGet('/admin/structure/webform/manage/contact/element/test/edit');
@@ -239,7 +239,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertRaw('(Changing from <em class="placeholder">Text field</em>)');
 
     // Change the element type.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', [], t('Save'), ['query' => ['type' => 'value']]);
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', [], 'Save', ['query' => ['type' => 'value']]);
 
     // Change the element type from 'textfield' to 'value'.
     $this->drupalGet('/admin/structure/webform/manage/contact/element/test/edit');
@@ -248,7 +248,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertRaw('Value <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/change" class="button button--small webform-ajax-link" data-dialog-type="modal" data-dialog-options="{&quot;width&quot;:800,&quot;dialogClass&quot;:&quot;webform-ui-dialog&quot;}" data-drupal-selector="edit-change-type" id="edit-change-type">Change</a>');
 
     // Check color element that does not have related type and return 404.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/color', ['key' => 'test_color', 'properties[title]' => 'Test color'], t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/color', ['key' => 'test_color', 'properties[title]' => 'Test color'], 'Save');
     $this->drupalGet('/admin/structure/webform/manage/contact/element/test_color/change');
     $this->assertResponse(404);
 
@@ -260,7 +260,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $edit = [
       'properties[default_value]' => 'not a valid date',
     ];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_date/element/date_min_max_dynamic/edit', $edit, t('Save'));
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_date/element/date_min_max_dynamic/edit', $edit, 'Save');
     $this->assertRaw('The Default value could not be interpreted in <a href="https://www.gnu.org/software/tar/manual/html_chapter/tar_7.html#Date-input-formats">GNU Date Input Format</a>.');
   }
 

@@ -10,7 +10,7 @@ use Drupal\webform\WebformInterface;
 /**
  * Tests for access denied webform and submissions.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsAccessDeniedTest extends WebformBrowserTestBase {
 
@@ -31,7 +31,7 @@ class WebformSettingsAccessDeniedTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Place blocks.

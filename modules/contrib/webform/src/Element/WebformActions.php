@@ -110,7 +110,7 @@ class WebformActions extends Container {
       // Apply attributes (class, style, properties).
       if (!empty($element['#' . $settings_name . '__attributes'])) {
         foreach ($element['#' . $settings_name . '__attributes'] as $attribute_name => $attribute_value) {
-          if ($attribute_name == 'class') {
+          if ($attribute_name === 'class') {
             // Merge class names.
             $element[$button_name]['#attributes']['class'] = array_merge($element[$button_name]['#attributes']['class'], $attribute_value);
           }

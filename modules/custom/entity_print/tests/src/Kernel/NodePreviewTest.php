@@ -29,7 +29,7 @@ class NodePreviewTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     set_error_handler([$this, 'errorHandler']);
   }
@@ -38,7 +38,6 @@ class NodePreviewTest extends KernelTestBase {
    * Tests that entity print link is not displayed in node preview.
    */
   public function testNodePreview() {
-    $this->installSchema('system', ['router']);
     $this->installConfig(['system', 'user']);
     $this->config('system.theme.global')
       ->set('features.node_user_picture', FALSE)->save();

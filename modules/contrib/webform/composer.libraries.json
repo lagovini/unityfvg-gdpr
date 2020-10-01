@@ -33,13 +33,13 @@
             "type": "package",
             "package": {
                 "name": "algolia/places",
-                "version": "1.17.1",
+                "version": "1.18.2",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "algolia.places"
                 },
                 "dist": {
-                    "url": "https://registry.npmjs.org/places.js/-/places.js-1.17.1.tgz",
+                    "url": "https://registry.npmjs.org/places.js/-/places.js-1.18.2.tgz",
                     "type": "tar"
                 },
                 "require": {
@@ -159,13 +159,13 @@
             "type": "package",
             "package": {
                 "name": "codemirror/codemirror",
-                "version": "5.51.0",
+                "version": "5.53.2",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "codemirror"
                 },
                 "dist": {
-                    "url": "https://github.com/components/codemirror/archive/5.51.0.zip",
+                    "url": "https://github.com/components/codemirror/archive/5.53.2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -249,13 +249,13 @@
             "type": "package",
             "package": {
                 "name": "jquery/image-picker",
-                "version": "0.3.0",
+                "version": "0.3.1",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "jquery.image-picker"
                 },
                 "dist": {
-                    "url": "https://github.com/rvera/image-picker/archive/0.3.0.zip",
+                    "url": "https://github.com/rvera/image-picker/archive/0.3.1.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -321,13 +321,13 @@
             "type": "package",
             "package": {
                 "name": "jquery/select2",
-                "version": "4.0.12",
+                "version": "4.0.13",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "jquery.select2"
                 },
                 "dist": {
-                    "url": "https://github.com/select2/select2/archive/4.0.12.zip",
+                    "url": "https://github.com/select2/select2/archive/4.0.13.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -339,13 +339,13 @@
             "type": "package",
             "package": {
                 "name": "jquery/textcounter",
-                "version": "0.8.0",
+                "version": "0.9.0",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "jquery.textcounter"
                 },
                 "dist": {
-                    "url": "https://github.com/ractoon/jQuery-Text-Counter/archive/0.8.0.zip",
+                    "url": "https://github.com/ractoon/jQuery-Text-Counter/archive/0.9.0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -357,13 +357,13 @@
             "type": "package",
             "package": {
                 "name": "jquery/timepicker",
-                "version": "1.13.0",
+                "version": "1.13.10",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "jquery.timepicker"
                 },
                 "dist": {
-                    "url": "https://github.com/jonthornton/jquery-timepicker/archive/1.13.0.zip",
+                    "url": "https://github.com/jonthornton/jquery-timepicker/archive/1.13.10.zip",
                     "type": "zip"
                 },
                 "require": {

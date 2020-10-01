@@ -10,7 +10,6 @@
  * @ingroup themeable
  */
 #}
-
 {% if settings.debug %}<b class="color-error">{{ 'Debugging is enabled'|t }}</b><br />{% endif %}
 {% for setting in settings.settings %}
   <b>{{ setting.title }}:</b> {{ setting.value }}<br />

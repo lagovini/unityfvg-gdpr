@@ -457,7 +457,7 @@ class WebformCliService implements WebformCliServiceInterface {
    */
   public function drush_webform_purge_validate($webform_id = NULL) {
     // If webform id is set to 'all' or not included skip validation.
-    if ($this->drush_get_option('all') || $webform_id == NULL) {
+    if ($this->drush_get_option('all') || $webform_id === NULL) {
       return;
     }
 
@@ -483,7 +483,7 @@ class WebformCliService implements WebformCliServiceInterface {
     }
 
     // Set the webform.
-    $webform = ($webform_id == 'all') ? NULL : Webform::load($webform_id);
+    $webform = ($webform_id === 'all') ? NULL : Webform::load($webform_id);
 
     /** @var \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager */
     $entity_type_manager = \Drupal::service('entity_type.manager');
@@ -577,7 +577,7 @@ class WebformCliService implements WebformCliServiceInterface {
       $dependencies = FALSE;
     }
 
-    $files = file_scan_directory($file_directory_path, ($prefix) ? '/^' . preg_quote($prefix, '/.') . '.*\.yml$/' : '/.*\.yml$/');
+    $files = \Drupal::service('file_system')->scanDirectory($file_directory_path, ($prefix) ? '/^' . preg_quote($prefix, '/.') . '.*\.yml$/' : '/.*\.yml$/');
     $this->drush_print($this->dt("Reviewing @count YAML configuration '@prefix.*' files in '@module'.", ['@count' => count($files), '@module' => $target, '@prefix' => $prefix]));
 
     $total = 0;
@@ -619,7 +619,7 @@ class WebformCliService implements WebformCliServiceInterface {
 
       // Tidy and add new line to the end of the tidied file.
       $tidied_yaml = WebformYaml::encode($data) . PHP_EOL;
-      if ($tidied_yaml != $original_yaml) {
+      if ($tidied_yaml !== $original_yaml) {
         $this->drush_print($this->dt('Tidying @file…', ['@file' => $file->filename]));
         file_put_contents($file->uri, $tidied_yaml);
         $total++;
@@ -780,7 +780,7 @@ class WebformCliService implements WebformCliServiceInterface {
       $files = scandir($temp_location);
       // Remove directories (. ..)
       unset($files[0], $files[1]);
-      if ((count($files) == 1) && is_dir($temp_location . '/' . current($files))) {
+      if ((count($files) === 1) && is_dir($temp_location . '/' . current($files))) {
         $temp_location .= '/' . current($files);
       }
       $this->drush_move_dir($temp_location, $download_location);
@@ -993,7 +993,7 @@ class WebformCliService implements WebformCliServiceInterface {
       $help_html = \Drupal::service('renderer')->renderPlain($help_section);
       $help_html = $this->_drush_webform_docs_tidy($help_html);
 
-      if ($help_name == 'videos') {
+      if ($help_name === 'videos') {
         // Download YouTube thumbnails so that they can be updated to
         // https://www.drupal.org/files/
         preg_match_all('#https://img.youtube.com/vi/([^/]+)/0.jpg#', $help_html, $matches);
@@ -1314,7 +1314,7 @@ function $command_hook() {
 // @codingStandardsIgnoreFile
 
 /**
- * This is file was generated using Drush. DO NOT EDIT. 
+ * This is file was generated using Drush. DO NOT EDIT.
  *
  * @see drush webform-generate-commands
  * @see \Drupal\webform\Commands\DrushCliServiceBase::generate_commands_drush8
@@ -1452,7 +1452,7 @@ $command_annotations
 // @codingStandardsIgnoreFile
 
 /**
- * This is file was generated using Drush. DO NOT EDIT. 
+ * This is file was generated using Drush. DO NOT EDIT.
  *
  * @see drush webform-generate-commands
  * @see \Drupal\webform\Commands\DrushCliServiceBase::generate_commands_drush9
@@ -1512,7 +1512,7 @@ $methods
         return $this->drush_set_error($this->dt("'@title' (@entity_type:@entity_id) does not reference a webform.", $dt_args));
       }
 
-      if ($source_entity->webform->target_id != $webform_id) {
+      if ($source_entity->webform->target_id !== $webform_id) {
         return $this->drush_set_error($this->dt("'@title' (@entity_type:@entity_id) does not have a '@webform_id' webform associated with it.", $dt_args));
       }
     }

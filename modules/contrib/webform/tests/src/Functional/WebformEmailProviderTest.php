@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional;
 /**
  * Tests for webform email provider.
  *
- * @group Webform
+ * @group webform
  */
 class WebformEmailProviderTest extends WebformBrowserTestBase {
 
@@ -72,7 +72,7 @@ class WebformEmailProviderTest extends WebformBrowserTestBase {
 
     // Turn on the smtp.module via the UI.
     // @see webform_form_smtp_admin_settings_alter()
-    $this->drupalPostForm('/admin/config/system/smtp', ['smtp_on' => TRUE], t('Save configuration'));
+    $this->drupalPostForm('/admin/config/system/smtp', ['smtp_on' => TRUE], 'Save configuration');
 
     // Check SMTP: Default PHP mailer after smtp.module turned on.
     $this->drupalGet('/admin/reports/status');

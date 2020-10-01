@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for email_confirm element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementEmailConfirmTest extends WebformElementBrowserTestBase {
 
@@ -52,14 +52,14 @@ class WebformElementEmailConfirmTest extends WebformElementBrowserTestBase {
       'email_confirm_flexbox[mail_1]' => 'example01@example.com',
       'email_confirm_flexbox[mail_2]' => 'example02@example.com',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertRaw('The specified email addresses do not match.');
 
     $edit = [
       'email_confirm_flexbox[mail_1]' => 'example@example.com',
       'email_confirm_flexbox[mail_2]' => 'example@example.com',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertRaw("email_confirm_basic: ''
 email_confirm_advanced: ''
 email_confirm_pattern: ''
@@ -71,7 +71,7 @@ email_confirm_flexbox: example@example.com");
       'email_confirm_advanced[mail_1]' => 'Not a valid email address',
       'email_confirm_advanced[mail_2]' => 'Not a valid email address, again',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertRaw('The email address <em class="placeholder">Not a valid email address</em> is not valid.');
     $this->assertRaw('The email address <em class="placeholder">Not a valid email address, again</em> is not valid.');
 
@@ -80,7 +80,7 @@ email_confirm_flexbox: example@example.com");
       'email_confirm_advanced[mail_1]' => 'example01@example.com',
       'email_confirm_advanced[mail_2]' => 'example02@example.com',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertRaw('The specified email addresses do not match.');
 
     // Check email confirm matching email addresses.
@@ -88,7 +88,7 @@ email_confirm_flexbox: example@example.com");
       'email_confirm_advanced[mail_1]' => 'example@example.com',
       'email_confirm_advanced[mail_2]' => 'example@example.com',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertNoRaw('<li class="messages__item">The specified email addresses do not match.</li>');
     $this->assertRaw('email_confirm_advanced: example@example.com');
 
@@ -97,7 +97,7 @@ email_confirm_flexbox: example@example.com");
       'email_confirm_advanced[mail_1]' => '',
       'email_confirm_advanced[mail_2]' => '',
     ];
-    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_email_confirm', $edit, 'Submit');
     $this->assertNoRaw('<li class="messages__item">Confirm Email field is required.</li>');
   }
 

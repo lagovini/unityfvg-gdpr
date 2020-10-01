@@ -295,7 +295,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
     if ($file_limit) {
       $element_validate[] = [get_class($this), 'validateManagedFileLimit'];
     }
-    // NOTE: Using array_splice() to make sure that self::validateManagedFile
+    // NOTE: Using array_splice() to make sure that static::validateManagedFile
     // is executed before all other validation hooks are executed but after
     // \Drupal\file\Element\ManagedFile::validateManagedFile.
     array_splice($element['#element_validate'], 1, 0, $element_validate);
@@ -822,7 +822,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
       $preview_element = ['#format' => $element['#file_preview']] + $element;
 
       // Convert '#theme': file_link to a container with a file preview.
-      $fids = (array) $webform_submission->getElementData($element['#webform_key']) ?: [];
+      $fids = (isset($element['#webform_key'])) ? (array) $webform_submission->getElementData($element['#webform_key']) : [];
       foreach ($fids as $delta => $fid) {
         $child_key = 'file_' . $fid;
         // Make sure the child element exists.
@@ -1266,7 +1266,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
       $destination_uri = $this->getFileDestinationUri($element, $file, $webform_submission);
 
       // Save file if there is a new destination URI.
-      if ($source_uri != $destination_uri) {
+      if ($source_uri !== $destination_uri) {
         $destination_uri = $this->fileSystem->move($source_uri, $destination_uri);
         $file->setFileUri($destination_uri);
         $file->setFileName($this->fileSystem->basename($destination_uri));
@@ -1387,7 +1387,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
     $usage = $file_usage->listUsage($file);
     foreach ($usage as $module => $entity_types) {
       // Check for Webform module.
-      if ($module != 'webform') {
+      if ($module !== 'webform') {
         continue;
       }
 
@@ -1395,7 +1395,7 @@ abstract class WebformManagedFileBase extends WebformElementBase implements Webf
         $entity_ids = array_keys($counts);
 
         // Check for webform submission entity type.
-        if ($entity_type != 'webform_submission' || empty($entity_ids)) {
+        if ($entity_type !== 'webform_submission' || empty($entity_ids)) {
           continue;
         }
 

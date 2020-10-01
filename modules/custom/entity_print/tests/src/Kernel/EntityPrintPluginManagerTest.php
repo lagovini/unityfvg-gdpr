@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\entity_print\Kernel;
 
+use Drupal\entity_print\PrintEngineException;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
@@ -10,6 +11,9 @@ use Drupal\KernelTests\KernelTestBase;
  */
 class EntityPrintPluginManagerTest extends KernelTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = ['entity_print', 'entity_print_test'];
 
   /**
@@ -22,7 +26,7 @@ class EntityPrintPluginManagerTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->pluginManager = $this->container->get('plugin.manager.entity_print.print_engine');
   }
@@ -31,7 +35,6 @@ class EntityPrintPluginManagerTest extends KernelTestBase {
    * Ensure that an empty plugin ID does not break the in unusual ways.
    *
    * @covers ::createSelectedInstance
-   * @expectedException \Drupal\entity_print\PrintEngineException
    */
   public function testCreateSelectedInstance() {
     /** @var \Drupal\Core\Config\ConfigFactoryInterface $factory */
@@ -40,6 +43,7 @@ class EntityPrintPluginManagerTest extends KernelTestBase {
     $config->set('print_engines', ['pdf_engine' => '']);
     $config->save();
 
+    $this->expectException(PrintEngineException::class);
     $this->pluginManager->createSelectedInstance('pdf');
   }
 

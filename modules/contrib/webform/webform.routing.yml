@@ -823,6 +823,17 @@ entity.webform.variant.test_form:
     _entity_access: 'webform.update'
     _custom_access: '\Drupal\webform\Access\WebformVariantAccess::checkVariantSettingsAccess'
 
+entity.webform.variant.share_form:
+  path: '/admin/structure/webform/manage/{webform}/variants/share'
+  defaults:
+    _form: '\Drupal\webform\Form\WebformVariantViewForm'
+    _title: 'Share webform variants'
+    operation: 'share'
+  requirements:
+    _permission: 'edit webform variants'
+    _entity_access: 'webform.update'
+    _custom_access: '\Drupal\webform\Access\WebformVariantAccess::checkVariantSettingsAccess'
+
 # Plugins.
 
 webform.reports_plugins.elements:

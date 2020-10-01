@@ -123,6 +123,7 @@ services:
 
   webform.route_subscriber:
     class: Drupal\webform\Routing\WebformRouteSubscriber
+    arguments: ['@module_handler']
     tags:
       - { name: event_subscriber }
 

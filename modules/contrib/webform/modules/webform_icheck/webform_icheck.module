@@ -82,7 +82,7 @@ function webform_icheck_webform_element_alter(array &$element, FormStateInterfac
   $icheck = NULL;
   $icheck_skin = NULL;
   if (isset($element['#icheck'])) {
-    if ($element['#icheck'] != 'none') {
+    if ($element['#icheck'] !== 'none') {
       $icheck = $element['#icheck'];
       $icheck_skin = strtok($element['#icheck'], '-');
     }

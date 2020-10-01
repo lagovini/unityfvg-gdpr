@@ -48,21 +48,21 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
   protected $renderer;
 
   /**
-   * Element info manager.
+   * The element info manager.
    *
    * @var \Drupal\Core\Render\ElementInfoManagerInterface
    */
   protected $elementInfo;
 
   /**
-   * Webform element manager.
+   * The webform element manager.
    *
    * @var \Drupal\webform\Plugin\WebformElementManagerInterface
    */
   protected $elementManager;
 
   /**
-   * Webform element validator.
+   * The webform element validator.
    *
    * @var \Drupal\webform\WebformEntityElementsValidatorInterface
    */
@@ -502,8 +502,9 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
       $row_class[] = 'webform-ui-element-disabled';
     }
 
-    // Add element key.
+    // Add element key and type.
     $row['#attributes']['data-webform-key'] = $element['#webform_key'];
+    $row['#attributes']['data-webform-type'] = (isset($element['#type'])) ? $element['#type'] : '';
 
     $row['#attributes']['class'] = $row_class;
 
@@ -683,7 +684,7 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
     // modal, then clicking the image button opens another modal,
     // which closes the original modal.
     // @todo Remove the below workaround once this issue is resolved.
-    if ($webform_element->getPluginId() == 'processed_text' && !WebformDialogHelper::useOffCanvas()) {
+    if ($webform_element->getPluginId() === 'processed_text' && !WebformDialogHelper::useOffCanvas()) {
       unset($row['operations']['#links']['edit']['attributes']);
     }
     if (!$is_container) {

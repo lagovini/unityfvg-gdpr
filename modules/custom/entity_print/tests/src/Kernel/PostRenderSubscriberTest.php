@@ -37,7 +37,7 @@ class PostRenderSubscriberTest extends KernelTestBase {
     $config->save();
 
     // Try render again and we should get the exception.
-    $this->setExpectedException('\Drupal\entity_print\PrintEngineException');
+    $this->expectException('\Drupal\entity_print\PrintEngineException');
     $subscriber->postRender($event);
   }
 

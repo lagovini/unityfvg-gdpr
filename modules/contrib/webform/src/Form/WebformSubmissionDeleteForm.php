@@ -37,7 +37,7 @@ class WebformSubmissionDeleteForm extends ContentEntityDeleteForm implements Web
   protected $sourceEntity;
 
   /**
-   * Webform request handler.
+   * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
    */
@@ -118,7 +118,7 @@ class WebformSubmissionDeleteForm extends ContentEntityDeleteForm implements Web
    */
   public function getWarning() {
     $t_args = [
-      '@entity-type' => $this->getEntity()->getEntityType()->getLowercaseLabel(),
+      '@entity-type' => $this->getEntity()->getEntityType()->getSingularLabel(),
       '%label' => $this->getEntity()->label(),
     ];
 

@@ -34,7 +34,8 @@ class WebformTermSelect extends Select implements WebformElementEntityReferenceI
     ] + parent::defineDefaultProperties();
     unset(
       $properties['options'],
-      $properties['options_randomize']
+      $properties['options_randomize'],
+      $properties['sort_options']
     );
     return $properties;
   }

@@ -11,7 +11,7 @@ use Drupal\webform\WebformSubmissionInterface;
 /**
  * Tests for webform submission webform element custom #format support.
  *
- * @group Webform
+ * @group webform
  */
 class WebformCompositeFormatTest extends WebformBrowserTestBase {
 
@@ -63,7 +63,7 @@ class WebformCompositeFormatTest extends WebformBrowserTestBase {
       'Link (Value)' => '<a href="http://example.com">Loremipsum</a>',
     ];
     foreach ($elements as $label => $value) {
-      $this->assertContains('<b>' . $label . '</b><br />' . $value, $body, new FormattableMarkup('Found @label: @value', ['@label' => $label, '@value' => $value]));
+      $this->assertStringContainsString('<b>' . $label . '</b><br />' . $value, $body, new FormattableMarkup('Found @label: @value', ['@label' => $label, '@value' => $value]));
     }
 
     // Check composite elements formatted as text.
@@ -133,7 +133,7 @@ Country code: US
 Language code: en',
     ];
     foreach ($elements as $value) {
-      $this->assertContains($value, $body, new FormattableMarkup('Found @value', ['@value' => $value]));
+      $this->assertStringContainsString($value, $body, new FormattableMarkup('Found @value', ['@value' => $value]));
     }
 
     /**************************************************************************/
@@ -160,7 +160,7 @@ Language code: en',
       'Basic address (Table)' => '<table width="100%" cellspacing="0" cellpadding="5" border="1" class="responsive-enabled" data-striping="1"><thead><tr><th bgcolor="#eee">Address</th><th bgcolor="#eee">Address 2</th><th bgcolor="#eee">City/Town</th><th bgcolor="#eee">State/Province</th><th bgcolor="#eee">ZIP/Postal Code</th><th bgcolor="#eee">Country</th></tr></thead><tbody><tr class="odd"><td>10 Main Street</td><td>10 Main Street</td><td>Springfield</td><td>Alabama</td><td>11111</td><td>Afghanistan</td></tr><tr class="even"><td>10 Main Street</td><td>10 Main Street</td><td>Springfield</td><td>Alabama</td><td>11111</td><td>Afghanistan</td></tr><tr class="odd"><td>10 Main Street</td><td>10 Main Street</td><td>Springfield</td><td>Alabama</td><td>11111</td><td>Afghanistan</td></tr></tbody></table>',
     ];
     foreach ($elements as $label => $value) {
-      $this->assertContains('<b>' . $label . '</b><br />' . $value, $body, new FormattableMarkup('Found @label: @value', ['@label' => $label, '@value' => $value]));
+      $this->assertStringContainsString('<b>' . $label . '</b><br />' . $value, $body, new FormattableMarkup('Found @label: @value', ['@label' => $label, '@value' => $value]));
     }
 
     // Check composite elements formatted as text.
@@ -209,7 +209,7 @@ Springfield, Alabama. 11111
 Afghanistan',
     ];
     foreach ($elements as $value) {
-      $this->assertContains($value, $body, new FormattableMarkup('Found @value', ['@value' => $value]));
+      $this->assertStringContainsString($value, $body, new FormattableMarkup('Found @value', ['@value' => $value]));
     }
   }
 

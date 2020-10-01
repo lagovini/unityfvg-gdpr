@@ -362,7 +362,7 @@ class WebformAdminConfigAdvancedForm extends WebformAdminConfigBaseForm {
 
       // Track if help is disabled.
       // @todo Figure out how to clear cached help block.
-      $is_help_disabled = ($config->getOriginal('ui.help_disabled') != $config->get('ui.help_disabled'));
+      $is_help_disabled = ($config->getOriginal('ui.help_disabled') !== $config->get('ui.help_disabled'));
 
       parent::submitForm($form, $form_state);
 

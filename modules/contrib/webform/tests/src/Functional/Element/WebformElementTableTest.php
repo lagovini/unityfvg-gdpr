@@ -7,7 +7,7 @@ use Drupal\webform\Entity\Webform;
 /**
  * Tests for table elements.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementTableTest extends WebformElementBrowserTestBase {
 
@@ -72,7 +72,7 @@ class WebformElementTableTest extends WebformElementBrowserTestBase {
       'table_advanced_01_last_name' => 'Lennon',
       'table_advanced_01_gender' => 'Male',
     ];
-    $this->drupalPostForm('/webform/test_element_table', $edit, t('Preview'));
+    $this->drupalPostForm('/webform/test_element_table', $edit, 'Preview');
 
     // Check data.
     $this->assertRaw("table__1__first_name: John
@@ -140,7 +140,7 @@ table_advanced_04_textfield: ''");
     $this->assertFieldByName('properties[duplicate]', TRUE);
 
     // Check table row element sub elements are duplicated.
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/webform_table_row', [], t('Save'), ['query' => ['parent' => 'table_basic']]);
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/webform_table_row', [], 'Save', ['query' => ['parent' => 'table_basic']]);
     $this->assertRaw('>table_basic_02<');
     $this->assertRaw('>table_basic_02_first_name<');
     $this->assertRaw('>table_basic_02_last_name<');
@@ -148,7 +148,7 @@ table_advanced_04_textfield: ''");
     $this->assertRaw('>table_basic_02_markup<');
 
     // Check table row element sub elements are NOT duplicated.
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/webform_table_row', ['properties[duplicate]' => FALSE], t('Save'), ['query' => ['parent' => 'table_basic']]);
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/webform_table_row', ['properties[duplicate]' => FALSE], 'Save', ['query' => ['parent' => 'table_basic']]);
     $this->assertRaw('>table_basic_03<');
     $this->assertNoRaw('>table_basic_03_first_name<');
     $this->assertNoRaw('>table_basic_03_last_name<');
@@ -166,7 +166,7 @@ table_advanced_04_textfield: ''");
       'properties[title]' => 'Testing',
     ];
     $options = ['query' => ['parent' => 'table_basic_01']];
-    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/textfield', $edit, t('Save'), $options);
+    $this->drupalPostForm('/admin/structure/webform/manage/test_element_table/element/add/textfield', $edit, 'Save', $options);
     $this->assertRaw('>table_basic_01_testing<');
 
     // Check table row element can NOT duplicate sub elements from the

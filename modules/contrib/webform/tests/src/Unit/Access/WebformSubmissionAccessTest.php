@@ -62,8 +62,8 @@ class WebformSubmissionAccessTest extends WebformAccessTestBase {
     // Mock webform wizard.
     $webform_wizard = $this->createMock('Drupal\webform\WebformInterface');
     $webform_wizard->expects($this->any())
-      ->method('hasWizardPages')
-      ->will($this->returnValue(TRUE));
+      ->method('getElementsRaw')
+      ->will($this->returnValue("'#type': webform_wizard_page"));
 
     // Mock webform wizard submission.
     $webform_wizard_submission = $this->createMock('Drupal\webform\WebformSubmissionInterface');

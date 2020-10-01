@@ -63,7 +63,7 @@ class WebformMapping extends FormElement {
         $source_description = '';
       }
       else {
-        $source_description_property_name = ($element['#source__description_display'] == 'help') ? 'help' : 'description';
+        $source_description_property_name = ($element['#source__description_display'] === 'help') ? 'help' : 'description';
         list($source_title, $source_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $source);
       }
       $sources[$source_key] = [
@@ -81,8 +81,8 @@ class WebformMapping extends FormElement {
     // Set base destination element.
     $destination_element_base = [
       '#title_display' => 'invisible',
-      '#required' => ($element['#required'] === self::REQUIRED_ALL) ? TRUE : FALSE,
-      '#error_no_message'  => ($element['#required'] !== self::REQUIRED_ALL) ? TRUE : FALSE,
+      '#required' => ($element['#required'] === static::REQUIRED_ALL) ? TRUE : FALSE,
+      '#error_no_message'  => ($element['#required'] !== static::REQUIRED_ALL) ? TRUE : FALSE,
     ];
 
     // Get base #destination__* properties.
@@ -190,7 +190,7 @@ class WebformMapping extends FormElement {
     // Note: Not validating REQUIRED_ALL because each destination element is
     // already required.
     $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);
-    if ($element['#required'] && $element['#required'] !== self::REQUIRED_ALL && empty($value) && $has_access) {
+    if ($element['#required'] && $element['#required'] !== static::REQUIRED_ALL && empty($value) && $has_access) {
       WebformElementHelper::setRequiredError($element, $form_state);
     }
 

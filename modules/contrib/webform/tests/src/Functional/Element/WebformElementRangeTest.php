@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for range element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementRangeTest extends WebformElementBrowserTestBase {
 
@@ -48,7 +48,7 @@ class WebformElementRangeTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<input style="width:4em" type="number" id="range_output_right__output" step="1" min="0" max="100" class="form-number" />');
 
     // Check processing.
-    $this->drupalPostForm('/webform/test_element_range', [], t('Submit'));
+    $this->drupalPostForm('/webform/test_element_range', [], 'Submit');
     $this->assertRaw("range: '50'
 range_advanced: '0'
 range_output_above: '50'

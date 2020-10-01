@@ -633,17 +633,17 @@ abstract class OptionsBase extends WebformElementBase {
    */
   public function buildExportHeader(array $element, array $options) {
     $options_format = ($element['#webform_multiple'] ? $options['options_multiple_format'] : $options['options_single_format']);
-    if ($options_format == 'separate' && isset($element['#options'])) {
+    if ($options_format === 'separate' && isset($element['#options'])) {
       $header = [];
       foreach ($element['#options'] as $option_value => $option_text) {
         // Note: If $option_text is an array (typically a tableselect row)
         // always use $option_value.
-        $title = ($options['options_item_format'] == 'key' || is_array($option_text)) ? $option_value : $option_text;
+        $title = ($options['options_item_format'] === 'key' || is_array($option_text)) ? $option_value : $option_text;
         $header[] = $title;
       }
       // Add 'Other' option to header.
       if ($this instanceof WebformElementOtherInterface) {
-        $header[] = ($options['options_item_format'] == 'key') ? 'other' : $this->t('Other');
+        $header[] = ($options['options_item_format'] === 'key') ? 'other' : $this->t('Other');
       }
       return $this->prefixExportHeader($header, $element, $options);
     }
@@ -658,7 +658,7 @@ abstract class OptionsBase extends WebformElementBase {
   public function buildExportRecord(array $element, WebformSubmissionInterface $webform_submission, array $export_options) {
     $element_options = (isset($element['#options'])) ? $element['#options'] : [];
     $options_format = ($element['#webform_multiple'] ? $export_options['options_multiple_format'] : $export_options['options_single_format']);
-    if ($options_format == 'separate') {
+    if ($options_format === 'separate') {
       $value = $this->getRawValue($element, $webform_submission);
 
       $record = [];
@@ -675,7 +675,7 @@ abstract class OptionsBase extends WebformElementBase {
           unset($value[$option_value]);
           $record[] = ($deltas) ? ($deltas[$option_value] + 1) : 'X';
         }
-        elseif ($value == $option_value) {
+        elseif ($value === $option_value) {
           $value = '';
           $record[] = ($deltas) ? ($deltas[$option_value] + 1) : 'X';
         }
@@ -690,7 +690,7 @@ abstract class OptionsBase extends WebformElementBase {
       return $record;
     }
     else {
-      if ($export_options['options_item_format'] == 'key') {
+      if ($export_options['options_item_format'] === 'key') {
         $element['#format'] = 'raw';
       }
       return parent::buildExportRecord($element, $webform_submission, $export_options);
@@ -810,6 +810,11 @@ abstract class OptionsBase extends WebformElementBase {
         }
       }
       else {
+        // If the trigger is 'filled or 'empty' then return the value.
+        if ($trigger === 'filled' || $trigger === 'empty') {
+          return $value;
+        }
+
         if ($this->hasMultipleValues($element)) {
           // Return array of valid #options.
           return array_intersect($value, array_keys($options));
@@ -864,7 +869,9 @@ abstract class OptionsBase extends WebformElementBase {
         'two_columns' => $this->t('Two columns'),
         'three_columns' => $this->t('Three columns'),
         'side_by_side' => $this->t('Side by side'),
-        'buttons' => $this->t('Buttons'),
+        'buttons' => $this->t('Buttons - flexbox'),
+        'buttons_horizontal' => $this->t('Buttons - horizontal'),
+        'buttons_vertical' => $this->t('Buttons - vertical'),
       ],
     ];
     $form['options']['options_display_container']['options_description_display'] = [
@@ -905,12 +912,28 @@ abstract class OptionsBase extends WebformElementBase {
       ],
     ];
 
+    // Sort options (only applies to select menus).
+    // @see template_preprocess_select()
+    // @see webform_preprocess_select()
+    $form['options']['sort_options'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Sort options'),
+      '#description' => $this->t('Sort the options by their (translated) labels.'),
+      '#return_value' => TRUE,
+    ];
+
     $form['options']['options_randomize'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Randomize options'),
       '#description' => $this->t('Randomizes the order of the options when they are displayed in the webform.'),
       '#return_value' => TRUE,
     ];
+
+    if ($this->hasProperty('options_randomize') && $this->hasProperty('sort_options')) {
+      $form['options']['options_randomize']['#states']['visible'] = [
+        ':input[name="properties[sort_options]"]' => ['checked' => FALSE],
+      ];
+    }
 
     // Other.
     $states_textfield_or_number = [

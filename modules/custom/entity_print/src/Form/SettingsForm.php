@@ -104,10 +104,10 @@ class SettingsForm extends ConfigFormBase {
         // Show the user which Print engines are disabled, but only for
         // the page load not on AJAX requests.
         if (!$request->isXmlHttpRequest()) {
-          drupal_set_message($this->t('@name is not available because it is not configured. @installation.', [
+          $this->messenger()->addWarning($this->t('@name is not available because it is not configured. @installation.', [
             '@name' => $definition['label'],
             '@installation' => $class::getInstallationInstructions(),
-          ]), 'warning');
+          ]));
         }
       }
     }
@@ -235,7 +235,7 @@ class SettingsForm extends ConfigFormBase {
       ->set('force_download', $values['force_download'])
       ->save();
 
-    drupal_set_message($this->t('Configuration saved.'));
+    $this->messenger()->addStatus($this->t('Configuration saved.'));
   }
 
   /**

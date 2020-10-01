@@ -116,7 +116,7 @@ function _webform_test_states($type, array $default_properties = []) {
     // Set default container content.
     if ($webform_element->isContainer($element)) {
       // Containers can't be disabled.
-      if ($type == 'disabled') {
+      if ($type === 'disabled') {
         continue;
       }
     }

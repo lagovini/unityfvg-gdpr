@@ -12,7 +12,7 @@ use Drupal\webform\WebformSubmissionInterface;
 class WebformSubmissionAccess {
 
   /**
-   * Check whether a webform submissions' webform has wizard pages.
+   * Check whether a webform submissions' webform has wizard pages/cards.
    *
    * @param \Drupal\webform\WebformSubmissionInterface $webform_submission
    *   A webform submission.
@@ -21,8 +21,10 @@ class WebformSubmissionAccess {
    *   The access result.
    */
   public static function checkWizardPagesAccess(WebformSubmissionInterface $webform_submission) {
-    $condition = $webform_submission->getWebform()->hasWizardPages();
-    return AccessResult::allowedIf($condition);
+    $elements_raw = $webform_submission->getWebform()->getElementsRaw();
+    $has_pages = (strpos($elements_raw, "'#type': webform_wizard_page") !== FALSE
+      || strpos($elements_raw, "'#type': webform_card") !== FALSE);
+    return AccessResult::allowedIf($has_pages);
   }
 
   /**

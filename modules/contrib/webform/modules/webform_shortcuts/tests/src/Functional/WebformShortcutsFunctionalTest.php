@@ -7,7 +7,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Webform shortcuts test.
  *
- * @group webform_browser
+ * @group webform_shortcuts
  */
 class WebformShortcutsFunctionalTest extends WebformBrowserTestBase {
 
@@ -24,7 +24,7 @@ class WebformShortcutsFunctionalTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
     $this->placeBlocks();
   }
@@ -44,7 +44,7 @@ class WebformShortcutsFunctionalTest extends WebformBrowserTestBase {
       'webform_shortcuts[add_element]' => 'crtl+z',
       'webform_shortcuts[toggle_weights]' => '',
     ];
-    $this->drupalPostForm('/admin/structure/webform/config/advanced', $edit, t('Save configuration'));
+    $this->drupalPostForm('/admin/structure/webform/config/advanced', $edit, 'Save configuration');
 
     // Check customized shortcuts.
     $this->drupalGet('/admin/structure/webform/manage/contact');

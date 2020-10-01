@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform submission form preview.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsPreviewTest extends WebformBrowserTestBase {
 
@@ -22,7 +22,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
 
     // Exclude Progress tracker so that the default progress bar is displayed.
@@ -46,7 +46,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $this->assertFieldByName('op', 'Preview');
 
     // Check default preview with values.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => 'example@example.com', 'checkbox' => TRUE], t('Preview'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => 'example@example.com', 'checkbox' => TRUE], 'Preview');
 
     $this->assertRaw('<h1 class="page-title">Test: Webform: Preview: Preview</h1>');
 
@@ -73,7 +73,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $this->assertRaw('<div class="webform-preview js-form-wrapper form-wrapper" data-drupal-selector="edit-preview" id="edit-preview">');
 
     // Check default preview without values.
-    $this->drupalPostForm('/webform/test_form_preview', [], t('Preview'));
+    $this->drupalPostForm('/webform/test_form_preview', [], 'Preview');
     $this->assertNoRaw('<label>Name</label>');
     $this->assertNoRaw('<label>Email</label>');
     $this->assertNoRaw('<label>Checkbox</label>');
@@ -98,7 +98,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
       ->save();
 
     // Check blank preview message is not displayed.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => 'example@example.com'], t('Preview'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => 'example@example.com'], 'Preview');
     $this->assertNoRaw('Please review your submission. Your submission is not complete until you press the "Submit" button!');
 
     // Set preview and submission to include empty.
@@ -109,7 +109,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $webform_preview->save();
 
     // Check empty elements are included in preview.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => '', 'email' => '', 'checkbox' => FALSE], t('Preview'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => '', 'email' => '', 'checkbox' => FALSE], 'Preview');
     $this->assertRaw('<label>Name</label>' . PHP_EOL . '        {Empty}');
     $this->assertRaw('<div class="format-attributes-class webform-element webform-element-type-email js-form-item form-item js-form-type-item form-type-item js-form-item-email form-item-email" id="test_form_preview--email">');
     $this->assertRaw('<label>Email</label>' . PHP_EOL . '        {Empty}');
@@ -139,7 +139,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $this->assertRaw('<h1 class="page-title">This has special characters. &#039;&lt;&gt;&quot;&amp;</h1>');
 
     // Check special characters in preview page title.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test'], t('Preview'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test'], 'Preview');
     $this->assertRaw('<title>This has special characters. \'"&: Preview | Drupal</title>');
     $this->assertRaw('<h1 class="page-title">This has special characters. &#039;&lt;&gt;&quot;&amp;: Preview</h1>');
 
@@ -162,7 +162,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $webform_preview->save();
 
     // Check custom preview.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test'], t('{Preview}'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test'], '{Preview}');
     $this->assertRaw('<h1 class="page-title">{Title}</h1>');
     $this->assertRaw('<b>{Label}</b></li>');
     $this->assertRaw('{Message}');
@@ -177,7 +177,7 @@ class WebformSettingsPreviewTest extends WebformBrowserTestBase {
     $this->assertFieldByName('op', '{Preview}');
 
     // Check empty element is excluded from preview.
-    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => ''], t('{Preview}'));
+    $this->drupalPostForm('/webform/test_form_preview', ['name' => 'test', 'email' => ''], '{Preview}');
     $this->assertRaw('<label>Name</label>' . PHP_EOL . '        test');
     $this->assertNoRaw('<label>Email</label>');
   }

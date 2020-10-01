@@ -37,7 +37,7 @@ function entity_print_theme($existing, $type, $theme, $path) {
 function entity_print_entity_type_alter(array &$entity_types) {
   /** @var \Drupal\Core\Entity\EntityTypeInterface $entity_type */
   foreach ($entity_types as $entity_type) {
-    if ($entity_type->isSubclassOf(ContentEntityInterface::class) && !$entity_type->hasHandlerClass('entity_print')) {
+    if ($entity_type->entityClassImplements(ContentEntityInterface::class) && !$entity_type->hasHandlerClass('entity_print')) {
       $entity_type->setHandlerClass('entity_print', ContentEntityRenderer::class);
     }
   }

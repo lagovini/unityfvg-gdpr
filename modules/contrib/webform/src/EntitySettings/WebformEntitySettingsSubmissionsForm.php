@@ -782,7 +782,7 @@ class WebformEntitySettingsSubmissionsForm extends WebformEntitySettingsBaseForm
 
     // Set customize submission user columns.
     $values['submission_user_columns'] = array_values($values['submission_user_columns']);
-    if ($values['submission_user_columns'] == $webform_submission_storage->getUserDefaultColumnNames($webform)) {
+    if ($values['submission_user_columns'] === $webform_submission_storage->getUserDefaultColumnNames($webform)) {
       $values['submission_user_columns'] = [];
     }
 

@@ -5,7 +5,7 @@ namespace Drupal\Tests\webform\Functional\Element;
 /**
  * Tests for likert element.
  *
- * @group Webform
+ * @group webform
  */
 class WebformElementLikertTest extends WebformElementBrowserTestBase {
 
@@ -50,7 +50,7 @@ class WebformElementLikertTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<label for="edit-likert-help-q1--2" class="option"><span class="webform-likert-label visually-hidden">Option 2<span class="webform-likert-help hidden"><span class="webform-element-help" role="tooltip" tabindex="0" data-webform-help="&lt;div class=&quot;webform-element-help--title&quot;&gt;Option 2&lt;/div&gt;&lt;div class=&quot;webform-element-help--content&quot;&gt;This is help text&lt;/div&gt;"><span aria-hidden="true">?</span></span>');
 
     // Check likert required.
-    $this->drupalPostForm('/webform/test_element_likert', [], t('Submit'));
+    $this->drupalPostForm('/webform/test_element_likert', [], 'Submit');
     $this->assertRaw('Question 1 field is required.');
     $this->assertRaw('Question 2 field is required.');
     $this->assertRaw('Question 3 field is required.');
@@ -64,7 +64,7 @@ class WebformElementLikertTest extends WebformElementBrowserTestBase {
       'likert_values[1]' => '1',
       'likert_values[2]' => 'N/A',
     ];
-    $this->drupalPostForm('/webform/test_element_likert', $edit, t('Submit'));
+    $this->drupalPostForm('/webform/test_element_likert', $edit, 'Submit');
     $this->assertRaw("likert_default:
   q1: null
   q2: null

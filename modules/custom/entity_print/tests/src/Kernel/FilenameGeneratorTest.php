@@ -4,7 +4,7 @@ namespace Drupal\Tests\entity_print\Kernel;
 
 use Drupal\entity_print\FilenameGeneratorInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\simpletest\NodeCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * @coversDefaultClass \Drupal\entity_print\FilenameGenerator
@@ -31,7 +31,7 @@ class FilenameGeneratorTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
     $this->installConfig(['system', 'filter']);
     $this->installEntitySchema('node');

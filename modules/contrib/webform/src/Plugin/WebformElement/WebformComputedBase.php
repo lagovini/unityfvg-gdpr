@@ -27,7 +27,7 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
       // Element settings.
       'title' => '',
       // Markup settings.
-      'display_on' => static::DISPLAY_ON_BOTH,
+      'display_on' => WebformElementDisplayOnInterface::DISPLAY_ON_BOTH,
       // Description/Help.
       'help' => '',
       'help_title' => '',
@@ -73,7 +73,7 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
     parent::prepare($element, $webform_submission);
 
     // Hide element if it should not be displayed on 'form'.
-    if (!$this->isDisplayOn($element, static::DISPLAY_ON_FORM)) {
+    if (!$this->isDisplayOn($element, WebformElementDisplayOnInterface::DISPLAY_ON_FORM)) {
       $element['#access'] = FALSE;
     }
   }

@@ -8,7 +8,7 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
 /**
  * Tests for webform settings behaviors.
  *
- * @group Webform
+ * @group webform
  */
 class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
@@ -33,7 +33,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  protected function setUp() {
     parent::setUp();
     // Disable description help icon.
     $this->config('webform.settings')->set('ui.description_help', FALSE)->save();
@@ -170,7 +170,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform has .js-webform-unsaved class.
     $this->drupalGet('/webform/test_form_unsaved');
-    $this->assertCssSelect('form.js-webform-unsaved', t('Form has .js-webform-unsaved class.'));
+    $this->assertCssSelect('form.js-webform-unsaved', 'Form has .js-webform-unsaved class.');
 
     // Disable YAML specific webform unsaved setting.
     $webform_form_unsaved->setSetting('form_unsaved', FALSE);
@@ -182,7 +182,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform no longer has .js-webform-unsaved class.
     $this->drupalGet('/webform/test_form_novalidate');
-    $this->assertNoCssSelect('webform.js-webform-unsaved', t('Webform does not have .js-webform-unsaved class.'));
+    $this->assertNoCssSelect('webform.js-webform-unsaved', 'Webform does not have .js-webform-unsaved class.');
 
     // Enable default (global) unsaved on all webforms.
     \Drupal::configFactory()->getEditable('webform.settings')
@@ -196,7 +196,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check unsaved attribute added to webform.
     $this->drupalGet('/webform/test_form_unsaved');
-    $this->assertCssSelect('form.js-webform-unsaved', t('Form has .js-webform-unsaved class.'));
+    $this->assertCssSelect('form.js-webform-unsaved', 'Form has .js-webform-unsaved class.');
 
     /**************************************************************************/
     /* Test webform disable autocomplete (form_disable_autocomplete) */
@@ -204,7 +204,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform has autocomplete=off attribute.
     $this->drupalGet('/webform/test_form_disable_autocomplete');
-    $this->assertCssSelect('form[autocomplete="off"]', t('Form has autocomplete=off attribute.'));
+    $this->assertCssSelect('form[autocomplete="off"]', 'Form has autocomplete=off attribute.');
 
     /**************************************************************************/
     /* Test webform (client-side) novalidate (form_novalidate) */
@@ -214,7 +214,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform has novalidate attribute.
     $this->drupalGet('/webform/test_form_novalidate');
-    $this->assertCssSelect('form[novalidate="novalidate"]', t('Form has the proper novalidate attribute.'));
+    $this->assertCssSelect('form[novalidate="novalidate"]', 'Form has the proper novalidate attribute.');
 
     // Disable YAML specific webform client-side validation setting.
     $webform_form_novalidate->setSetting('form_novalidate', FALSE);
@@ -227,7 +227,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform no longer has novalidate attribute.
     $this->drupalGet('/webform/test_form_novalidate');
-    $this->assertNoCssSelect('form[novalidate="novalidate"]', t('Webform have client-side validation enabled.'));
+    $this->assertNoCssSelect('form[novalidate="novalidate"]', 'Webform have client-side validation enabled.');
 
     // Enable default (global) disable client-side validation on all webforms.
     \Drupal::configFactory()->getEditable('webform.settings')
@@ -242,7 +242,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check novalidate attribute added to webform.
     $this->drupalGet('/webform/test_form_novalidate');
-    $this->assertCssSelect('form[novalidate="novalidate"]', t('Form has the proper novalidate attribute.'));
+    $this->assertCssSelect('form[novalidate="novalidate"]', 'Form has the proper novalidate attribute.');
 
     /**************************************************************************/
     /* Test required indicator (form_required) */
@@ -302,7 +302,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform has .webform-details-toggle class.
     $this->drupalGet('/webform/test_form_details_toggle');
-    $this->assertCssSelect('form.webform-details-toggle', t('Form has the .webform-details-toggle class.'));
+    $this->assertCssSelect('form.webform-details-toggle', 'Form has the .webform-details-toggle class.');
 
     // Check details toggle checkbox is disabled.
     $this->drupalGet('/admin/structure/webform/manage/test_form_details_toggle/settings/form');
@@ -316,7 +316,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check .webform-details-toggle class still added to webform.
     $this->drupalGet('/webform/test_form_details_toggle');
-    $this->assertCssSelect('form.webform-details-toggle', t('Form has the .webform-details-toggle class.'));
+    $this->assertCssSelect('form.webform-details-toggle', 'Form has the .webform-details-toggle class.');
 
     // Check details toggle checkbox is enabled.
     $this->drupalGet('/admin/structure/webform/manage/test_form_details_toggle/settings/form');
@@ -329,7 +329,7 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
 
     // Check webform does not hav .webform-details-toggle class.
     $this->drupalGet('/webform/test_form_details_toggle');
-    $this->assertNoCssSelect('webform.webform-details-toggle', t('Webform does not have the .webform-details-toggle class.'));
+    $this->assertNoCssSelect('webform.webform-details-toggle', 'Webform does not have the .webform-details-toggle class.');
 
     /**************************************************************************/
     /* Test webform disable inline form errors (test_form_disable_inline_errors) */

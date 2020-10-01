@@ -136,7 +136,7 @@ function _webform_update_webform_setting(array $data) {
     $settings[$name] = $value;
   }
   // Set settings.
-  $data['settings'] = $settings;
+  $data['settings'] = _webform_update_webform_setting_settings($settings);
 
   // Set access.
   /** @var \Drupal\webform\WebformAccessRulesManagerInterface $access_rules_manager */
@@ -144,6 +144,30 @@ function _webform_update_webform_setting(array $data) {
   $data['access'] += $access_rules_manager->getDefaultAccessRules();
 
   return $data;
+}
+
+/**
+ * Make sure outdated webform settings are up-to-date.
+ *
+ * @param array $settings
+ *   An associative array of webform settings.
+ *
+ * @return array
+ *   Updated webform settings.
+ */
+function _webform_update_webform_setting_settings(array $settings) {
+  // Issue #3153184: Allow a webform displayed as a page to have a custom theme.
+  // Convert 'page_admin_theme' setting to 'page_theme_name' setting.
+  // @see webform_update_8196()
+  if (isset($settings['page_admin_theme'])) {
+    if (empty($settings['page_theme_name'])) {
+      $settings['page_theme_name'] = ($settings['page_admin_theme'])
+        ? \Drupal::configFactory()->get('system.theme')->get('admin')
+        : '';
+    }
+    unset($settings['page_admin_theme']);
+  }
+  return $settings;
 }
 
 /**
@@ -188,7 +212,7 @@ function _webform_update_webform_handler_settings() {
           $settings[$settings_key] = $setting_value;
         }
 
-        if ($handler['settings'] != $settings) {
+        if ($handler['settings'] !== $settings) {
           $has_handler = TRUE;
           $handler['settings'] = $settings;
         }
@@ -247,7 +271,7 @@ function _webform_update_options_settings() {
  * Update or install any new system.actions.* config entities.
  */
 function _webform_update_actions() {
-  $files = file_scan_directory(drupal_get_path('module', 'webform') . '/config', '/^system.action..*\.yml$/');
+  $files = \Drupal::service('file_system')->scanDirectory(drupal_get_path('module', 'webform') . '/config', '/^system.action..*\.yml$/');
   foreach ($files as $path => $file) {
     $action_id = str_replace('system.action.', '', $file->name);
     $action = Action::load($action_id);

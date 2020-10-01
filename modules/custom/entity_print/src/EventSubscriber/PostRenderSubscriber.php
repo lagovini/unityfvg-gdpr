@@ -2,7 +2,6 @@
 
 namespace Drupal\entity_print\EventSubscriber;
 
-use Drupal\Component\Utility\Unicode;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\entity_print\Event\PrintEvents;
 use Drupal\entity_print\Event\PrintHtmlAlterEvent;
@@ -72,10 +71,10 @@ class PostRenderSubscriber implements EventSubscriberInterface {
         $attribute_value = $node->getAttribute($attribute);
 
         // Handle protocol agnostic URLs as well.
-        if (Unicode::substr($attribute_value, 0, 2) === '//') {
-          $node->setAttribute($attribute, $base_url . Unicode::substr($attribute_value, 1));
+        if (mb_substr($attribute_value, 0, 2) === '//') {
+          $node->setAttribute($attribute, $base_url . mb_substr($attribute_value, 1));
         }
-        elseif (Unicode::substr($attribute_value, 0, 1) === '/') {
+        elseif (mb_substr($attribute_value, 0, 1) === '/') {
           $node->setAttribute($attribute, $base_url . $attribute_value);
         }
       }
