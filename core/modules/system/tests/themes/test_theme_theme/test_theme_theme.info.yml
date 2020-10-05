@@ -5,7 +5,7 @@ description: 'Test theme that extends theme settings options via theme.theme fil
 core: 8.x
 base theme: false
 
-# Information added by Drupal.org packaging script on 2020-08-05
-version: '8.9.3'
+# Information added by Drupal.org packaging script on 2020-09-16
+version: '8.9.6'
 project: 'drupal'
-datestamp: 1596665109
+datestamp: 1600276320
