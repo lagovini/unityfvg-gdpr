@@ -871,7 +871,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         );
 
       case 'entity':
-        $source_entity = $entity->getSourceEntity();
+        $source_entity = $entity->getSourceEntity(TRUE);
         if (!$source_entity) {
           return '';
         }
@@ -891,7 +891,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
         }
 
       case 'notes':
-        $notes_url = $this->ensureDestination($this->requestHandler->getUrl($entity, $entity->getSourceEntity(), 'webform_submission.notes_form'));
+        $notes_url = $this->ensureDestination($this->requestHandler->getUrl($entity, $entity->getSourceEntity(TRUE), 'webform_submission.notes_form'));
         $state = $entity->get('notes')->value ? 'on' : 'off';
         $t_args = ['@label' => $entity->label()];
         $label = $entity->get('notes')->value ? $this->t('Edit @label notes', $t_args) : $this->t('Add notes to @label', $t_args);
@@ -923,7 +923,7 @@ class WebformSubmissionListBuilder extends EntityListBuilder {
           $link_url = $entity->getTokenUrl();
         }
         else {
-          $link_url = $this->requestHandler->getUrl($entity, $entity->getSourceEntity(), $this->getSubmissionRouteName());
+          $link_url = $this->requestHandler->getUrl($entity, $entity->getSourceEntity(TRUE), $this->getSubmissionRouteName());
         }
         if ($name === 'serial') {
           $link_text = $entity->serial();

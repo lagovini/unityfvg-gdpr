@@ -334,9 +334,15 @@ class WebformElementManagedFileTest extends WebformElementManagedFileTestBase {
     $this->drupalGet('/admin/structure/webform/manage/test_element_managed_file/submission/' . $sid);
     if ($type === 'multiple') {
       $this->assertRaw('<label>managed_file_multiple</label>');
-      $this->assertRaw('<div class="item-list">');
+      $this->assertRaw('<ul>');
     }
-    $this->assertRaw('<span class="file file--mime-text-plain file--text"> <a href="' . file_create_url($file->getFileUri()) . '" type="text/plain; length=' . $file->getSize() . '">' . $file->getFilename() . '</a></span>');
+    // @todo Remove once Drupal 9.1.x is only supported.
+    if (floatval(\Drupal::VERSION) >= 9.1) {
+      $this->assertRaw('<span class="file file--mime-text-plain file--text"><a href="' . file_create_url($file->getFileUri()) . '" type="text/plain">' . $file->getFilename() . '</a></span>');
+    }
+    else {
+      $this->assertRaw('<span class="file file--mime-text-plain file--text"><a href="' . file_create_url($file->getFileUri()) . '" type="text/plain; length=' . $file->getSize() . '">' . $file->getFilename() . '</a></span>');
+    }
 
     // Remove the uploaded file.
     if ($type === 'multiple') {

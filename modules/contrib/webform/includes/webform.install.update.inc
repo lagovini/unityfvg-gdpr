@@ -36,6 +36,11 @@ function webform_update_dependencies() {
   // @see https://www.drupal.org/project/webform/issues/2958102
   $dependencies['webform'][8099]['system'] = 8501;
 
+  // Ensure that system_update_8805() runs before the webform update, so that
+  // the 'path_alias' module is enabled and configured correctly.
+  // @see https://www.drupal.org/project/webform/issues/3166248
+  $dependencies['webform']['8158']['system'] = 8805;
+
   return $dependencies;
 }
 
@@ -911,7 +916,7 @@ function webform_update_8044() {
 }
 
 /**
- * Issue #2878307: webform example module disable causes a customised webform deleted.
+ * Issue #2878307: webform example module disable causes a customized webform deleted.
  */
 function webform_update_8045() {
   // Remove sub module dependencies copied to new forms.
@@ -3521,7 +3526,7 @@ function webform_update_8187() {
 }
 
 /**
- * Issue #3097101: Remote Post cast boolean and numer values.
+ * Issue #3097101: Remote Post cast boolean and number values.
  */
 function webform_update_8188() {
   _webform_update_webform_handler_settings();
@@ -3758,4 +3763,156 @@ function webform_update_8196() {
  */
 function webform_update_8197() {
   _webform_update_admin_settings();
+}
+
+/**
+ * Issue #3156982: Fix empty '#option_all_value' and '#option_all_text'.
+ */
+function webform_update_8198() {
+  $options_properties = [
+    '#options_all_value',
+    '#options_all_text',
+    '#options_none_value',
+    '#options_none_text',
+  ];
+
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
+    $webform_config = $config_factory->getEditable($webform_config_name);
+    $elements = $webform_config->get('elements');
+
+    // Try to decode elements.
+    try {
+      $elements = WebformYaml::decode($elements);
+    }
+    catch (\Exception $exception) {
+      continue;
+    }
+
+    // Make sure elements is an array.
+    if (!is_array($elements)) {
+      continue;
+    }
+
+    $has_options_property = FALSE;
+    $flattened_elements =& WebformFormHelper::flattenElements($elements);
+    foreach ($flattened_elements as &$element) {
+      foreach ($options_properties as $options_property) {
+        if (isset($element[$options_property]) && $element[$options_property] === '') {
+          unset($element[$options_property]);
+          $has_options_property = TRUE;
+        }
+      }
+    }
+    if ($has_options_property) {
+      $webform_config->set('elements', WebformYaml::encode($elements));
+      $webform_config->save(TRUE);
+    }
+  }
+}
+
+/**
+ * Issue #3157587: Hide the next button when auto-forwarding cards.
+ */
+function webform_update_8199() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3161787: Image select element is included empty filter properties.
+ */
+function webform_update_8200() {
+  _webform_update_elements_clear_properties([
+    '#filter__placeholder' => '',
+    '#filter__singlular' => '',
+    '#filter__plural' => '',
+    '#filter__no_results' => '',
+  ]);
+}
+
+/**
+ * Issue #3165395: Improve delete button handling.
+ */
+function webform_update_8201() {
+  _webform_update_admin_settings();
+}
+
+/**
+ * Issue #3152884: Clientside validation with AJAX.
+ */
+function webform_update_8202() {
+  _webform_update_admin_settings();
+}
+
+/**
+ * Issue #3166341: Add keyboard navigation support to Webform cards.
+ */
+function webform_update_8203() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3166236: Make "next_serial" optional.
+ */
+function webform_update_8204() {
+  _webform_update_admin_settings();
+}
+
+/**
+ * Issue #3168333: Allow site builders to customize debug handler data and format.
+ */
+function webform_update_8205() {
+  _webform_update_webform_handler_settings();
+}
+
+/**
+ * Issue #3166827: Make the "Webforms" menu item a top-level toolbar item.
+ */
+function webform_update_8206() {
+  _webform_update_admin_settings();
+}
+
+/**
+ * Issue #3171834: Allow .webform-elements to support custom attributes.
+ */
+function webform_update_8207() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3151506: Remove .webform-elements wrapper around elements.
+ */
+function webform_update_8208() {
+  _webform_update_webform_settings();
+}
+
+/**
+ * Issue #3174132: Add (admin) notes to handlers.
+ */
+function webform_update_8209() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('webform.webform.') as $webform_config_name) {
+    $webform_config = $config_factory->getEditable($webform_config_name);
+
+    $data = $webform_config->getRawData();
+    $save = FALSE;
+    foreach ($data['handlers'] as &$handler) {
+      if (!isset($handler['notes'])) {
+        WebformArrayHelper::insertAfter($handler, 'label', 'notes', '');
+        $save = TRUE;
+      }
+    }
+
+    if ($save) {
+      $webform_config->setData($data);
+      $webform_config->save();
+    }
+  }
+}
+
+/**
+ * Issue #3158114: Delete own submission with secure token not working.
+ */
+function webform_update_8210() {
+  _webform_update_webform_settings();
 }

@@ -7,6 +7,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\Core\Serialization\Yaml;
+use Drupal\Core\Site\Settings;
 use Drupal\webform\Controller\WebformResultsExportController;
 use Drupal\webform\Entity\Webform;
 use Drupal\webform\Entity\WebformSubmission;
@@ -547,7 +548,8 @@ class WebformCliService implements WebformCliServiceInterface {
 
     $target = $target ?: 'webform';
 
-    if (!isset($config_directories[$target])
+    if (empty(Settings::get('config_' . $target . '_directory', FALSE))
+      && !(isset($config_directories) && isset($config_directories[$target]))
       && !(\Drupal::moduleHandler()->moduleExists($target) && file_exists(drupal_get_path('module', $target) . '/config'))
       && !file_exists(realpath($target))) {
       $t_args = ['@target' => $target];
@@ -564,7 +566,15 @@ class WebformCliService implements WebformCliServiceInterface {
     $target = $target ?: 'webform';
     $prefix = $this->drush_get_option('prefix', 'webform');
 
-    if (isset($config_directories[$target])) {
+    // [Drupal 8.8+] The sync directory is defined in $settings
+    // and not $config_directories.
+    // @see https://www.drupal.org/node/3018145
+    $config_directory = Settings::get('config_' . $target . '_directory');
+    if ($config_directory) {
+      $file_directory_path = DRUPAL_ROOT . '/' . $config_directory;
+      $dependencies = $this->drush_get_option('dependencies');
+    }
+    elseif (isset($config_directories) && isset($config_directories[$target])) {
       $file_directory_path = DRUPAL_ROOT . '/' . $config_directories[$target];
       $dependencies = $this->drush_get_option('dependencies');
     }

@@ -12,6 +12,7 @@ use Drupal\webform\WebformEntityReferenceManagerInterface;
 use Drupal\webform\WebformSubmissionGenerateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Drupal\Component\Datetime\TimeInterface;
 
 /**
  * Provides a WebformSubmissionDevelGenerate trait.
@@ -84,6 +85,13 @@ trait WebformSubmissionDevelGenerateTrait {
   protected $messenger;
 
   /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructs a WebformSubmissionDevelGenerate object.
    *
    * @param array $configuration
@@ -104,8 +112,10 @@ trait WebformSubmissionDevelGenerateTrait {
    *   The webform submission generator.
    * @param \Drupal\webform\WebformEntityReferenceManagerInterface $webform_entity_reference_manager
    *   The webform entity reference manager.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, Connection $database, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger, WebformSubmissionGenerateInterface $webform_submission_generate, WebformEntityReferenceManagerInterface $webform_entity_reference_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, RequestStack $request_stack, Connection $database, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger, WebformSubmissionGenerateInterface $webform_submission_generate, WebformEntityReferenceManagerInterface $webform_entity_reference_manager, TimeInterface $time) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
     $this->request = $request_stack->getCurrentRequest();
@@ -116,6 +126,7 @@ trait WebformSubmissionDevelGenerateTrait {
     $this->webformEntityReferenceManager = $webform_entity_reference_manager;
     $this->webformStorage = $entity_type_manager->getStorage('webform');
     $this->webformSubmissionStorage = $entity_type_manager->getStorage('webform_submission');
+    $this->time = $time;
   }
 
   /**
@@ -131,7 +142,8 @@ trait WebformSubmissionDevelGenerateTrait {
       $container->get('entity_type.manager'),
       $container->get('messenger'),
       $container->get('webform_submission.generate'),
-      $container->get('webform.entity_reference_manager')
+      $container->get('webform.entity_reference_manager'),
+      $container->get('datetime.time')
     );
   }
 
@@ -281,11 +293,11 @@ trait WebformSubmissionDevelGenerateTrait {
     }
     if (!empty($values['webform_ids'])) {
       $this->initializeGenerate($values);
-      $start = time();
+      $start = $this->time->getRequestTime();
       for ($i = 1; $i <= $values['num']; $i++) {
         $this->generateSubmission($values);
         if (function_exists('drush_log') && $i % drush_get_option('feedback', 1000) === 0) {
-          $now = time();
+          $now = $this->time->getRequestTime();
           $dt_args = [
             '@feedback' => drush_get_option('feedback', 1000),
             '@rate' => (drush_get_option('feedback', 1000) * 60) / ($now - $start),
@@ -331,7 +343,7 @@ trait WebformSubmissionDevelGenerateTrait {
 
     // Set created min and max.
     $values['created_min'] = strtotime('-1 month');
-    $values['created_max'] = time();
+    $values['created_max'] = $this->time->getRequestTime();
 
     // Set entity type and id default value.
     $values += [

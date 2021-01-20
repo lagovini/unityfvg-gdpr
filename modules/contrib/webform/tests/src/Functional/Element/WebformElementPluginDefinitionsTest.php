@@ -764,6 +764,25 @@ value:
   container: false
   root: false
   multiple: false
+vertical_tabs:
+  dependencies: {  }
+  default_key: ''
+  category: 'Markup elements'
+  description: 'Provides a vertical tabs element.'
+  hidden: true
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: vertical_tabs
+  label: 'Vertical tabs'
+  class: Drupal\webform\Plugin\WebformElement\VerticalTabs
+  provider: webform
+  input: false
+  container: false
+  root: false
+  multiple: false
 view:
   dependencies: {  }
   default_key: ''
@@ -1075,7 +1094,7 @@ webform_element:
   default_key: ''
   category: ''
   description: 'Provides a generic form element.'
-  hidden: false
+  hidden: true
   multiline: false
   composite: false
   states_wrapper: false
@@ -1204,6 +1223,25 @@ webform_flexbox:
   container: true
   root: false
   multiple: false
+webform_height:
+  dependencies: {  }
+  default_key: ''
+  category: 'Advanced elements'
+  description: 'Provides a form element to collect height in feet and inches.'
+  hidden: false
+  multiline: false
+  composite: false
+  states_wrapper: false
+  deprecated: false
+  deprecated_message: ''
+  id: webform_height
+  label: 'Height (feet/inches)'
+  class: Drupal\webform\Plugin\WebformElement\WebformHeight
+  provider: webform
+  input: true
+  container: false
+  root: false
+  multiple: true
 webform_horizontal_rule:
   dependencies: {  }
   default_key: horizontal_rule
@@ -1830,7 +1868,7 @@ webform_variant:
   deprecated: false
   deprecated_message: ''
   id: webform_variant
-  label: 'Variant [EXPERIMENTAL]'
+  label: 'Variant'
   class: Drupal\webform\Plugin\WebformElement\WebformVariant
   provider: webform
   input: true

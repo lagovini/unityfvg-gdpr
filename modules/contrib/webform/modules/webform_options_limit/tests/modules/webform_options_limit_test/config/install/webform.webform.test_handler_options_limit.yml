@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -25,6 +26,7 @@ elements: |
       - B
       - C
     '#options':
+      none: None
       A: A
       B: B
       C: C
@@ -32,6 +34,7 @@ elements: |
     '#type': checkboxes
     '#title': options_limit_messages
     '#options':
+      none: None
       D: D
       E: E
       F: F
@@ -184,6 +187,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -239,6 +244,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -290,6 +297,7 @@ handlers:
   options_limit_default:
     id: options_limit
     label: options_limit_default
+    notes: ''
     handler_id: options_limit_default
     status: true
     conditions: {  }
@@ -297,6 +305,7 @@ handlers:
     settings:
       element_key: options_limit_default
       limits:
+        none: 0
         A: 1
         B: 2
         _default_: 3
@@ -314,6 +323,7 @@ handlers:
   options_limit_messages:
     id: options_limit
     label: options_limit_messages
+    notes: ''
     handler_id: options_limit_messages
     status: true
     conditions: {  }
@@ -321,6 +331,7 @@ handlers:
     settings:
       element_key: options_limit_messages
       limits:
+        none: 0
         D: 1
         E: 2
       limit_reached_message: '@name is not available.'
@@ -337,6 +348,7 @@ handlers:
   options_limit_select_disable:
     id: options_limit
     label: options_limit_select_disable
+    notes: ''
     handler_id: options_limit_select_disable
     status: true
     conditions: {  }
@@ -360,6 +372,7 @@ handlers:
   options_limit_select_remove:
     id: options_limit
     label: options_limit_select_remove
+    notes: ''
     handler_id: options_limit_select_remove
     status: true
     conditions: {  }
@@ -383,6 +396,7 @@ handlers:
   options_limit_select_none:
     id: options_limit
     label: options_limit_select_none
+    notes: ''
     handler_id: options_limit_select_none
     status: true
     conditions: {  }
@@ -406,6 +420,7 @@ handlers:
   options_limit_select_other:
     id: options_limit
     label: options_limit_select_other
+    notes: ''
     handler_id: options_limit_select_other
     status: true
     conditions: {  }
@@ -429,6 +444,7 @@ handlers:
   options_limit_tableselect_multiple:
     id: options_limit
     label: options_limit_tableselect_multiple
+    notes: ''
     handler_id: options_limit_tableselect_multiple
     status: true
     conditions: {  }
@@ -452,6 +468,7 @@ handlers:
   options_limit_tableselect_single:
     id: options_limit
     label: options_limit_tableselect_single
+    notes: ''
     handler_id: options_limit_tableselect_single
     status: true
     conditions: {  }

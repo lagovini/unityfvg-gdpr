@@ -1,13 +1,12 @@
-name: 'Webform Share [EXPERIMENTAL]'
+name: 'Webform Share'
 type: module
 description: 'Allows webforms to be shared on other websites using an iframe.'
-experimental: true
-package: 'Webform [EXPERIMENTAL]'
+package: 'Webform'
 core_version_requirement: ^8.8
 dependencies:
   - 'webform:webform'
 
-# Information added by Drupal.org packaging script on 2020-07-02
-version: '8.x-5.19'
+# Information added by Drupal.org packaging script on 2020-12-25
+version: '8.x-5.23'
 project: 'webform'
-datestamp: 1593681142
+datestamp: 1608855650

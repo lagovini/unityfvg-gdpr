@@ -32,7 +32,7 @@ class WebformCardsAutoForwardJavaScriptTest extends WebformWebDriverTestBase {
     $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="textfield"]');
 
     // Check that enter in textfield auto-forwards.
-    $session->executeScript('var event = jQuery.Event("keypress"); event.which = 13; jQuery("#edit-textfield").trigger(event);');
+    $this->executeJqueryEvent('#edit-textfield', 'keydown', ['which' => 13]);
     $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="radios_example"]');
 
     // Check that radios auto-forwards.
@@ -66,6 +66,30 @@ class WebformCardsAutoForwardJavaScriptTest extends WebformWebDriverTestBase {
     // Check that the form can be submitted.
     $page->pressButton('edit-submit');
     $assert_session->pageTextContains('New submission added to Test: Webform: Cards auto-forward.');
+
+    /**************************************************************************/
+
+    $this->drupalGet('/webform/test_cards_auto_forward_hide');
+
+    $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="radios_example"]');
+
+    // Check that next button is hidden.
+    $this->assertElementNotVisible('#edit-cards-prev');
+    $this->assertElementNotVisible('#edit-cards-next');
+
+    // Move to the next page.
+    // Click the radio's label because radio is not visible.
+    $this->click('label[for="edit-radios-one"]');
+    $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="radios_other_example"]');
+
+    // Go back to previous page.
+    $this->assertElementVisible('#edit-cards-prev');
+    $this->assertElementNotVisible('#edit-cards-next');
+    $page->pressButton('edit-cards-prev');
+    $assert_session->waitForElementVisible('css', '#edit-cards-next');
+
+    // Check that next button is now visible.
+    $this->assertElementVisible('#edit-cards-next');
   }
 
 }

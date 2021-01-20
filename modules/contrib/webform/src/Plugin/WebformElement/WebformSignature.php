@@ -322,7 +322,9 @@ class WebformSignature extends WebformElementBase {
     }
 
     $webform = $webform_submission->getWebform();
-    $element_key = $element['#webform_key'];
+    $element_key = (isset($element['#webform_composite_key']))
+      ? $element['#webform_composite_key']
+      : $element['#webform_key'];
     $sid = $webform_submission->id();
 
     $image_base_directory = 'public://webform/' . $webform->id();

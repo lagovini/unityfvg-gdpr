@@ -5,6 +5,7 @@
  * Provides a 'Card' container element for clientside multistep form pagination.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\EventSubscriber\MainContentViewSubscriber;
 use Drupal\Core\Render\Element;
@@ -17,6 +18,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\webform\Element\WebformMessage;
 use Drupal\webform\Utility\WebformArrayHelper;
 use Drupal\webform\Utility\WebformDialogHelper;
+use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\WebformInterface;
 use Drupal\webform\WebformSubmissionInterface;
 
@@ -105,6 +107,20 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
     return;
   }
 
+  // Display quick form submit when testing webform cards.
+  if ($form_object->getOperation() === 'test'
+    && \Drupal::request()->getMethod() === 'GET') {
+    $form_id = Html::getId($form_object->getFormId());
+    $build = [
+      '#type' => 'link',
+      '#url' => Url::fromRoute('<none>', [], ['fragment' => $form_id]),
+      '#title' => t('Submit %title form', ['%title' => $webform->label()]),
+      '#attributes' => ['class' => ['js-webform-card-test-submit-form']],
+    ];
+    \Drupal::messenger()->addWarning(\Drupal::service('renderer')->render($build));
+    $form['#attached']['library'][] = 'webform_cards/webform_cards.test';
+  }
+
   // Add cards JavaScript.
   $form['#attached']['library'][] = 'webform_cards/webform_cards';
 
@@ -143,6 +159,10 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
     'wizard_progress_link',
     // Auto forward to next page when the page is completed.
     'wizard_auto_forward',
+    // Hide the next button when auto-forwarding.
+    'wizard_auto_forward_hide_next_button',
+    // Navigate between cards using left or right arrow keys.
+    'wizard_keyboard',
     // Link to previous pages in preview.
     'wizard_preview_link',
     // Include confirmation page in progress.
@@ -159,6 +179,8 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
     'ajax_effect',
     // Ajax speed.
     'ajax_speed',
+    // Ajax scroll top.
+    'ajax_scroll_top',
   ];
   foreach ($setting_names as $setting_name) {
     if ($value = $webform->getSetting($setting_name, TRUE)) {
@@ -175,7 +197,7 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
       WebformInterface::PAGE_PREVIEW,
       WebformInterface::PAGE_CONFIRMATION,
     ])) {
-      $current_page = $current_card ?: array_key_first($pages);
+      $current_page = $current_card ?: key($pages);
     }
     $form['progress'] = [
       '#theme' => 'webform_progress',
@@ -208,6 +230,11 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
       'class' => ['webform-button--previous', 'webform-cards-button--previous'],
     ],
     '#weight' => 0,
+    // Cards and previews previous button labels can have the same value.
+    // Issue #1342066 Document that buttons with the same #value need a unique
+    // #name for the Form API to distinguish them, or change the Form API to
+    // assign unique #names automatically.
+    '#name' => $webform->id() . '_card_previous_button',
   ];
   $form['actions']['cards_next'] = [
     '#type' => 'submit',
@@ -217,6 +244,14 @@ function webform_cards_webform_submission_form_alter(array &$form, FormStateInte
     ],
     '#weight' => 1,
   ];
+
+  // Add 'data-webform-unsaved-ignore' attribute to forms with unsaved
+  // data warning.
+  // @see webform.form.unsaved.js
+  if ($webform->getSetting('form_unsaved', TRUE)) {
+    $form['actions']['cards_prev']['#attributes']['data-webform-unsaved-ignore'] = TRUE;
+    $form['actions']['cards_next']['#attributes']['data-webform-unsaved-ignore'] = TRUE;
+  };
 
   // Process the submitted values before they are stored.
   $form['#entity_builders'][] = 'webform_card_webform_submission_builder';
@@ -316,6 +351,41 @@ function webform_cards_form_webform_admin_config_elements_form_alter(array &$for
  * Implements hook_form_FORM_ID_alter() for webform settings:form.
  *
  * @see \Drupal\webform\EntitySettings\WebformEntitySettingsFormForm
+ * @see /admin/structure/webform/manage/{webform}/settings
+ */
+function webform_cards_form_webform_settings_form_alter(array &$form, FormStateInterface $form_state) {
+  /** @var \Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\webform\WebformInterface $webform */
+  $webform = $form_object->getEntity();
+  /** @var \Drupal\webform_cards\WebformCardsManagerInterface $webform_cards_manager */
+  $webform_cards_manager = \Drupal::service('webform_cards.manager');
+  // Check if the webform has cards.
+  $has_cards = $webform_cards_manager->hasCards($webform);
+  if (!$has_cards) {
+    return;
+  }
+
+  // Move hide/show from container to jus the progress type.
+  $form['ajax_settings']['ajax_container']['ajax_progress_type']['#states'] = $form['ajax_settings']['ajax_container']['#states'];
+  $form['ajax_settings']['ajax_container']['#states'] = NULL;
+
+  // Display info message.
+  $form['ajax_settings']['ajax_container']['ajax_progress_type']['#weight'] = -10;
+  $form['ajax_settings']['ajax_container']['ajax_cards_message'] = [
+    '#type' => 'webform_message',
+    '#message_type' => 'info',
+    '#message_close' => TRUE,
+    '#message_storage' => WebformMessage::STORAGE_SESSION,
+    '#message_message' => t('The below Ajax scroll, effect, and speed settings will also be applied to cards.'),
+    '#weight' => -9,
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for webform settings:form.
+ *
+ * @see \Drupal\webform\EntitySettings\WebformEntitySettingsGeneralForm
  * @see /admin/structure/webform/manage/{webform}/settings/form
  */
 function webform_cards_form_webform_settings_form_form_alter(array &$form, FormStateInterface $form_state) {
@@ -338,6 +408,12 @@ function webform_cards_form_webform_settings_form_form_alter(array &$form, FormS
       'wizard_auto_forward' => [
         '#access' => TRUE,
       ],
+      'wizard_auto_forward_hide_next_button' => [
+        '#access' => TRUE,
+      ],
+      'wizard_keyboard' => [
+        '#access' => TRUE,
+      ],
       'wizard_start_label' => [
         '#title' => t('Wizard/cards start label'),
         '#description' => t('The first page label in the progress bar. Subsequent pages are titled by their wizard/card page title.'),
@@ -347,6 +423,10 @@ function webform_cards_form_webform_settings_form_form_alter(array &$form, FormS
       ],
       'wizard_track' => [
         '#title' => t('Track wizard/cards progress in the URL by'),
+        '#options' => [
+          'name' => t("Page/card name (?page=contact)"),
+          'index' => t("Page/card index (?page=2)"),
+        ],
       ],
       'wizard_prev_button_label' => [
         '#title' => t('Wizard/cards previous page button label'),
@@ -388,7 +468,7 @@ function _webform_cards_form_alter_elements(array &$form, array $elements) {
         continue;
       }
 
-      if (Element::property($key)) {
+      if (WebformElementHelper::property($key)) {
         $form[$container_key][$key] = $element;
       }
       elseif (is_array($container)) {

@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Routing;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
@@ -19,13 +20,23 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
   protected $moduleHandler;
 
   /**
+   * The configuration object factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * Constructs a WebformShareRouteSubscriber object.
    *
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configuration object factory.
    */
-  public function __construct(ModuleHandlerInterface $module_handler) {
+  public function __construct(ModuleHandlerInterface $module_handler, ConfigFactoryInterface $config_factory = NULL) {
     $this->moduleHandler = $module_handler;
+    $this->configFactory = $config_factory ?: \Drupal::configFactory();
   }
 
   /**
@@ -39,6 +50,14 @@ class WebformRouteSubscriber extends RouteSubscriberBase {
           || strpos($route->getPath(), '/webform/results/') !== FALSE
         )) {
         $route->setOption('_admin_route', TRUE);
+      }
+
+      // Change /admin/structure/webform/ to /admin/webform/.
+      if ($this->configFactory->get('webform.settings')->get('ui.toolbar_item')) {
+        if (strpos($route->getPath(), '/admin/structure/webform') === 0) {
+          $path = str_replace('/admin/structure/webform', '/admin/webform', $route->getPath());
+          $route->setPath($path);
+        }
       }
     }
 

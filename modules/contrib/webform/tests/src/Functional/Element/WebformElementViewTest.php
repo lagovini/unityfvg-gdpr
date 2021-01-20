@@ -29,8 +29,6 @@ class WebformElementViewTest extends WebformElementBrowserTestBase {
   public function testView() {
     // Check that embedded view is render.
     $this->drupalGet('/webform/test_element_view');
-    $this->assertCssSelect('.view-webform-submissions');
-    $this->assertRaw('<div class="view-empty">');
     $this->assertRaw('No submissions available.');
 
     // Check that embedded view can't be edited.

@@ -107,8 +107,8 @@ class WebformNodeResultsTest extends WebformNodeBrowserTestBase {
 
     $this->drupalGet('/node/' . $node->id() . '/webform/results/submissions');
     $this->assertResponse(200);
-    $this->assertRaw('<h1 class="page-title">' . $node->label() . '</h1>');
-    $this->assertNoRaw('<h1 class="page-title">' . $webform->label() . '</h1>');
+    $this->assertRaw('<h1>' . $node->label() . '</h1>');
+    $this->assertNoRaw('<h1>' . $webform->label() . '</h1>');
     $this->assertRaw(('<a href="' . $node_submission_url->toString() . '" title="' . Html::escape($node_submission_title) . '" aria-label="' . Html::escape($node_submission_title) . '">' . $node_sids[1] . '</a>'));
     $this->assertNoRaw(('<a href="' . $webform_submission_url->toString() . '">' . $webform_sids[1] . '</a>'));
 

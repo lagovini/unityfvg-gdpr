@@ -1,6 +1,6 @@
 name: 'Webform Clientside Validation'
 type: module
-description: 'Helps support Webform to Clientside Validation integration.'
+description: 'Helps support Webform Clientside Validation integration.'
 package: Webform
 core_version_requirement: ^8.8
 dependencies:
@@ -8,7 +8,7 @@ dependencies:
   - 'clientside_validation:clientside_validation'
   - 'clientside_validation:clientside_validation_jquery'
 
-# Information added by Drupal.org packaging script on 2020-07-02
-version: '8.x-5.19'
+# Information added by Drupal.org packaging script on 2020-12-25
+version: '8.x-5.23'
 project: 'webform'
-datestamp: 1593681142
+datestamp: 1608855650

@@ -151,7 +151,7 @@ class WebformCardsProgressJavaScriptTest extends WebformWebDriverTestBase {
     // Move to card 2.
     $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="card_1"]');
     $page->pressButton('edit-cards-next');
-    $assert_session->waitForElement('css',  '#edit-element-2');
+    $assert_session->waitForElement('css', '#edit-element-2');
 
     // Check that only card 1 is linked in the progress bar.
     $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="card_2"]');

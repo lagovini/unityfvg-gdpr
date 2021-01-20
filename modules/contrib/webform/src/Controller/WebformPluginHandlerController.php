@@ -175,7 +175,7 @@ class WebformPluginHandlerController extends ControllerBase implements Container
           '#type' => 'link',
           '#title' => $definition['label'],
           '#url' => Url::fromRoute('entity.webform.handler.add_form', ['webform' => $webform->id(), 'webform_handler' => $plugin_id]),
-          '#attributes' => WebformDialogHelper::getOffCanvasDialogAttributes(),
+          '#attributes' => WebformDialogHelper::getOffCanvasDialogAttributes($handler_plugin->getOffCanvasWidth()),
           '#prefix' => '<div class="webform-form-filter-text-source">',
           '#suffix' => '</div>',
         ];
@@ -202,7 +202,7 @@ class WebformPluginHandlerController extends ControllerBase implements Container
         $links['add'] = [
           'title' => $this->t('Add handler'),
           'url' => Url::fromRoute('entity.webform.handler.add_form', ['webform' => $webform->id(), 'webform_handler' => $plugin_id]),
-          'attributes' => WebformDialogHelper::getOffCanvasDialogAttributes(),
+          'attributes' => WebformDialogHelper::getOffCanvasDialogAttributes($handler_plugin->getOffCanvasWidth()),
         ];
         $row['operations']['data'] = [
           '#type' => 'operations',

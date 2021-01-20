@@ -1212,4 +1212,16 @@ interface WebformInterface extends ConfigEntityInterface, EntityWithPluginCollec
    */
   public function hasUserData($key);
 
+  /****************************************************************************/
+  // Third party settings.
+  /****************************************************************************/
+
+  /**
+   * Unsets all third-party settings of a given module.
+   *
+   * @param string $module
+   *   The module providing the third-party settings.
+   */
+  public function unsetThirdPartySettings($module);
+
 }

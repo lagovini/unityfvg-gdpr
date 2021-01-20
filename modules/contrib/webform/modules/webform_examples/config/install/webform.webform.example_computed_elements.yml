@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -46,7 +47,7 @@ elements: |
           Hello {{ data.first_name }} {{ data.last_name }}!!!
         </h2>
         <p>You are {{ ('now'|date('Y')) - (data.date_of_birth|date('Y'))  }} years old.</p>
-
+  
 css: ''
 javascript: ''
 settings:
@@ -119,6 +120,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -174,6 +177,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

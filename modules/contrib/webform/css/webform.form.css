@@ -32,6 +32,19 @@ html.js .js-webform-visually-hidden[style*="display: none"] {
 }
 
 /**
+ * Form inline. (This is not included in all themes)
+ */
+.form--inline .form-item {
+  float: left; /* LTR */
+  margin-right: 0.5em; /* LTR */
+}
+[dir="rtl"] .form--inline .form-item {
+  float: right;
+  margin-right: 0;
+  margin-left: 0.5em;
+}
+
+/**
  * Container inline
  */
 .form-item .container-inline {

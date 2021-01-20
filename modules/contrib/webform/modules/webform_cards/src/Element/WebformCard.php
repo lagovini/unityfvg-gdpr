@@ -44,13 +44,13 @@ class WebformCard extends RenderElement {
    */
   public static function preRenderWebformCard(array $element) {
     $element['#attributes']['data-title'] = $element['#title'];
-    if ($element['#webform_key']) {
+    if (!empty($element['#webform_key'])) {
       $element['#attributes']['data-webform-key'] = $element['#webform_key'];
     }
-    if ($element['#prev_button_label']) {
+    if (!empty($element['#prev_button_label'])) {
       $element['#attributes']['data-prev-button-label'] = $element['#prev_button_label'];
     }
-    if ($element['#next_button_label']) {
+    if (!empty($element['#next_button_label'])) {
       $element['#attributes']['data-next-button-label'] = $element['#next_button_label'];
     }
     return $element;

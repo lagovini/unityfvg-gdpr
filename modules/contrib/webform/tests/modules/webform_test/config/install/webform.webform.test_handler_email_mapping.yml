@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -30,7 +31,7 @@ elements: |
     '#title': radios_other
     '#options': gender
     '#description': 'Check and enter ''Other'' to trigger an email.'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -103,6 +104,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -158,6 +161,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -209,6 +214,7 @@ handlers:
   select:
     id: email
     label: 'Select yes option'
+    notes: ''
     handler_id: select
     status: true
     conditions: {  }
@@ -247,6 +253,7 @@ handlers:
   empty:
     id: email
     label: 'Select empty'
+    notes: ''
     handler_id: empty
     status: true
     conditions: {  }
@@ -285,6 +292,7 @@ handlers:
   default:
     id: email
     label: 'Select default'
+    notes: ''
     handler_id: empty
     status: true
     conditions: {  }
@@ -323,6 +331,7 @@ handlers:
   checkboxes:
     id: email
     label: Checkboxes
+    notes: ''
     handler_id: checkboxes
     status: true
     conditions: {  }
@@ -363,6 +372,7 @@ handlers:
   radios_other:
     id: email
     label: 'Radios other'
+    notes: ''
     handler_id: radios_other
     status: true
     conditions: {  }

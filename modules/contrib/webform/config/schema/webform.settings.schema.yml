@@ -30,6 +30,9 @@ webform.settings:
         default_reset_button_label:
           type: label
           label: 'Default reset button label'
+        default_delete_button_label:
+          type: label
+          label: 'Default delete button label'
         default_form_submit_once:
           type: boolean
           label: 'Prevent duplicate submissions'
@@ -568,6 +571,9 @@ webform.settings:
         description_help:
           type: boolean
           label: 'Display element description as help text (tooltip)'
+        toolbar_item:
+          type: boolean
+          label: 'Display webforms as a top-level item in toolbar'
     libraries:
       type: mapping
       label: 'Library settings'
@@ -585,6 +591,9 @@ webform.settings:
         cdn:
           type: boolean
           label: 'Check if CDN is being used for external libraries'
+        clientside_validation:
+          type: boolean
+          label: 'Check if Webform Clientside Validation module is installed when using the Clientside Validation module'
         bootstrap:
           type: boolean
           label: 'Check if Webform Bootstrap Integration module is installed when using the Bootstrap theme'

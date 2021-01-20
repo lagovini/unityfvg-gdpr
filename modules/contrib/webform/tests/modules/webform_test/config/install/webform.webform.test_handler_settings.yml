@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -60,7 +61,7 @@ elements: |
       '#type': textfield
       '#title': 'Draft loaded message'
       '#default_value': '{Custom draft loaded message}'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -133,6 +134,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -188,6 +191,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -239,6 +244,7 @@ handlers:
   preview:
     id: settings
     label: 'Preview settings'
+    notes: ''
     handler_id: preview
     status: true
     conditions:
@@ -256,6 +262,7 @@ handlers:
   confirmation:
     id: settings
     label: 'Confirmation Settings'
+    notes: ''
     handler_id: confirmation
     status: true
     conditions:
@@ -273,6 +280,7 @@ handlers:
   custom:
     id: settings
     label: 'Custom settings'
+    notes: ''
     handler_id: custom
     status: true
     conditions:

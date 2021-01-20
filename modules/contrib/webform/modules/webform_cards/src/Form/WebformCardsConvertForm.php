@@ -31,8 +31,7 @@ class WebformCardsConvertForm extends FormBase {
     ];
     $form['warning'] = [
       '#type' => 'webform_message',
-      '#message_message' => '<strong>' . $this->t('Webform cards support is an experimental module/feature.') . '</strong><br/>'
-        . $this->t('Please make sure to test the converted webform on a staging server before using cards in production.'),
+      '#message_message' => $this->t('Please make sure to test the converted webform on a staging server before using cards in production.'),
       '#message_type' => 'warning',
     ];
     $form['description'] = [

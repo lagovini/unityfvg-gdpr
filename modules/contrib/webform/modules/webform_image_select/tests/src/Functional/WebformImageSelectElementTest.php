@@ -46,8 +46,13 @@ class WebformImageSelectElementTest extends WebformElementBrowserTestBase {
       'image_select_default' => 'kitten_1',
     ];
     $this->postSubmission($webform, $edit, 'Preview');
-    $this->assertRaw('<figure style="display: inline-block; margin: 0 6px 6px 0; padding: 6px; border: 1px solid #ddd;width: 220px"><img src="http://placekitten.com/220/200" width="220" height="200" alt="Cute Kitten 1" title="Cute Kitten 1" />');
-
+    // @todo Remove once Drupal 9.1.x is only supported.
+    if (floatval(\Drupal::VERSION) >= 9.1) {
+      $this->assertRaw('<figure style="display: inline-block; margin: 0 6px 6px 0; padding: 6px; border: 1px solid #ddd;width: 220px"><img src="http://placekitten.com/220/200" width="220" height="200" alt="Cute Kitten 1" title="Cute Kitten 1" loading="lazy" />');
+    }
+    else {
+      $this->assertRaw('<figure style="display: inline-block; margin: 0 6px 6px 0; padding: 6px; border: 1px solid #ddd;width: 220px"><img src="http://placekitten.com/220/200" width="220" height="200" alt="Cute Kitten 1" title="Cute Kitten 1" />');
+    }
   }
 
 }

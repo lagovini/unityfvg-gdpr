@@ -15,6 +15,9 @@ git diff 8.x-5.x > [project_name]-[issue-description]-[issue-number]-00.patch
 # Apply remote patch
 curl https://www.drupal.org/files/issues/[project_name]-[issue-description]-[issue-number]-00.patch | git apply -
 
+# Apply remote patch with 3 way merge
+curl https://www.drupal.org/files/issues/[project_name]-[issue-description]-[issue-number]-00.patch | git apply -3
+
 # Force apply patch
 patch -p1 < 3037968-2.patch
 

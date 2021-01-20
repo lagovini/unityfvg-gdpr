@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -29,7 +30,7 @@ elements: |
     '#type': checkbox
     '#title': boolean_limit_remove
     '#default_value': true
-
+  
 css: ''
 javascript: ''
 settings:
@@ -102,6 +103,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -157,6 +160,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -208,6 +213,7 @@ handlers:
   boolean_limit_default:
     id: options_limit
     label: boolean_limit_default
+    notes: ''
     handler_id: boolean_limit_default
     status: true
     conditions: {  }
@@ -229,6 +235,7 @@ handlers:
   boolean_limit_message:
     id: options_limit
     label: boolean_limit_message
+    notes: ''
     handler_id: boolean_limit_message
     status: true
     conditions: {  }
@@ -250,6 +257,7 @@ handlers:
   boolean_limit_remove:
     id: options_limit
     label: boolean_limit_remove
+    notes: ''
     handler_id: boolean_limit_remove
     status: true
     conditions: {  }

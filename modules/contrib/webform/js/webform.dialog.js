@@ -13,7 +13,7 @@
   Drupal.webform.dialog.options = Drupal.webform.dialog.options || {};
 
   /**
-   * Programatically open a webform (or page) in a dialog.
+   * Programmatically open a webform (or page) in a dialog.
    *
    * @param {string} url
    *   Webform URL.
@@ -26,7 +26,7 @@
     // Init the webform dialog behavior.
     Drupal.behaviors.webformDialog.attach($div);
     // Trigger the link.
-    $div.find('a').click();
+    $div.find('a').trigger('click');
   };
 
   /**
@@ -84,6 +84,11 @@
         element_settings.dialogType = $a.data('dialog-type') || 'modal';
         element_settings.dialog = options;
         element_settings.element = this;
+        element_settings.error = function error(xmlhttp, uri) {
+          if (xmlhttp.status === 403) {
+            window.location.replace(href.split('?')[0]);
+          }
+        };
         Drupal.ajax(element_settings);
       });
     }

@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -38,7 +39,7 @@ elements: |
       number:
         '#type': number
         '#title': number
-
+  
 css: ''
 javascript: ''
 settings:
@@ -113,6 +114,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -142,7 +145,7 @@ settings:
   confirmation_title: ''
   confirmation_message: |
     <p>Your confirmation number is [webform_submission:values:confirmation_number].</p>
-
+    
   confirmation_url: ''
   confirmation_attributes: {  }
   confirmation_back: true
@@ -170,6 +173,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -221,6 +226,7 @@ handlers:
   remote_post:
     id: remote_post
     label: 'Remote post'
+    notes: ''
     handler_id: remote_post
     status: true
     conditions: {  }
@@ -252,7 +258,7 @@ handlers:
         boolean_true: '(boolean) true'
         integer: '(integer) 100'
         float: '(float) 100.01'
-
+        
       custom_options: ''
       debug: true
       completed_url: 'http://webform-test-handler-remote-post/completed'

@@ -178,7 +178,7 @@ abstract class TextBase extends WebformElementBase {
     $form['validation']['pattern_error'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Pattern message'),
-      '#description' => $this->t('If set, this message will be used when a pattern is not matched, instead of the default "@message" message.', ['@message' => t('%name field is not in the right format.')]),
+      '#description' => $this->t('If set, this message will be used when a pattern is not matched, instead of the default "@message" message.', ['@message' => $this->t('%name field is not in the right format.')]),
       '#states' => [
         'visible' => [
           ':input[name="properties[pattern][checkbox]"]' => ['checked' => TRUE],
@@ -324,7 +324,7 @@ abstract class TextBase extends WebformElementBase {
       $pcre_pattern = preg_replace('/\\\\u([a-fA-F0-9]{4})/', '\\x{\\1}', $properties['#pattern']);
 
       if (preg_match('{^(?:' . $pcre_pattern . ')$}u', NULL) === FALSE) {
-        $form_state->setErrorByName('pattern', t('Pattern %pattern is not a valid regular expression.', ['%pattern' => $properties['#pattern']]));
+        $form_state->setErrorByName('pattern', $this->t('Pattern %pattern is not a valid regular expression.', ['%pattern' => $properties['#pattern']]));
       }
 
       set_error_handler('_drupal_error_handler');
@@ -332,8 +332,8 @@ abstract class TextBase extends WebformElementBase {
 
     // Validate #counter_maximum.
     if (!empty($properties['#counter_type']) && empty($properties['#counter_maximum']) && empty($properties['#counter_minimum'])) {
-      $form_state->setErrorByName('counter_minimum', t('Counter minimum or maximum is required.'));
-      $form_state->setErrorByName('counter_maximum', t('Counter minimum or maximum is required.'));
+      $form_state->setErrorByName('counter_minimum', $this->t('Counter minimum or maximum is required.'));
+      $form_state->setErrorByName('counter_maximum', $this->t('Counter minimum or maximum is required.'));
     }
   }
 

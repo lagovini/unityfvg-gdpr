@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -215,6 +216,9 @@ elements: |
       '#type': webform_codemirror
       '#title': CodeMirror
       '#mode': yaml
+    webform_height:
+      '#type': webform_height
+      '#title': Height
     webform_image_select:
       '#type': webform_image_select
       '#title': 'Image select'
@@ -643,7 +647,7 @@ elements: |
       '#type': address
       '#title': Address
       '#description': '@see <a href="https://www.drupal.org/project/address">https://www.drupal.org/project/address</a>'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -716,6 +720,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -771,6 +777,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

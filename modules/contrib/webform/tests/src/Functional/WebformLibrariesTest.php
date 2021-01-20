@@ -37,7 +37,7 @@ class WebformLibrariesTest extends WebformBrowserTestBase {
 
     $this->drupalLogin($this->rootUser);
 
-    // Enable choices and jquery.chosen
+    // Enable choices and jquery.chosen.
     $edit = [
       'excluded_libraries[choices]' => TRUE,
       'excluded_libraries[jquery.chosen]' => TRUE,

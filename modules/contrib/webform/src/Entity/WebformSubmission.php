@@ -12,6 +12,7 @@ use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
@@ -114,6 +115,12 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    */
   protected $computedData = [];
 
+  /**
+   * The data hashed.
+   *
+   * @var string
+   */
+  protected $dataHash;
   /**
    * Flag to indicated if submission is being converted from anonymous to authenticated.
    *
@@ -402,6 +409,7 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
     if ($this->getWebform()->getElement($key)) {
       $this->data[$key] = $value;
       $this->computedData = NULL;
+      $this->dataHash = NULL;
     }
     return $this;
   }
@@ -453,6 +461,7 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
   public function setData(array $data) {
     $this->data = $data;
     $this->computedData = NULL;
+    $this->dataHash = NULL;
     return $this;
   }
 
@@ -476,6 +485,17 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
    */
   public function getElementOriginalData($key) {
     return (isset($this->originalData[$key])) ? $this->originalData[$key] : NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getDataHash() {
+    if (isset($this->dataHash)) {
+      return $this->dataHash;
+    }
+    $this->dataHash = Crypt::hmacBase64(serialize($this->getRawData()), Settings::getHashSalt());
+    return $this->dataHash;
   }
 
   /**
@@ -549,6 +569,12 @@ class WebformSubmission extends ContentEntityBase implements WebformSubmissionIn
 
       case 'update':
         $url = $this->getSourceUrl();
+        break;
+
+      case 'delete':
+        /** @var \Drupal\webform\WebformRequestInterface $request_handler */
+        $request_handler = \Drupal::service('webform.request');
+        $url = $request_handler->getUrl($this, $this->getSourceEntity(), 'webform.user.submission.delete');
         break;
 
       default:

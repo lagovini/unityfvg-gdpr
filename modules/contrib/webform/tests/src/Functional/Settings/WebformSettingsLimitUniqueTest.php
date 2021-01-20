@@ -231,11 +231,17 @@ class WebformSettingsLimitUniqueTest extends WebformNodeBrowserTestBase {
     $this->assertFieldByName('name', 'Jane Doe');
     $this->assertRaw("<div><b>Submission ID:</b> $sid</div>");
 
+    // Check that the delete submission link includes ?destination.
+    $this->assertLinkByHref(base_path() . 'webform/test_form_limit_user_unique/submissions/' . $sid . '/delete?destination=' . base_path() . 'form/test-form-limit-user-unique');
+
     // Check that 'Test' form also has name set to 'Jane Doe'
     // and does not display a message.
     $this->drupalGet('/webform/test_form_limit_user_unique/test');
     $this->assertFieldByName('name', 'Jane Doe');
     $this->assertRaw("<div><b>Submission ID:</b> $sid</div>");
+
+    // Check that the delete submission link does not include the ?destination.
+    $this->assertLinkByHref(base_path() . 'admin/structure/webform/manage/test_form_limit_user_unique/submission/' . $sid . '/delete');
   }
 
 }

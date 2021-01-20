@@ -6,6 +6,7 @@ use Drupal\Core\Test\AssertMailTrait;
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Tests\webform\Traits\WebformBrowserTestTrait;
 use Drupal\Tests\webform\Traits\WebformAssertLegacyTrait;
+use Drupal\Tests\webform\Traits\WebformWebDriverTestTrait;
 
 /**
  * Defines an abstract test base for webform JavaScript tests.
@@ -15,6 +16,7 @@ abstract class WebformWebDriverTestBase extends WebDriverTestBase {
   use AssertMailTrait;
   use WebformBrowserTestTrait;
   use WebformAssertLegacyTrait;
+  use WebformWebDriverTestTrait;
 
   /**
    * Set default theme to classy.

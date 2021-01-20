@@ -54,7 +54,7 @@
           $error.hide();
         };
 
-        $telephone.blur(function () {
+        $telephone.on('blur', function () {
           reset();
           if ($.trim($telephone.val())) {
             if (!$telephone.intlTelInput('isValidNumber')) {

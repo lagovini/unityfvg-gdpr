@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -39,7 +40,7 @@ elements: |
     '#type': webform_actions
     '#title': 'Submit button(s)'
     '#submit__label': 'Send message'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -112,6 +113,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -167,6 +170,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -218,6 +223,7 @@ handlers:
   employee_email:
     id: email
     label: 'Employee: Email'
+    notes: ''
     handler_id: employee_email
     status: true
     conditions: {  }
@@ -254,6 +260,7 @@ handlers:
   manager_email:
     id: email
     label: 'Manager: Email'
+    notes: ''
     handler_id: manager_email
     status: true
     conditions: {  }
@@ -290,6 +297,7 @@ handlers:
   manager_admins_email:
     id: email
     label: 'Manager: Admins: Email'
+    notes: ''
     handler_id: manager_admins_email
     status: true
     conditions: {  }
@@ -326,6 +334,7 @@ handlers:
   manager_users_email:
     id: email
     label: 'Manager: Users: Email'
+    notes: ''
     handler_id: manager_users_email
     status: true
     conditions: {  }
@@ -362,6 +371,7 @@ handlers:
   manager_email_addresses_email:
     id: email
     label: 'Manager: Email addresses: Email'
+    notes: ''
     handler_id: manager_email_addresses_email
     status: true
     conditions: {  }
@@ -398,6 +408,7 @@ handlers:
   everyone_email:
     id: email
     label: 'Everyone: Email'
+    notes: ''
     handler_id: everyone_email
     status: true
     conditions: {  }

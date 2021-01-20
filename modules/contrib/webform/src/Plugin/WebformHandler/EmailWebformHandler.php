@@ -511,6 +511,12 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     $form['from']['from_mail'] = $this->buildElement('from_mail', $this->t('From email'), $this->t('From email address'), TRUE, $mail_element_options, $options_element_options, NULL, $other_element_email_options);
     $form['from']['from_name'] = $this->buildElement('from_name', $this->t('From name'), $this->t('From name'), FALSE, $name_element_options, NULL, NULL, $other_element_name_options);
     $form['from']['token_tree_link'] = $this->buildTokenTreeElement();
+    // 'From name' is not used if it contains multiple email addresses.
+    $form['from']['from_name']['from_name']['#states'] = [
+      '!visible' => [
+        ':input[name="settings[from_mail][other]"]' => ['value' => ['pattern' => ',']],
+      ],
+    ];
 
     // Message.
     $form['message'] = [
@@ -547,7 +553,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     // webform_token() Twig function.
     // @see \Drupal\webform\Twig\WebformTwigExtension
     $twig_default_body = $body_custom_default_values[$body_default_format];
-    $twig_default_body = preg_replace('/(\[[^]]+\])/', '{{ webform_token(\'\1\', webform_submission) }}', $twig_default_body);
+    $twig_default_body = preg_replace('/(\[[^]]+\])/', '{{ webform_token(\'\1\', webform_submission, [], options) }}', $twig_default_body);
     $body_custom_default_values['twig'] = $twig_default_body;
 
     // Look at the 'body' and determine the body select and custom
@@ -1501,7 +1507,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
    * @return array
    *   A select other element.
    */
-  protected function buildElement($name, $title, $label, $required = FALSE, array $element_options, array $options_options = NULL, array $role_options = NULL, array $other_options = NULL) {
+  protected function buildElement($name, $title, $label, $required = FALSE, array $element_options = [], array $options_options = NULL, array $role_options = NULL, array $other_options = NULL) {
     list($element_name, $element_type) = (strpos($name, '_') !== FALSE) ? explode('_', $name) : [$name, 'text'];
 
     $default_option = $this->getDefaultConfigurationValue($name);
@@ -1511,7 +1517,7 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
     if ($default_option) {
       $options[(string) $this->t('Default')] = [static::DEFAULT_VALUE => $default_option];
     }
-    if ($element_options) {
+    if (!empty($element_options)) {
       $options[(string) $this->t('Elements')] = $element_options;
     }
     if ($options_options) {
@@ -1550,25 +1556,33 @@ class EmailWebformHandler extends WebformHandlerBase implements WebformHandlerMe
       $element[$name]['#other__maxlength'] = NULL;
     }
 
+    // Tweak elements.
+    switch ($name) {
+      case 'from_mail':
+        $element[$name]['#other__description'] = $this->t('Multiple email addresses may be separated by commas.')
+          . ' '
+          . $this->t("If multiple email addresses are entered the '@name' will be not included in the email.", ['@name' => $this->t('From name')]);
+        break;
+
+      case 'reply_to':
+        $element[$name]['#description'] = $this->t('The email address that a recipient will see when they replying to an email.');
+        break;
+
+      case 'return_path':
+        $element[$name]['#description'] = $this->t('The email address to which bounce messages are delivered.');
+        break;
+
+      case 'sender_mail':
+        $element[$name]['#description'] = $this->t('The email address submitting the message, if other than shown by the From header');
+        break;
+    }
+
     // Use multiple email for reply_to, return_path, and sender_mail because
     // it supports tokens.
     if (in_array($name, ['reply_to', 'return_path', 'sender_mail'])) {
       $element[$name]['#other__type'] = 'webform_email_multiple';
       $element[$name]['#other__cardinality'] = 1;
       $element[$name]['#other__description'] = '';
-      switch ($name) {
-        case 'reply_to':
-          $element[$name]['#description'] = $this->t('The email address that a recipient will see when they replying to an email.');
-          break;
-
-        case 'return_path':
-          $element[$name]['#description'] = $this->t('The email address to which bounce messages are delivered.');
-          break;
-
-        case 'sender_mail':
-          $element[$name]['#description'] = $this->t('The email address submitting the message, if other than shown by the From header');
-          break;
-      }
       $t_args = ['@title' => $title];
       if ($default_email = $this->getDefaultConfigurationValue($name)) {
         $t_args['%email'] = $default_email;

@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -50,7 +51,7 @@ elements: |
       Please enter a value for a and b.
       {% endif %}
       {% endspaceless %}
-
+  
   webform_computed_twig_token:
     '#type': webform_computed_twig
     '#title': webform_computed_twig_token
@@ -65,7 +66,7 @@ elements: |
       Please enter a value for a and b.
       {% endif %}
       {% endspaceless %}
-
+  
   horizontal_rule:
     '#type': webform_horizontal_rule
   composite:
@@ -88,9 +89,9 @@ elements: |
       Please enter a value for composite textfield.
       {% endif %}
       {% endspaceless %}
-
+  
     '#ajax': true
-
+  
 css: ''
 javascript: ''
 settings:
@@ -163,6 +164,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -218,6 +221,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -269,6 +274,7 @@ handlers:
   debug:
     id: debug
     label: Debug
+    notes: ''
     handler_id: debug
     status: true
     conditions: {  }

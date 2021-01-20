@@ -357,8 +357,8 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
     $this->assertNoPattern('#<h2 class="visually-hidden">Error message</h2>\s+textfield field is required.#m');
 
     // Check that error message is displayed inline.
-    $this->assertRaw('1 error has been found: <div class="item-list--comma-list item-list"><ul class="item-list__comma-list"><li><a href="#edit-textfield">textfield</a></li></ul>');
-    $this->assertRaw('<strong>textfield field is required.</strong>');
+    $this->assertRaw('1 error has been found: <ul class="item-list__comma-list"><li><a href="#edit-textfield">textfield</a></li></ul>');
+    $this->assertRaw('textfield field is required.');
 
     // Check disable inline errors checkbox is enabled.
     $this->drupalGet('/admin/structure/webform/manage/test_form_disable_inline_errors/settings/form');
@@ -376,8 +376,8 @@ class WebformSettingsBehaviorsTest extends WebformBrowserTestBase {
     $this->assertRaw('Inline form errors is disabled for all forms.');
 
     // Check that error message is not displayed inline.
-    $this->assertNoRaw('1 error has been found: <div class="item-list--comma-list item-list"><ul class="item-list__comma-list"><li><a href="#edit-textfield">textfield</a></li></ul>');
-    $this->assertNoRaw('<strong>textfield field is required.</strong>');
+    $this->assertNoRaw('1 error has been found: <ul class="item-list__comma-list"><li><a href="#edit-textfield">textfield</a></li></ul>');
+    $this->assertNoRaw('textfield field is required.');
   }
 
 }

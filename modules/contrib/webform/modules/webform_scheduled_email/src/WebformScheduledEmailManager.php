@@ -278,7 +278,7 @@ class WebformScheduledEmailManager implements WebformScheduledEmailManagerInterf
         'send' => $send_timestamp,
       ])->execute();
 
-      // If email is alread scheduled when don't need to log anything.
+      // If email is already scheduled when don't need to log anything.
       if ($status === WebformScheduledEmailManagerInterface::EMAIL_ALREADY_SCHEDULED) {
         return $status;
       }

@@ -625,7 +625,7 @@ webform_submission.multiple_delete_confirm:
   defaults:
     _form: '\Drupal\webform\Form\WebformSubmissionDeleteMultiple'
   requirements:
-    _permission: 'administer webform submission'
+    _permission: 'administer webform submission+delete any webform submission+delete own webform submission'
 
 # Handlers.
 

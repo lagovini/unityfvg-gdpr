@@ -21,11 +21,11 @@
         var $message = $container.find('.webform-share-admin-copy-message');
         // Copy code from textarea to the clipboard.
         // @see https://stackoverflow.com/questions/37658524/copying-text-of-textarea-in-clipboard-when-button-is-clicked
-        $button.click(function () {
-          $textarea.select();
+        $button.on('click', function () {
+          $textarea.trigger('select');
           document.execCommand('copy');
           $message.show().delay(1500).fadeOut('slow');
-          $button.focus();
+          $button.trigger('focus');
           Drupal.announce(Drupal.t('Code copied to clipboard…'));
           return false;
         });

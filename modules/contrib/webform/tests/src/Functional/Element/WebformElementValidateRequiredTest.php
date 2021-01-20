@@ -26,7 +26,7 @@ class WebformElementValidateRequiredTest extends WebformElementBrowserTestBase {
 
     // Check that HTML tags are rendered in validation message.
     $this->drupalPostForm('/webform/test_element_validate_required', [], 'Submit');
-    $this->assertRaw('<li class="messages__item">This is a <em>custom required message</em></li>');
+    $this->assertRaw('<li>This is a <em>custom required message</em></li>');
   }
 
 }

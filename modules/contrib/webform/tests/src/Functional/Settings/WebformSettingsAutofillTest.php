@@ -23,7 +23,8 @@ class WebformSettingsAutofillTest extends WebformBrowserTestBase {
    * Test webform submission form autofill.
    */
   public function testAutofill() {
-    $this->drupalLogin($this->rootUser);
+    $account = $this->drupalCreateUser();
+    $this->drupalLogin($account);
 
     $webform = Webform::load('test_form_autofill');
 

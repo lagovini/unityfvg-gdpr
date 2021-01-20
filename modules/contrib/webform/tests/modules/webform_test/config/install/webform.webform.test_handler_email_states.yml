@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -17,7 +18,7 @@ category: 'Test: Handler'
 elements: |
   message:
     '#markup': 'Click ''Save Draft'' and ''Submit'' to send emails triggered by submissions  state.'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -90,6 +91,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -145,6 +148,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -196,6 +201,7 @@ handlers:
   email_draft:
     id: email
     label: 'Draft saved'
+    notes: ''
     handler_id: email_draft
     status: true
     conditions: {  }
@@ -233,6 +239,7 @@ handlers:
   email_converted:
     id: email
     label: 'Submission converted'
+    notes: ''
     handler_id: email_converted
     status: true
     conditions: {  }
@@ -269,6 +276,7 @@ handlers:
   email_completed:
     id: email
     label: 'Submission completed'
+    notes: ''
     handler_id: email_completed
     status: true
     conditions: {  }
@@ -305,6 +313,7 @@ handlers:
   email_updated:
     id: email
     label: 'Submission updated'
+    notes: ''
     handler_id: email_updated
     status: true
     conditions: {  }
@@ -341,6 +350,7 @@ handlers:
   email_locked:
     id: email
     label: 'Submission locked'
+    notes: ''
     handler_id: email_locked
     status: true
     conditions: {  }
@@ -377,6 +387,7 @@ handlers:
   email_deleted:
     id: email
     label: 'Submission deleted'
+    notes: ''
     handler_id: email_deleted
     status: true
     conditions: {  }
@@ -413,6 +424,7 @@ handlers:
   email_custom:
     id: email
     label: 'Submission custom'
+    notes: ''
     handler_id: email_custom
     status: true
     conditions: {  }

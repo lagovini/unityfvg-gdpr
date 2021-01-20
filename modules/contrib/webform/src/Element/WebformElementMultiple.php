@@ -3,6 +3,7 @@
 namespace Drupal\webform\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Element\FormElement;
 
 /**
@@ -111,13 +112,10 @@ class WebformElementMultiple extends FormElement {
    * Validates element multiple.
    */
   public static function validateWebformElementMultiple(&$element, FormStateInterface $form_state, &$complete_form) {
-    $has_access = (!isset($element['#access']) || $element['#access'] === TRUE);
-    $is_disabled = (!empty($element['#disabled']));
-
-    if (!$has_access) {
+    if (!Element::isVisibleElement($element)) {
       $multiple = $element['#value'];
     }
-    elseif ($is_disabled) {
+    elseif (!empty($element['#disabled'])) {
       $multiple = $element['#default_value'];
     }
     else {

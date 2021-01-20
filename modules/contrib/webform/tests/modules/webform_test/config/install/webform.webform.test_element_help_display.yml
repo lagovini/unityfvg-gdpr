@@ -1,3 +1,4 @@
+uuid: 28d4e7be-efdb-4a88-bc0d-16ed5e8a1767
 langcode: en
 status: open
 dependencies:
@@ -1909,7 +1910,7 @@ elements: |
       '#help_display': element_after
     machine_name_hr:
       '#type': webform_horizontal_rule
-
+  
 css: ''
 javascript: ''
 settings:
@@ -1982,6 +1983,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -2037,6 +2040,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -2086,6 +2091,5 @@ access:
     permissions: {  }
 handlers: {  }
 variants: {  }
-uuid: 28d4e7be-efdb-4a88-bc0d-16ed5e8a1767
 _core:
   default_config_hash: n-o0dubYyFAYHV9OGOrntyVrFt0L6owQM3jhd_cjuIc

@@ -159,11 +159,13 @@ function template_preprocess_webform_confirmation(array &$variables) {
   // Get query string parameters.
   $query = \Drupal::request()->query->all();
 
-  // Add Ajax trigger to back link.
+  // Add Ajax trigger to back link except for webform with unique limits which
+  // break the ajax callback.
   // @see \Drupal\webform\WebformSubmissionForm::getCustomForm
   // @see Drupal.behaviors.webformConfirmationBackAjax (js/webform.ajax.js)
   $is_ajax = (!empty($query['ajax_form'])) ? TRUE : FALSE;
-  if (!empty($is_ajax)) {
+  $is_limit_unique = ($webform  && ($webform->getSetting('limit_total_unique') || $webform->getSetting('limit_user_unique')));
+  if (!empty($is_ajax) && !$is_limit_unique) {
     $variables['back_attributes']->addClass('js-webform-confirmation-back-link-ajax');
   }
 
@@ -326,14 +328,12 @@ function template_preprocess_webform_submission_information(array &$variables) {
     $variables['uri'] = Link::fromTextAndUrl($source_url->setAbsolute(FALSE)->toString(), $source_url);
   }
 
-  if ($webform->getSetting('token_view')) {
-    $token_view_url = $webform_submission->getTokenUrl('view');
-    $variables['token_view'] = Link::fromTextAndUrl($token_view_url->setAbsolute(FALSE)->toString(), $token_view_url);
-  }
-
-  if ($webform->getSetting('token_update')) {
-    $token_update_url = $webform_submission->getTokenUrl('update');
-    $variables['token_update'] = Link::fromTextAndUrl($token_update_url->setAbsolute(FALSE)->toString(), $token_update_url);
+  $token_operations = ['view', 'update', 'delete'];
+  foreach ($token_operations as $token_operation) {
+    if ($webform->getSetting('token_' . $token_operation)) {
+      $token_url = $webform_submission->getTokenUrl($token_operation);
+      $variables['token_' . $token_operation] = Link::fromTextAndUrl($token_url->setAbsolute(FALSE)->toString(), $token_url);
+    }
   }
 
   if (($source_entity = $webform_submission->getSourceEntity()) && $source_entity->hasLinkTemplate('canonical')) {
@@ -360,9 +360,23 @@ function template_preprocess_webform_submission_information(array &$variables) {
   if ($webform_submission->access('delete')) {
     /** @var \Drupal\webform\WebformRequestInterface $request_handler */
     $request_handler = \Drupal::service('webform.request');
-    $base_route_name = (strpos(\Drupal::routeMatch()->getRouteName(), 'webform.user.submission') !== FALSE) ? 'webform.user.submission.delete' : 'webform_submission.delete_form';
-    $url = $request_handler->getUrl($webform_submission, $source_entity, $base_route_name);
 
+    $current_url = Url::fromRoute('<current>')->toString();
+    $source_entity_url = $webform_submission->getSourceUrl()->setAbsolute(FALSE)->toString();
+
+    $route_options = [];
+    if ($current_url === $source_entity_url) {
+      $base_route_name = 'webform.user.submission.delete';
+      $route_options = ['query' => \Drupal::destination()->getAsArray()];
+    }
+    elseif (strpos(\Drupal::routeMatch()->getRouteName(), 'webform.user.submission') !== FALSE
+      || !$webform->access('submission_view_any')) {
+      $base_route_name = 'webform.user.submission.delete';
+    }
+    else {
+      $base_route_name = 'webform_submission.delete_form';
+    }
+    $url = $request_handler->getUrl($webform_submission, $source_entity, $base_route_name, $route_options);
     $variables['delete'] = [
       '#type' => 'link',
       '#title' => t('Delete submission'),
@@ -853,6 +867,7 @@ function template_preprocess_webform_composite_telephone(array &$variables) {
 function template_preprocess_webform_element_help(array &$variables) {
   $attributes = (isset($variables['attributes'])) ? $variables['attributes'] : [];
   $attributes['class'][] = 'webform-element-help';
+  $attributes['class'][] = 'js-webform-element-help';
   $attributes['role'] = 'tooltip';
   $attributes['tabindex'] = '0';
 

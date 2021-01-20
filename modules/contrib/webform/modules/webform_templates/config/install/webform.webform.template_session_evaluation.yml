@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: closed
 dependencies:
@@ -44,7 +45,7 @@ elements: |
     '#type': textarea
     '#title': Comments
     '#description': 'What did you like most? What would you change? Advice for the speaker to make this session better?'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -117,6 +118,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -172,6 +175,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -223,6 +228,7 @@ handlers:
   email_notification:
     id: email
     label: 'Email Notification'
+    notes: ''
     handler_id: email_notification
     status: true
     conditions: {  }

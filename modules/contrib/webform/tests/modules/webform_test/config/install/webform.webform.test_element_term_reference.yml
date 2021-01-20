@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -27,6 +28,11 @@ elements: |
         '#type': webform_term_checkboxes
         '#title': webform_term_checkboxes_tree_default
         '#vocabulary': tags
+      webform_term_checkboxes_tree_depth:
+        '#type': webform_term_checkboxes
+        '#title': webform_term_checkboxes_tree_depth
+        '#vocabulary': tags
+        '#depth': 1
       webform_term_checkboxes_tree_advanced:
         '#type': webform_term_checkboxes
         '#title': webform_term_checkboxes_tree_advanced
@@ -46,6 +52,13 @@ elements: |
         '#vocabulary': tags
         '#breadcrumb': true
         '#format': breadcrumb
+      webform_term_checkboxes_breadcrumb_depth:
+        '#type': webform_term_checkboxes
+        '#title': webform_term_checkboxes_breadcrumb_depth
+        '#vocabulary': tags
+        '#breadcrumb': true
+        '#format': breadcrumb
+        '#depth': 1
       webform_term_checkboxes_breadcrumb_advanced:
         '#type': webform_term_checkboxes
         '#title': webform_term_checkboxes_breadcrumb_advanced
@@ -68,6 +81,11 @@ elements: |
         '#type': webform_term_select
         '#title': webform_term_select_tree_default
         '#vocabulary': tags
+      webform_term_select_tree_depth:
+        '#type': webform_term_select
+        '#title': webform_term_select_tree_depth
+        '#vocabulary': tags
+        '#depth': 1
       webform_term_select_tree_advanced:
         '#type': webform_term_select
         '#title': webform_term_select_tree_advanced
@@ -86,6 +104,13 @@ elements: |
         '#vocabulary': tags
         '#breadcrumb': true
         '#format': breadcrumb
+      webform_term_select_breadcrumb_depth:
+        '#type': webform_term_select
+        '#title': webform_term_select_breadcrumb_depth
+        '#vocabulary': tags
+        '#breadcrumb': true
+        '#format': breadcrumb
+        '#depth': 1
       webform_term_select_breadcrumb_advanced:
         '#type': webform_term_select
         '#title': webform_term_select_breadcrumb_advanced
@@ -169,6 +194,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -224,6 +251,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

@@ -9,6 +9,7 @@ webform_cards:
     - core/drupal
     - core/jquery.once
     - core/jquery.ui.effects.shake
+    - webform/webform.scroll
 
 webform_cards.admin:
   version: VERSION
@@ -17,6 +18,14 @@ webform_cards.admin:
       css/webform_cards.admin.css: { }
   js:
     js/webform_cards.admin.js: { }
+  dependencies:
+    - core/drupal
+    - core/jquery.once
+
+webform_cards.test:
+  version: VERSION
+  js:
+    js/webform_cards.test.js: { }
   dependencies:
     - core/drupal
     - core/jquery.once

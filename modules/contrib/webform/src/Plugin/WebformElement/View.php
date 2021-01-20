@@ -143,14 +143,14 @@ class View extends WebformMarkupBase {
     /** @var \Drupal\views\ViewEntityInterface $view */
     $view = ViewEntity::load($properties['#name']);
     if (!$view) {
-      $form_state->setErrorByName('name', t('View %name does not exist.', ['%name' => $properties['#name']]));
+      $form_state->setErrorByName('name', $this->t('View %name does not exist.', ['%name' => $properties['#name']]));
       return;
     }
 
     // Check display id.
     $display = $view->getDisplay($properties['#display_id']);
     if (!$display) {
-      $form_state->setErrorByName('display_id', t('View display %display_id does not exist.', ['%display_id' => $properties['#display_id']]));
+      $form_state->setErrorByName('display_id', $this->t('View display %display_id does not exist.', ['%display_id' => $properties['#display_id']]));
       return;
     }
 
@@ -168,7 +168,7 @@ class View extends WebformMarkupBase {
       }
       foreach ($filters as $filter) {
         if (!empty($filter['exposed'])) {
-          $form_state->setErrorByName('display_id', t('View display %display_id has exposed filters which will break the webform.', ['%display_id' => $properties['#display_id']]));
+          $form_state->setErrorByName('display_id', $this->t('View display %display_id has exposed filters which will break the webform.', ['%display_id' => $properties['#display_id']]));
           break;
         }
       }
