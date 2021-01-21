@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Mail\MailFormatHelper;
 use Drupal\webform\Element\WebformComputedTwig as WebformComputedTwigElement;
 use Drupal\webform\Element\WebformComputedBase as WebformComputedBaseElement;
+use Drupal\webform\Element\WebformMessage as WebformMessageElement;
 use Drupal\webform\Plugin\WebformElementBase;
 use Drupal\webform\Plugin\WebformElementComputedInterface;
 use Drupal\webform\Plugin\WebformElementDisplayOnInterface;
@@ -159,6 +160,14 @@ abstract class WebformComputedBase extends WebformElementBase implements Webform
     $form['computed'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Computed settings'),
+    ];
+    $form['computed']['warning'] = [
+      '#type' => 'webform_message',
+      '#message_message' => $this->t('Computing complex or multiple values with or without Ajax can be resource intensive and may have performance implications. When possible try limiting or combining computations or consider using custom Twig functions, JavaScript, or PHP.'),
+      '#message_type' => 'warning',
+      '#message_close' => TRUE,
+      '#message_storage' => WebformMessageElement::STORAGE_SESSION,
+      '#access' => TRUE,
     ];
     $form['computed']['display_on'] = [
       '#type' => 'select',

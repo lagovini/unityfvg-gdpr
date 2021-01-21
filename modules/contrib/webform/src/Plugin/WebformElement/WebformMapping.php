@@ -142,7 +142,7 @@ class WebformMapping extends WebformElementBase {
 
         $rows = [];
         foreach ($element['#source'] as $source_key => $source_text) {
-          list($source_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $source_text);
+          list($source_title) = WebformOptionsHelper::splitOption($source_text);
           $destination_value = (isset($value[$source_key])) ? $value[$source_key] : NULL;
           $destination_title = ($destination_value) ? WebformOptionsHelper::getOptionText($destination_value, $element['#destination']) : $this->t('[blank]');
           $rows[$source_key] = [
@@ -165,7 +165,7 @@ class WebformMapping extends WebformElementBase {
       case 'list':
         $items = [];
         foreach ($element['#source'] as $source_key => $source_text) {
-          list($source_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $source_text);
+          list($source_title) = WebformOptionsHelper::splitOption($source_text);
           $destination_value = (isset($value[$source_key])) ? $value[$source_key] : NULL;
           $destination_title = ($destination_value) ? WebformOptionsHelper::getOptionText($destination_value, $element['#destination']) : $this->t('[blank]');
           $items[$source_key] = ['#markup' => "$source_title $arrow $destination_title"];
@@ -210,7 +210,7 @@ class WebformMapping extends WebformElementBase {
       case 'list':
         $list = [];
         foreach ($element['#source'] as $source_key => $source_text) {
-          list($source_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $source_text);
+          list($source_title) = WebformOptionsHelper::splitOption($source_text);
           $destination_value = (isset($value[$source_key])) ? $value[$source_key] : NULL;
           $destination_title = ($destination_value) ? WebformOptionsHelper::getOptionText($destination_value, $element['#destination']) : $this->t('[blank]');
           $list[] = "$source_title $arrow $destination_title";

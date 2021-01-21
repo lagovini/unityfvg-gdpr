@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -18,7 +19,7 @@ elements: |
   name:
     '#type': textfield
     '#title': Name
-
+  
 css: ''
 javascript: ''
 settings:
@@ -93,6 +94,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -134,7 +137,7 @@ settings:
   limit_total_message: |
     webform_submission:interval:webform:wait =&gt; [webform_submission:interval:webform:wait]<br />
     webform_submission:interval:webform:source_entity:wait =&gt; [webform_submission:interval:webform:source_entity:wait]
-
+    
   limit_total_unique: false
   limit_user: 1
   limit_user_interval: 15
@@ -142,7 +145,7 @@ settings:
     <pre>
     webform_submission:interval:user:wait =&gt; [webform_submission:interval:user:wait]
     webform_submission:interval:user:source_entity:wait =&gt; [webform_submission:interval:user:source_entity:wait]</pre>
-
+    
   limit_user_unique: false
   entity_limit_total: 2
   entity_limit_total_interval: 30
@@ -155,6 +158,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

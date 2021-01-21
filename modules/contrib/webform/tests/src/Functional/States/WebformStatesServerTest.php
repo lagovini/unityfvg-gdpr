@@ -3,6 +3,7 @@
 namespace Drupal\Tests\webform\Functional\States;
 
 use Drupal\Component\Utility\Crypt;
+use Drupal\Tests\TestFileCreationTrait;
 use Drupal\webform\Element\WebformOtherBase;
 use Drupal\webform\Entity\Webform;
 use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
@@ -14,6 +15,8 @@ use Drupal\Tests\webform\Functional\WebformBrowserTestBase;
  */
 class WebformStatesServerTest extends WebformBrowserTestBase {
 
+  use TestFileCreationTrait;
+
   /**
    * Webforms to load.
    *
@@ -23,6 +26,8 @@ class WebformStatesServerTest extends WebformBrowserTestBase {
     'test_states_crosspage',
     'test_states_server_custom',
     'test_states_server_comp',
+    'test_states_server_file',
+    'test_states_server_file',
     'test_states_server_likert',
     'test_states_server_nested',
     'test_states_server_multiple',
@@ -35,7 +40,7 @@ class WebformStatesServerTest extends WebformBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['filter', 'webform'];
+  public static $modules = ['filter', 'file', 'webform'];
 
   /**
    * {@inheritdoc}
@@ -356,26 +361,51 @@ class WebformStatesServerTest extends WebformBrowserTestBase {
       'trigger_pattern' => 'abc',
       'trigger_not_pattern' => 'ABC',
       'trigger_less' => 1,
+      'trigger_less_equal' => 1,
       'trigger_greater' => 11,
+      'trigger_greater_equal' => 11,
     ];
     $this->postSubmission($webform, $edit);
     $this->assertNoRaw('New submission added to Test: Form API #states custom pattern, less, greater, and between condition validation.');
     $this->assertRaw('dependent_pattern field is required.');
     $this->assertRaw('dependent_not_pattern field is required.');
     $this->assertRaw('dependent_less field is required.');
+    $this->assertRaw('dependent_less_equal field is required.');
     $this->assertRaw('dependent_greater field is required.');
+    $this->assertRaw('dependent_greater_equal field is required.');
+
+    $edit = [
+      'trigger_less' => 10,
+      'trigger_less_equal' => 10,
+      'trigger_greater' => 10,
+      'trigger_greater_equal' => 10,
+    ];
+    $this->postSubmission($webform, $edit);
+    $this->assertNoRaw('dependent_less field is required.');
+    $this->assertRaw('dependent_less_equal field is required.');
+    $this->assertNoRaw('dependent_greater field is required.');
+    $this->assertRaw('dependent_greater_equal field is required.');
+
+    $edit = [
+      'trigger_between' => 11,
+    ];
+    $this->postSubmission($webform, $edit);
+    $this->assertRaw('dependent_between field is required.');
+    $this->assertNoRaw('dependent_not_between field is required.');
 
     $edit = [
       'trigger_between' => 9,
     ];
     $this->postSubmission($webform, $edit);
     $this->assertNoRaw('dependent_between field is required.');
+    $this->assertRaw('dependent_not_between field is required.');
 
     $edit = [
       'trigger_between' => 21,
     ];
     $this->postSubmission($webform, $edit);
     $this->assertNoRaw('dependent_between field is required.');
+    $this->assertRaw('dependent_not_between field is required.');
 
     /**************************************************************************/
     // multiple element.
@@ -421,6 +451,20 @@ class WebformStatesServerTest extends WebformBrowserTestBase {
     $this->assertRaw('webform_name_nested_first field is required.');
     $this->assertRaw('webform_name_nested_last field is required.');
     $this->assertRaw(' <input data-drupal-selector="edit-webform-name-nested-last" type="text" id="edit-webform-name-nested-last" name="webform_name_nested[last]" value="" size="60" maxlength="255" class="form-text error" aria-invalid="true" data-drupal-states="{&quot;required&quot;:{&quot;.webform-submission-test-states-server-comp-add-form :input[name=\u0022webform_name_nested_trigger\u0022]&quot;:{&quot;checked&quot;:true}}}" />');
+
+    /**************************************************************************/
+    // file_trigger.
+    /**************************************************************************/
+
+    $webform = Webform::load('test_states_server_file');
+
+    // Check required error.
+    $files = $this->getTestFiles('text');;
+    $edit = [
+      'files[trigger_file]' => \Drupal::service('file_system')->realpath($files[0]->uri),
+    ];
+    $this->postSubmission($webform, $edit);
+    $this->assertRaw('textfield_dependent_required field is required.');
 
     /**************************************************************************/
     // likert element.

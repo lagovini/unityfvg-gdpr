@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -123,7 +124,7 @@ elements: |
     '#description': |
       @see <a href="https://www.drupal.org/node/2917107">Issue #2917107: Date and Time validation problem</a><br/>
       @see <a href="https://www.drupal.org/node/2723159">Issue #2723159: Datetime form element cannot validate when using a format without seconds</a><br/>
-
+  
     '#date_date_element': datepicker
     '#date_time_element': text
     '#date_time_format': 'H:i'
@@ -153,7 +154,7 @@ elements: |
         '#autocomplete': 'off'
     '#default_value':
       - datetime: '2009-08-18T01:00:00-05:00'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -226,6 +227,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -281,6 +284,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -332,6 +337,7 @@ handlers:
   debug:
     id: debug
     label: Debug
+    notes: ''
     handler_id: debug
     status: true
     conditions: {  }

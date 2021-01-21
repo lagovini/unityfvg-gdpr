@@ -611,7 +611,7 @@ class WebformMultiple extends FormElement {
           //
           // WORKAROUND:
           // Convert element to rendered hidden element.
-          if (!isset($element['#access']) || $element['#access'] !== FALSE) {
+          if (Element::isVisibleElement($element)) {
             $hidden_elements[$child_key]['#type'] = 'hidden';
             // Unset #access, #element_validate, and #pre_render.
             // @see \Drupal\webform\Plugin\WebformElementBase::prepare()
@@ -719,15 +719,7 @@ class WebformMultiple extends FormElement {
    *   TRUE if the element is hidden.
    */
   protected static function isHidden(array $element) {
-    if (isset($element['#access']) && $element['#access'] === FALSE) {
-      return TRUE;
-    }
-    elseif (isset($element['#type']) && in_array($element['#type'], ['hidden', 'value'])) {
-      return TRUE;
-    }
-    else {
-      return FALSE;
-    }
+    return !Element::isVisibleElement($element);
   }
 
   /**
@@ -906,9 +898,15 @@ class WebformMultiple extends FormElement {
     $button = $form_state->getTriggeringElement();
     $parent_length = (isset($button['#row_index'])) ? -4 : -2;
     $element = NestedArray::getValue($form, array_slice($button['#array_parents'], 0, $parent_length));
+
     // Make sure only the ajax prefix and suffix is used.
     $element['#prefix'] = $element['#ajax_prefix'];
     $element['#suffix'] = $element['#ajax_suffix'];
+
+    // Disable states and flexbox wrapper.
+    // @see \Drupal\webform\Plugin\WebformElementBase::preRenderFixFlexboxWrapper
+    $element['#webform_wrapper'] = FALSE;
+
     return $element;
   }
 

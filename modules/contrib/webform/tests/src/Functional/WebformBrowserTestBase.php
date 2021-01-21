@@ -17,12 +17,11 @@ abstract class WebformBrowserTestBase extends BrowserTestBase {
   use WebformAssertLegacyTrait;
 
   /**
-   * Set default theme to classy.
+   * Set default theme to stable.
    *
    * @var string
-   * @see https://www.drupal.org/node/3083055
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable';
 
   /**
    * Modules to enable.

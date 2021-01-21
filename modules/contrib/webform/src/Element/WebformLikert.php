@@ -57,14 +57,14 @@ class WebformLikert extends FormElement {
     $answers = [];
     foreach ($element['#answers'] as $answer_key => $answer) {
       $answer = (string) $answer;
-      if (strpos($answer, WebformOptionsHelper::DESCRIPTION_DELIMITER) === FALSE) {
+      if (!WebformOptionsHelper::hasOptionDescription($answer)) {
         $answer_description_property_name = NULL;
         $answer_title = $answer;
         $answer_description = '';
       }
       else {
         $answer_description_property_name = ($element['#answers_description_display'] === 'help') ? 'help' : 'description';
-        list($answer_title, $answer_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $answer);
+        list($answer_title, $answer_description) = WebformOptionsHelper::splitOption($answer);
       }
       $answers[$answer_key] = [
         'description_property_name' => $answer_description_property_name,
@@ -115,14 +115,14 @@ class WebformLikert extends FormElement {
     $rows = [];
     foreach ($element['#questions'] as $question_key => $question) {
       $question = (string) $question;
-      if (strpos($question, WebformOptionsHelper::DESCRIPTION_DELIMITER) === FALSE) {
+      if (!WebformOptionsHelper::hasOptionDescription($question)) {
         $question_description_property_name = NULL;
         $question_title = $question;
         $question_description = '';
       }
       else {
         $question_description_property_name = ($element['#questions_description_display'] === 'help') ? '#help' : '#description';
-        list($question_title, $question_description) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $question);
+        list($question_title, $question_description) = WebformOptionsHelper::splitOption($question);
       }
 
       $value = (isset($element['#value'][$question_key])) ? $element['#value'][$question_key] : NULL;

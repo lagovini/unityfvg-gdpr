@@ -162,7 +162,7 @@ class WebformArrayHelper {
     $array_keys = array_keys($array);
     $array_key = reset($array_keys);
     do {
-      if ($array_key === $key) {
+      if ($array_key == $key) {
         return $direction($array_keys);
       }
     } while ($array_key = next($array_keys));

@@ -134,15 +134,11 @@ abstract class TabularBaseWebformExporter extends WebformExporterBase {
 
       case 'entity_url':
       case 'entity_title':
-        if (empty($webform_submission->entity_type->value) || empty($webform_submission->entity_id->value)) {
-          $record[] = '';
-          break;
-        }
-        $entity_type = $webform_submission->entity_type->value;
-        $entity_id = $webform_submission->entity_id->value;
-        $entity = $this->entityTypeManager->getStorage($entity_type)->load($entity_id);
+        $entity = $webform_submission->getSourceEntity(TRUE);
         if ($entity) {
-          $record[] = ($field_type === 'entity_url' && $entity->hasLinkTemplate('canonical')) ? $entity->toUrl()->setOption('absolute', TRUE)->toString() : $entity->label();
+          $record[] = ($field_type === 'entity_url' && $entity->hasLinkTemplate('canonical'))
+            ? $entity->toUrl()->setOption('absolute', TRUE)->toString()
+            : $entity->label();
         }
         else {
           $record[] = '';

@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -54,18 +55,38 @@ elements: |
       sort:
         field: title
         direction: ASC
-  entity_autocomplete_node_view:
-    '#type': entity_autocomplete
-    '#title': 'entity_autocomplete (node view)'
-    '#target_type': node
-    '#selection_handler': views
-    '#selection_settings':
-      view:
-        view_name: webform_test_entity_reference
-        display_name: entity_reference
-        arguments: ''
     '#default_value': 1
-
+  entity_autocomplete_term_tags_autocreate:
+    '#type': entity_autocomplete
+    '#title': entity_autocomplete_term_tags_autocreate
+    '#tags': true
+    '#target_type': taxonomy_term
+    '#selection_handler': 'default:taxonomy_term'
+    '#selection_settings':
+      target_bundles:
+        tags: tags
+      sort:
+        field: name
+        direction: ASC
+      auto_create: true
+      auto_create_bundle: tags
+    '#default_value': 1
+  entity_autocomplete_term_multiple_autocreate:
+    '#type': entity_autocomplete
+    '#title': entity_autocomplete_term_multiple_autocreate
+    '#multiple': true
+    '#target_type': taxonomy_term
+    '#selection_handler': 'default:taxonomy_term'
+    '#selection_settings':
+      target_bundles:
+        tags: tags
+      sort:
+        field: name
+        direction: ASC
+      auto_create: true
+      auto_create_bundle: tags
+    '#default_value': 1
+  
 css: ''
 javascript: ''
 settings:
@@ -138,6 +159,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -193,6 +216,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -244,6 +269,7 @@ handlers:
   debug:
     id: debug
     label: Debug
+    notes: ''
     handler_id: debug
     status: true
     conditions: {  }

@@ -180,6 +180,9 @@ function webform_entity_print_preprocess_entity_print(array &$variables) {
     return;
   }
 
+  // Add webform submission to variables.
+  $variables['webform_submission'] = $webform_submission;
+
   $webform = $webform_submission->getWebform();
 
   $css = [];

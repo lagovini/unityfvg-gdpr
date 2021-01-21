@@ -4,11 +4,11 @@ namespace Drupal\webform\Plugin\WebformVariant;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element;
 use Drupal\Core\Serialization\Yaml;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\webform\Element\WebformHtmlEditor;
 use Drupal\webform\Plugin\WebformVariantBase;
+use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\Utility\WebformYaml;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -176,7 +176,7 @@ class OverrideWebformVariant extends WebformVariantBase {
     if ($elements) {
       foreach ($elements as $element_key => $element_properties) {
         // Skip custom form property.
-        if (Element::property($element_key)) {
+        if (WebformElementHelper::property($element_key)) {
           continue;
         }
 
@@ -224,7 +224,7 @@ class OverrideWebformVariant extends WebformVariantBase {
     $elements = Yaml::decode($this->configuration['elements']) ?: [];
     if ($elements) {
       foreach ($elements as $element_key => $element_properties) {
-        if (Element::property($element_key)) {
+        if (WebformElementHelper::property($element_key)) {
           // Set custom form property.
           $webform->setElements([$element_key => $element_properties] + $webform->getElementsDecoded());
         }

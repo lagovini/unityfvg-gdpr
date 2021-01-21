@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -33,7 +34,7 @@ elements: |
     '#wrapper_attributes':
       style: 'display: inline-block; margin: 0; padding: 0 20px; font-size: 100px; '
     '#markup': '{0}'
-
+  
 css: ''
 javascript: ''
 settings:
@@ -106,6 +107,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -161,6 +164,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:
@@ -212,6 +217,7 @@ handlers:
   debug:
     id: debug
     label: Debug
+    notes: ''
     handler_id: debug
     status: false
     conditions: {  }
@@ -231,7 +237,7 @@ variants:
       elements: |
         letter_markup:
           '#markup': '[A]'
-
+        
       handlers: {  }
       debug: false
   b:
@@ -247,7 +253,7 @@ variants:
       elements: |
         letter_markup:
           '#markup': '[B]'
-
+        
       handlers: {  }
       debug: false
   1:
@@ -263,7 +269,7 @@ variants:
       elements: |
         number_markup:
           '#markup': '[1]'
-
+        
       handlers: {  }
       debug: false
   2:
@@ -279,7 +285,7 @@ variants:
       elements: |
         number_markup:
           '#markup': '[2]'
-
+        
       handlers: {  }
       debug: false
   3:
@@ -295,6 +301,6 @@ variants:
       elements: |
         number_markup:
           '#markup': '[3]'
-
+        
       handlers: {  }
       debug: false

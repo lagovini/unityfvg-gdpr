@@ -28,6 +28,13 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
   protected $moduleHandler;
 
   /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactory
+   */
+  protected $configFactory;
+
+  /**
    * The webform request handler.
    *
    * @var \Drupal\webform\WebformRequestInterface
@@ -107,12 +114,15 @@ class WebformBreadcrumbBuilderTest extends UnitTestCase {
 
     // Make some test doubles.
     $this->moduleHandler = $this->createMock('Drupal\Core\Extension\ModuleHandlerInterface');
+    $this->configFactory = $this->getConfigFactoryStub([
+      'webform.settings' => ['ui' => ['toolbar_item' => FALSE]],
+    ]);
     $this->requestHandler = $this->createMock('Drupal\webform\WebformRequestInterface');
     $this->translationManager = $this->createMock('Drupal\Core\StringTranslation\TranslationInterface');
 
     // Make an object to test.
     $this->breadcrumbBuilder = $this->getMockBuilder('Drupal\webform\Breadcrumb\WebformBreadcrumbBuilder')
-      ->setConstructorArgs([$this->moduleHandler, $this->requestHandler, $this->translationManager])
+      ->setConstructorArgs([$this->moduleHandler, $this->requestHandler, $this->translationManager, $this->configFactory])
       ->setMethods(NULL)
       ->getMock();
 

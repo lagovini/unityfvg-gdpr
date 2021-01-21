@@ -42,12 +42,12 @@ class WebformHandlerSettingsTest extends WebformBrowserTestBase {
 
     // Check custom preview title and message.
     $this->drupalPostForm('/webform/test_handler_settings', [], 'Preview');
-    $this->assertRaw('<li class="messages__item">{Custom preview message}</li>');
-    $this->assertRaw('<h1 class="page-title">{Custom preview title}</h1>');
+    $this->assertRaw('<li>{Custom preview message}</li>');
+    $this->assertRaw('<h1>{Custom preview title}</h1>');
 
     // Check custom confirmation title and message.
     $this->drupalPostForm('/webform/test_handler_settings', [], 'Submit');
-    $this->assertRaw('<h1 class="page-title">{Custom confirmation title}</h1>');
+    $this->assertRaw('<h1>{Custom confirmation title}</h1>');
     $this->assertRaw('<div class="webform-confirmation__message">{Custom confirmation message}</div>');
 
     // Check no custom save draft message.
@@ -65,7 +65,7 @@ class WebformHandlerSettingsTest extends WebformBrowserTestBase {
 
     // Check no custom preview title and message.
     $this->drupalPostForm('/webform/test_handler_settings', [], 'Preview');
-    $this->assertNoRaw('<h1 class="page-title">{Custom confirmation title}</h1>');
+    $this->assertNoRaw('<h1>{Custom confirmation title}</h1>');
     $this->assertNoRaw('<div class="webform-confirmation__message">{Custom confirmation message}</div>');
 
     // Check no custom confirmation title and message.

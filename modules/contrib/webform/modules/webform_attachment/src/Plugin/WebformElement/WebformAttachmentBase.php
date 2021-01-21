@@ -97,7 +97,8 @@ abstract class WebformAttachmentBase extends WebformElementBase implements Webfo
       default:
       case 'link';
       case 'url';
-        return $attachment_element::getFileUrl($element, $webform_submission)->toString();
+        $fileUrl = $attachment_element::getFileUrl($element, $webform_submission);
+        return $fileUrl ? $fileUrl->toString() : '';
     }
   }
 

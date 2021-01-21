@@ -159,7 +159,7 @@ class WebformWizardAdvancedTest extends WebformWizardTestBase {
     $this->assertRaw('<a href="mailto:janesmith@example.com">janesmith@example.com</a>');
     $this->assertRaw('<label>Phone</label>');
     $this->assertRaw('<a href="tel:111-111-1111">111-111-1111</a>');
-    $this->assertRaw('<div class="webform-element webform-element-type-textarea js-form-item form-item js-form-type-item form-type-item js-form-item-comments form-item-comments form-no-label" id="test_form_wizard_advanced--comments">');
+    $this->assertRaw('<div class="webform-element webform-element-type-textarea js-form-item form-item js-form-type-item form-item-comments js-form-item-comments form-no-label" id="test_form_wizard_advanced--comments">');
     $this->assertRaw('This is working fine.');
 
     // Submit the webform.

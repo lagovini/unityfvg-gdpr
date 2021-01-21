@@ -62,7 +62,7 @@ class WebformElementPrepopulateTest extends WebformElementBrowserTestBase {
     $this->drupalPostForm('/webform/test_element_prepopulate', [], 'Next >', $options);
     $this->assertFieldByName('textfield_prepopulate_02', 'value_02');
 
-    // Check prepopulating textfield on multiple pages and changing the value
+    // Check prepopulating textfield on multiple pages and changing the value.
     $options = [
       'query' => [
         'textfield_prepopulate_01' => 'value_01',

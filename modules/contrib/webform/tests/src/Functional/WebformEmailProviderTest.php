@@ -27,7 +27,7 @@ class WebformEmailProviderTest extends WebformBrowserTestBase {
     // Check Default PHP mailer is enabled because we manually changed the
     // system.mail configuration.
     $this->drupalGet('/admin/reports/status');
-    $this->assertRaw('Provided by php_mail mail plugin.');
+    $this->assertRaw('Provided by the php_mail mail plugin.');
     $this->assertNoRaw("Webform PHP mailer: Sends the message as plain text or HTML, using PHP's native mail() function.");
     $this->assertRaw('Default PHP mailer: Sends the message as plain text, using PHP\'s native mail() function.');
 

@@ -10,7 +10,7 @@ dependencies:
 themes:
   - classy
 
-# Information added by Drupal.org packaging script on 2020-08-05
-version: '8.9.3'
+# Information added by Drupal.org packaging script on 2020-11-26
+version: '8.9.10'
 project: 'drupal'
-datestamp: 1596665108
+datestamp: 1606360355

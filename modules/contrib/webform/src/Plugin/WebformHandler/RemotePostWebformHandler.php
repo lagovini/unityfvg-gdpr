@@ -2,6 +2,7 @@
 
 namespace Drupal\webform\Plugin\WebformHandler;
 
+use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -82,11 +83,11 @@ class RemotePostWebformHandler extends WebformHandlerBase {
   protected $elementManager;
 
   /**
-   * The current request.
+   * The request stack.
    *
-   * @var \Symfony\Component\HttpFoundation\Request
+   * @var \Symfony\Component\HttpFoundation\RequestStack
    */
-  protected $request;
+  protected $requestStack;
 
   /**
    * The DrupalKernel instance used in the test.
@@ -137,7 +138,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
       $container->get('plugin.manager.webform.element')
     );
 
-    $instance->request = $container->get('request_stack')->getCurrentRequest();
+    $instance->requestStack = $container->get('request_stack');
     $instance->kernel = $container->get('kernel');
 
     return $instance;
@@ -267,6 +268,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
         '#title' => $this->t('@title URL', $t_args),
         '#description' => $this->t('The full URL to POST to when an existing webform submission is @state. (e.g. @url)', $t_args),
         '#required' => ($state === WebformSubmissionInterface::STATE_COMPLETED),
+        '#maxlength' => NULL,
         '#default_value' => $this->configuration[$state_url],
       ];
       $form[$state][$state_custom_data] = [
@@ -394,7 +396,7 @@ class RemotePostWebformHandler extends WebformHandlerBase {
     $form['additional']['error_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Custom error response redirect URL'),
-      '#description' => $this->t('The URL or path to redirect to when a remote fails.', $t_args),
+      '#description' => $this->t('The URL or path to redirect to when a remote fails.'),
       '#default_value' => $this->configuration['error_url'],
       '#pattern' => '(https?:\/\/|\/).+',
     ];
@@ -592,6 +594,12 @@ class RemotePostWebformHandler extends WebformHandlerBase {
       $element = $webform->getElement($element_key);
       if (!$element) {
         continue;
+      }
+
+      // Cast markup to string. This only applies to computed Twig values.
+      // @see \Drupal\webform\Element\WebformComputedTwig::computeValue
+      if ($element_value instanceof MarkupInterface) {
+        $data[$element_key] = $element_value = (string) $element_value;
       }
 
       $element_plugin = $this->elementManager->getElementInstance($element);
@@ -961,7 +969,6 @@ class RemotePostWebformHandler extends WebformHandlerBase {
             '#suffix' => '</pre>',
           ],
         ];
-
       }
       if ($tokens = $this->getResponseTokens($response_data, ['webform', 'handler', $this->getHandlerId(), $state])) {
         asort($tokens);
@@ -1055,11 +1062,12 @@ class RemotePostWebformHandler extends WebformHandlerBase {
         $error_url = $base_url . preg_replace('#^' . $base_path . '#', '/', $error_url);
       }
       $response = new TrustedRedirectResponse($error_url);
+      $request = $this->requestStack->getCurrentRequest();
       // Save the session so things like messages get saved.
-      $this->request->getSession()->save();
-      $response->prepare($this->request);
+      $request->getSession()->save();
+      $response->prepare($request);
       // Make sure to trigger kernel events.
-      $this->kernel->terminate($this->request, $response);
+      $this->kernel->terminate($request, $response);
       $response->send();
     }
   }

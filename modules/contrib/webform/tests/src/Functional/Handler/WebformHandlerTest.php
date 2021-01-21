@@ -257,6 +257,23 @@ class WebformHandlerTest extends WebformBrowserTestBase {
     $this->drupalGet('/webform/test_handler_test/test', ['query' => ['_webform_handler' => 'missing']]);
     $this->assertResponse(403);
     $this->assertRaw('The <em class="placeholder">missing</em> email/handler for the <em class="placeholder">Test: Handler: Test invoke methods</em> webform does not exist.');
+
+    /**************************************************************************/
+    // Off-canvas width.
+    /**************************************************************************/
+
+    // Check add off-canvas element width is 800.
+    $this->drupalGet('/admin/structure/webform/manage/test_handler_test/handlers/add');
+    $this->assertCssSelect('[href$="/admin/structure/webform/manage/test_handler_test/handlers/add/test_offcanvas_width"][data-dialog-options*="800"]');
+    $this->assertNoCssSelect('[href$="/admin/structure/webform/manage/test_handler_test/handlers/add/test_offcanvas_width"][data-dialog-options*="550"]');
+
+    // Add handler.
+    $this->drupalPostForm('/admin/structure/webform/manage/test_handler_test/handlers/add/test_offcanvas_width', ['handler_id' => 'test_offcanvas_width'], 'Save');
+
+    // Check edit off-canvas element width is 800.
+    $this->drupalGet('/admin/structure/webform/manage/test_handler_test/handlers');
+    $this->assertCssSelect('[href$="/admin/structure/webform/manage/test_handler_test/handlers/test_offcanvas_width/edit"][data-dialog-options*="800"]');
+    $this->assertNoCssSelect('[href$="/admin/structure/webform/manage/test_handler_test/handlers/test_offcanvas_width/edit"][data-dialog-options*="550"]');
   }
 
   /**

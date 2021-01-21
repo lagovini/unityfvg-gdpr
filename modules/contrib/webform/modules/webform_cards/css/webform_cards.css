@@ -21,8 +21,7 @@ html.js .webform-card.webform-card--error[style*="display: block"] {
   display: block !important;
 }
 
-.webform-cards .webform-cards-button--previous,
-.webform-cards .webform-cards-button--next {
+html.js .webform-cards .form-actions {
   display: none;
 }
 
@@ -71,6 +70,10 @@ html.js .webform-card.webform-card--error[style*="display: block"] {
 html.js form.webform-cards-toggle-show .webform-card,
 html.js form.webform-cards-toggle-show .webform-card[style*="display: block"] {
   display: block !important;
+}
+
+html.js form.webform-cards-toggle-show .webform-card[style*="display: none"] {
+  display: none !important;
 }
 
 html.js form.webform-cards-toggle-show .webform-progress {

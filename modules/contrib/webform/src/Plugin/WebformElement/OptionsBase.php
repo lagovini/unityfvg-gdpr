@@ -262,7 +262,7 @@ abstract class OptionsBase extends WebformElementBase {
     }
 
     foreach ($element['#options__properties'] as $option_key => $options__properties) {
-      if (!isset($element[$option_key])) {
+      if (!isset($element[$option_key]) || !is_array($options__properties)) {
         continue;
       }
 
@@ -457,9 +457,10 @@ abstract class OptionsBase extends WebformElementBase {
       // Build list of checked and unchecked options.
       $build = [];
       $options_description = $this->hasProperty('options_description_display');
-      foreach ($element['#options'] as $option_value => $option_text) {
-        if ($options_description && strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-          list($option_text) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+      $options = OptGroup::flattenOptions($element['#options']);
+      foreach ($options as $option_value => $option_text) {
+        if ($options_description && WebformOptionsHelper::hasOptionDescription($option_text)) {
+          list($option_text) = WebformOptionsHelper::splitOption($option_text);
         }
         $build[$option_value] = [
           '#prefix' => isset($values[$option_value]) ? $checked : $unchecked,
@@ -511,8 +512,8 @@ abstract class OptionsBase extends WebformElementBase {
       $list = [];
       $options_description = $this->hasProperty('options_description_display');
       foreach ($element['#options'] as $option_value => $option_text) {
-        if ($options_description && strpos($option_text, WebformOptionsHelper::DESCRIPTION_DELIMITER) !== FALSE) {
-          list($option_text) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $option_text);
+        if ($options_description && WebformOptionsHelper::hasOptionDescription($option_text)) {
+          list($option_text) = WebformOptionsHelper::splitOption($option_text);
         }
         $list[] = ((isset($values[$option_value])) ? $checked : $unchecked) . ' ' . $option_text;
         unset($values[$option_value]);
@@ -1074,7 +1075,8 @@ abstract class OptionsBase extends WebformElementBase {
     $form['options_properties'] = [
       '#type' => 'details',
       '#title' => $this->t('Options (custom) properties'),
-      '#access' => $this->currentUser->hasPermission('edit webform source'),
+      '#access' => $this->hasProperty('options__properties')
+        && $this->currentUser->hasPermission('edit webform source'),
     ];
     $form['options_properties']['options__properties'] = [
       '#type' => 'webform_codemirror',

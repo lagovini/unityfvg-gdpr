@@ -247,6 +247,13 @@ class WebformAdminConfigFormsForm extends WebformAdminConfigBaseForm {
       '#size' => 20,
       '#default_value' => $settings['default_reset_button_label'],
     ];
+    $form['form_settings']['default_delete_button_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Default delete button label'),
+      '#required' => TRUE,
+      '#size' => 20,
+      '#default_value' => $settings['default_delete_button_label'],
+    ];
     $form['form_settings']['form_classes'] = [
       '#type' => 'webform_codemirror',
       '#title' => $this->t('Form CSS classes'),

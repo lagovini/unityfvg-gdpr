@@ -105,7 +105,7 @@ class WebformMessageManagerTest extends UnitTestCase {
     $token_manager->method('replace')
       ->will($this->returnCallback(function ($text) {
         return $text;
-    }));
+      }));
 
     // Mock Drupal's container.
     $container = new ContainerBuilder();

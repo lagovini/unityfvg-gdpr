@@ -18,6 +18,7 @@ use Drupal\webform\Plugin\WebformElement\WebformElement;
 use Drupal\webform\Plugin\WebformElement\WebformTable;
 use Drupal\webform\Utility\WebformDialogHelper;
 use Drupal\webform\Plugin\WebformElementManagerInterface;
+use Drupal\webform\Utility\WebformElementHelper;
 use Drupal\webform\WebformEntityElementsValidatorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -241,7 +242,7 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
     // Preserve the original elements root properties.
     $elements_original = Yaml::decode($webform->get('elements')) ?: [];
     foreach ($elements_original as $key => $value) {
-      if (Element::property($key)) {
+      if (WebformElementHelper::property($key)) {
         $elements_updated[$key] = $value;
       }
     }
@@ -461,19 +462,21 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
     $row = [];
 
     $element_state_options = OptGroup::flattenOptions(WebformElementStates::getStateOptions());
-    $element_dialog_attributes = WebformDialogHelper::getOffCanvasDialogAttributes();
     $key = $element['#webform_key'];
     $title = $element['#admin_title'] ?: $element['#title'];
     $title = (is_array($title)) ? $this->renderer->render($title) : $title;
+
     $plugin_id = $this->elementManager->getElementPluginId($element);
 
     /** @var \Drupal\webform\Plugin\WebformElementInterface $webform_element */
     $webform_element = $this->elementManager->createInstance($plugin_id);
 
+    $offcanvas_dialog_attributes = WebformDialogHelper::getOffCanvasDialogAttributes($webform_element->getOffCanvasWidth());
+
     $is_container = $webform_element->isContainer($element);
     $is_root = $webform_element->isRoot();
     $is_element_disabled = $webform_element->isDisabled();
-    $is_access_disabled = (isset($element['#access']) && $element['#access'] === FALSE);
+    $is_access_disabled = !Element::isVisibleElement($element);
 
     // If disabled, display warning.
     if ($is_element_disabled) {
@@ -517,15 +520,25 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
     }
 
     $row['title'] = [
-      '#type' => 'link',
-      '#title' => $element['#admin_title'] ?: $element['#title'],
-      '#url' => new Url('entity.webform_ui.element.edit_form', [
-        'webform' => $webform->id(),
-        'key' => $key,
-      ]),
-      '#attributes' => $element_dialog_attributes,
-      '#prefix' => !empty($indentation) ? $this->renderer->renderPlain($indentation) : '',
+      'link' => [
+        '#type' => 'link',
+        '#title' => $element['#admin_title'] ?: $element['#title'],
+        '#url' => new Url('entity.webform_ui.element.edit_form', [
+          'webform' => $webform->id(),
+          'key' => $key,
+        ]),
+        '#attributes' => $offcanvas_dialog_attributes,
+        '#prefix' => !empty($indentation) ? $this->renderer->renderPlain($indentation) : '',
+      ],
     ];
+    if (!empty($element['#admin_notes'])) {
+      $row['title']['notes'] = [
+        '#type' => 'webform_help',
+        '#help_title' => $element['#admin_title'] ?: $element['#title'],
+        '#help' => $element['#admin_notes'],
+        '#weight' => 100,
+      ];
+    }
 
     if ($webform->hasContainer()) {
       if ($is_container) {
@@ -590,7 +603,7 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
           'entity.webform_ui.element.edit_form',
           ['webform' => $webform->id(), 'key' => $key]
         ),
-        '#attributes' => $element_dialog_attributes + [
+        '#attributes' => $offcanvas_dialog_attributes + [
           // Add custom hash to current page's location.
           // @see Drupal.behaviors.webformAjaxLink
           'data-hash' => 'webform-tab--conditions',
@@ -678,7 +691,7 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
           'key' => $key,
         ]
       ),
-      'attributes' => $element_dialog_attributes,
+      'attributes' => $offcanvas_dialog_attributes,
     ];
     // Issue #2741877 Nested modals don't work: when using CKEditor in a
     // modal, then clicking the image button opens another modal,
@@ -697,7 +710,7 @@ class WebformUiEntityElementsForm extends BundleEntityFormBase {
             'key' => $key,
           ]
         ),
-        'attributes' => $element_dialog_attributes,
+        'attributes' => $offcanvas_dialog_attributes,
       ];
     }
     $row['operations']['#links']['delete'] = [

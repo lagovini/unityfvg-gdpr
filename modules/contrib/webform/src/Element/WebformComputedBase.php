@@ -275,19 +275,11 @@ abstract class WebformComputedBase extends FormElement implements WebformCompute
       'data-webform-announce' => t('@title is @value', $t_args),
     ];
     $element['#prefix'] = '<div' . new Attribute($attributes) . '>';
-
     $element['#suffix'] = '</div>';
 
-    // Remove flexbox wrapper because it already been render outside this
-    // computed element's ajax wrapper.
-    // @see \Drupal\webform\Plugin\WebformElementBase::prepareWrapper
+    // Disable states and flexbox wrapper.
     // @see \Drupal\webform\Plugin\WebformElementBase::preRenderFixFlexboxWrapper
-    $preRenderFixFlexWrapper = ['Drupal\webform\Plugin\WebformElement\WebformComputedTwig', 'preRenderFixFlexboxWrapper'];
-    foreach ($element['#pre_render'] as $index => $pre_render) {
-      if (is_array($pre_render) && $pre_render === $preRenderFixFlexWrapper) {
-        unset($element['#pre_render'][$index]);
-      }
-    }
+    $element['#webform_wrapper'] = FALSE;
 
     return $element;
   }

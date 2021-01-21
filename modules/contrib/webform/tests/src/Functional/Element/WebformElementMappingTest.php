@@ -31,7 +31,7 @@ class WebformElementMappingTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<td>One &rarr;<div class="description js-form-wrapper form-wrapper" data-drupal-selector="edit-table-one-source-data-description" id="edit-table-one-source-data-description">This is a description. This is a <a href="https://google.com">link</a></div>');
 
     // Check source help.
-    $this->assertRaw('<td>One<span data-drupal-selector="edit-table-one-source-data-help" class="webform-element-help" role="tooltip" tabindex="0" data-webform-help="&lt;div class=&quot;webform-element-help--title&quot;&gt;One&lt;/div&gt;&lt;div class=&quot;webform-element-help--content&quot;&gt;This is help. This is a &lt;a href=&quot;https://google.com&quot;&gt;link&lt;/a&gt;&lt;/div&gt;"><span aria-hidden="true">?</span></span> &rarr;</td>');
+    $this->assertRaw('<td>One<span data-drupal-selector="edit-table-one-source-data-help" class="webform-element-help js-webform-element-help" role="tooltip" tabindex="0" data-webform-help="&lt;div class=&quot;webform-element-help--title&quot;&gt;One&lt;/div&gt;&lt;div class=&quot;webform-element-help--content&quot;&gt;This is help. This is a &lt;a href=&quot;https://google.com&quot;&gt;link&lt;/a&gt;&lt;/div&gt;"><span aria-hidden="true">?</span></span> &rarr;</td>');
 
     // Check custom element.
     $this->assertRaw('<th>{Custom source} &raquo;</th>');

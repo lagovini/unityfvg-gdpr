@@ -15,7 +15,8 @@
  */
 @media (min-width: 400px) {
   .webform-options-display-two-columns {
-    display: inline-block;
+    display: block;
+    max-width: 900px;
     margin-top: 0.4em;
     -moz-column-count: 2;
     -webkit-column-count: 2;
@@ -23,7 +24,8 @@
   }
 
   .webform-options-display-three-columns {
-    display: inline-block;
+    display: block;
+    max-width: 900px;
     margin-top: 0.4em;
     -moz-column-count: 3;
     -webkit-column-count: 3;

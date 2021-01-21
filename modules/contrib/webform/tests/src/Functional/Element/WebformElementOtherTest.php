@@ -63,7 +63,7 @@ class WebformElementOtherTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<span class="fieldset-legend js-form-required form-required">Checkboxes other advanced</span>');
     $this->assertRaw('<input data-drupal-selector="edit-checkboxes-other-advanced-other" aria-describedby="edit-checkboxes-other-advanced-other--description" type="text" id="edit-checkboxes-other-advanced-other" name="checkboxes_other_advanced[other]" value="Four" size="60" maxlength="255" placeholder="What is this other option" class="form-text" />');
     $this->assertRaw('<div id="edit-checkboxes-other-advanced-other--description" class="webform-element-description">Other checkbox description</div>');
-    $this->assertRaw('<label for="edit-checkboxes-other-advanced-checkboxes-one" class="option">One<span class="webform-element-help"');
+    $this->assertRaw('<label for="edit-checkboxes-other-advanced-checkboxes-one" class="option">One<span class="webform-element-help js-webform-element-help"');
 
     /**************************************************************************/
     // radios_other
@@ -80,14 +80,14 @@ class WebformElementOtherTest extends WebformElementBrowserTestBase {
     $this->assertRaw('<input data-drupal-selector="edit-radios-other-advanced-radios-other-" type="radio" id="edit-radios-other-advanced-radios-other-" name="radios_other_advanced[radios]" value="_other_" checked="checked" class="form-radio" />');
     $this->assertRaw('<input data-drupal-selector="edit-radios-other-advanced-other" aria-describedby="edit-radios-other-advanced-other--description" type="text" id="edit-radios-other-advanced-other" name="radios_other_advanced[other]" value="Four" size="60" maxlength="255" placeholder="What is this other option" class="form-text" />');
     $this->assertRaw('<div id="edit-radios-other-advanced-other--description" class="webform-element-description">Other radio description</div>');
-    $this->assertRaw('<label for="edit-radios-other-advanced-radios-one" class="option">One<span class="webform-element-help"');
+    $this->assertRaw('<label for="edit-radios-other-advanced-radios-one" class="option">One<span class="webform-element-help js-webform-element-help"');
 
     /**************************************************************************/
     // wrapper_type
     /**************************************************************************/
 
     // Check form_item wrapper type.
-    $this->assertRaw('<div class="js-webform-select-other webform-select-other js-form-item form-item js-form-type-webform-select-other form-type-webform-select-other js-form-item-wrapper-other-form-element form-item-wrapper-other-form-element" id="edit-wrapper-other-form-element">');
+    $this->assertRaw('<div class="js-webform-select-other webform-select-other js-form-item form-item js-form-type-webform-select-other form-item-wrapper-other-form-element js-form-item-wrapper-other-form-element" id="edit-wrapper-other-form-element">');
 
     // Check container wrapper type.
     $this->assertRaw('<div data-drupal-selector="edit-wrapper-other-container" class="js-webform-select-other webform-select-other webform-select-other--wrapper fieldgroup form-composite js-form-wrapper form-wrapper" id="edit-wrapper-other-container">');

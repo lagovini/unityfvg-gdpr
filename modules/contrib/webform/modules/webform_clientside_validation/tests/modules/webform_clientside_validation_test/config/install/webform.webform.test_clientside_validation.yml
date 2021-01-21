@@ -1,3 +1,4 @@
+uuid: null
 langcode: en
 status: open
 dependencies:
@@ -22,6 +23,12 @@ elements: |
     textfield:
       '#type': textfield
       '#title': textfield
+      '#required': true
+    textfield_prefix_suffix:
+      '#type': textfield
+      '#title': textfield_prefix_suffix
+      '#field_prefix': '{field_prefix}'
+      '#field_suffix': '{field_suffix}'
       '#required': true
     pattern:
       '#type': textfield
@@ -58,6 +65,16 @@ elements: |
         one: One
         two: Two
         three: Three
+      '#required': true
+    checkboxes_two_columns:
+      '#type': checkboxes
+      '#title': checkboxes_two_columns
+      '#options_display': two_columns
+      '#options':
+        one: One
+        two: Two
+        three: Three
+        four: Four
       '#required': true
   date_elements:
     '#type': details
@@ -165,7 +182,7 @@ elements: |
       '#type': webform_signature
       '#title': signature
       '#required': true
-
+  
 css: ''
 javascript: ''
 settings:
@@ -238,6 +255,8 @@ settings:
   wizard_progress_link: false
   wizard_progress_states: false
   wizard_auto_forward: true
+  wizard_auto_forward_hide_next_button: false
+  wizard_keyboard: true
   wizard_start_label: ''
   wizard_preview_link: false
   wizard_confirmation: true
@@ -293,6 +312,8 @@ settings:
   results_customize: false
   token_view: false
   token_update: false
+  token_delete: false
+  serial_disabled: false
 access:
   create:
     roles:

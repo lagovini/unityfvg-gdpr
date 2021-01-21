@@ -8,7 +8,7 @@ webform_clientside_validation.novalidate:
 webform_clientside_validation.ife:
   version: VERSION
   js:
-    js/webform_clientside_validation.ife.js: {}
+    js/webform_clientside_validation.ife.js: { weight: -1 }
   css:
     component:
       css/webform_clientside_validation.ife.css: { }

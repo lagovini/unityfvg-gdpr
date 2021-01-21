@@ -121,7 +121,7 @@ class WebformLikert extends WebformElementBase {
           'width' => '40%',
         ];
         foreach ($element['#answers'] as $answer_value => $answer_text) {
-          list($answer_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $answer_text);
+          list($answer_title) = WebformOptionsHelper::splitOption($answer_text);
           $header[$answer_value] = [
             'data' => $answer_title,
             'align' => 'center',
@@ -133,7 +133,7 @@ class WebformLikert extends WebformElementBase {
 
         $rows = [];
         foreach ($element['#questions'] as $question_key => $question_text) {
-          list($question_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $question_text);
+          list($question_title) = WebformOptionsHelper::splitOption($question_text);
 
           $question_value = (isset($value[$question_key])) ? $value[$question_key] : NULL;
           $row = [];
@@ -167,7 +167,7 @@ class WebformLikert extends WebformElementBase {
       case 'list':
         $items = [];
         foreach ($element['#questions'] as $question_key => $question_text) {
-          list($question_title) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $question_text);
+          list($question_title) = WebformOptionsHelper::splitOption($question_text);
           $answer_value = (isset($value[$question_key])) ? $value[$question_key] : NULL;
           $answer_text = ($answer_value !== NULL) ? WebformOptionsHelper::getOptionText($answer_value, $element['#answers'], TRUE) : $this->t('[blank]');
           $items[$question_key] = [

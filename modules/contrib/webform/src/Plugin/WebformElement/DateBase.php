@@ -666,7 +666,7 @@ abstract class DateBase extends WebformElementBase {
   protected static function formatDate($custom_format, $timestamp = NULL) {
     /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
     $date_formatter = \Drupal::service('date.formatter');
-    return $date_formatter->format($timestamp ?: time(), 'custom', $custom_format);
+    return $date_formatter->format($timestamp ?: \Drupal::time()->getRequestTime(), 'custom', $custom_format);
   }
 
 }

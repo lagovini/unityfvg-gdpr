@@ -71,6 +71,7 @@
   font-weight: bold;
 }
 
+
 /*
 * Menu footer
 */
@@ -139,6 +140,14 @@
 /*
 * End Menu hompage
 */
+
+/*
+* Block Menu dentro Content
+*/
+#block-navigazioneprincipale-3 li span.navbar-text {
+  float: none;
+}
+
 /*
 * Menu RWD
 */

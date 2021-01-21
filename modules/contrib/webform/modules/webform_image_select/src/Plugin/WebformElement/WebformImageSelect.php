@@ -252,6 +252,7 @@ class WebformImageSelect extends Select {
     ];
     $form['options']['filter_container'] = [
       '#type' => 'container',
+      '#attributes' => ['data-webform-states-no-clear' => TRUE],
       '#states' => [
         'visible' => [
           ':input[name="properties[filter]"]' => ['checked' => TRUE],

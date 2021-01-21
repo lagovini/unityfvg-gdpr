@@ -53,6 +53,32 @@ class WebformCardsAjaxJavaScriptTest extends WebformWebDriverTestBase {
     // Confirm that the confirmation page is inline.
     $actual_path = parse_url($this->getSession()->getCurrentUrl(), PHP_URL_PATH) ?: '';
     $this->assertEquals($base_path . 'webform/test_cards_ajax', $actual_path);
+
+    /**************************************************************************/
+
+    // Get the webform and load card 1.
+    $this->drupalGet('/webform/test_cards_ajax');
+    $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="card_1"]');
+    $this->assertCssSelect('[data-webform-card="card_1"].is-active');
+
+    // Move to card 2.
+    $this->executeJqueryEvent('body', 'keydown', ['which' => 39]);
+    $assert_session->waitForElement('css', '.webform-card--active[data-webform-key="card_2"]');
+    $this->assertCssSelect('[data-webform-card="card_2"].is-active');
+
+    // Move to preview.
+    $this->executeJqueryEvent('body', 'keydown', ['which' => 39]);
+    $assert_session->waitForElement('css', '.webform-preview');
+    $this->assertCssSelect('[data-webform-page="webform_preview"].is-active');
+
+    // Submit the form.
+    $this->executeJqueryEvent('body', 'keydown', ['which' => 39]);
+    $assert_session->waitForElement('css', '.webform-confirmation');
+    $this->assertCssSelect('[data-webform-page="webform_confirmation"].is-active');
+
+    // Confirm that the confirmation page is inline.
+    $actual_path = parse_url($this->getSession()->getCurrentUrl(), PHP_URL_PATH) ?: '';
+    $this->assertEquals($base_path . 'webform/test_cards_ajax', $actual_path);
   }
 
 }

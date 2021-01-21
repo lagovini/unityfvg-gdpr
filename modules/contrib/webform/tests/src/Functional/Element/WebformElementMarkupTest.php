@@ -30,7 +30,7 @@ class WebformElementMarkupTest extends WebformElementBrowserTestBase {
 
     // Check markup display on form.
     $this->drupalGet('/webform/test_element_markup');
-    $this->assertRaw('<div id="edit-markup" class="js-form-item form-item js-form-type-webform-markup form-type-webform-markup js-form-item-markup form-item-markup form-no-label">');
+    $this->assertCssSelect('.js-form-item-markup.form-item-markup.form-no-label');
     $this->assertRaw('<p>This is normal markup</p>');
     $this->assertRaw('<p>This is only displayed on the form view.</p>');
     $this->assertNoRaw('<p>This is only displayed on the submission view.</p>');

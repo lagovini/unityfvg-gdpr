@@ -46,3 +46,5 @@ sites/simpletest
 
 # Ignore SimpleTest multi-site environment.
 # simpletest
+themes/custom/unityfvg/images/logo_sissa.ori.png
+themes/custom/unityfvg/images/SISSA_official_logo.png

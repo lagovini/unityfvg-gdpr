@@ -133,7 +133,7 @@ function webform_form_config_translation_add_form_alter(&$form, FormStateInterfa
  */
 function _webform_form_config_translation_add_form_alter_elements(array &$elements, array $element_alterations) {
   foreach ($elements as $key => &$element) {
-    if (Element::property($key) || !is_array($element)) {
+    if (WebformElementHelper::property($key) || !is_array($element)) {
       continue;
     }
 

@@ -17,7 +17,7 @@ class WebformUiElementTest extends WebformBrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['filter', 'webform', 'webform_ui'];
+  public static $modules = ['filter', 'webform', 'webform_ui', 'webform_test_element'];
 
   /**
    * Webforms to load.
@@ -142,6 +142,17 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertNoFieldChecked('edit-webform-ui-elements-name-required');
 
     /**************************************************************************/
+    // Notes.
+    /**************************************************************************/
+
+    // Add admin notes to contact name element.
+    $edit = [
+      'properties[admin_notes][value]' => 'This is an admin note.',
+    ];
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/name/edit', $edit, 'Save');
+    $this->assertRaw('<span data-drupal-selector="edit-webform-ui-elements-name-title-notes" class="webform-element-help js-webform-element-help" role="tooltip" tabindex="0" data-webform-help="&lt;div class=&quot;webform-element-help--title&quot;&gt;Your Name&lt;/div&gt;&lt;div class=&quot;webform-element-help--content&quot;&gt;This is an admin note.&lt;/div&gt;"><span aria-hidden="true">?</span></span>');
+
+    /**************************************************************************/
     // CRUD
     /**************************************************************************/
 
@@ -216,14 +227,12 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     // Check change element type link.
     $this->assertRaw('Text field <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/change" class="button button--small webform-ajax-link" data-dialog-type="modal" data-dialog-options="{&quot;width&quot;:800,&quot;dialogClass&quot;:&quot;webform-ui-dialog&quot;}" data-drupal-selector="edit-change-type" id="edit-change-type">Change</a>');
     // Check text field has description.
-    $this->assertRaw(t('A short description of the element used as help for the user when he/she uses the webform.'));
+    $this->assertRaw(t('A short description of the element used as help for the user when they use the webform.'));
 
     // Check change element types.
     $this->drupalGet('/admin/structure/webform/manage/contact/element/test/change');
     $this->assertRaw(t('Hidden'));
     $this->assertCssSelect('a[href$="admin/structure/webform/manage/contact/element/test/edit?type=hidden"][data-dialog-type][data-dialog-options][data-drupal-selector="edit-elements-hidden-operation"]');
-    $this->assertRaw(t('value'));
-    $this->assertCssSelect('a[href$="admin/structure/webform/manage/contact/element/test/edit?type=value"][data-dialog-type][data-dialog-options][data-drupal-selector="edit-elements-value-operation"]');
     $this->assertRaw(t('Search'));
     $this->assertCssSelect('a[href$="admin/structure/webform/manage/contact/element/test/edit?type=search"][data-dialog-type][data-dialog-options][data-drupal-selector="edit-elements-search-operation"]');
     $this->assertRaw(t('Telephone'));
@@ -232,20 +241,20 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     $this->assertCssSelect('a[href$="admin/structure/webform/manage/contact/element/test/edit?type=url"][data-dialog-type][data-dialog-options][data-drupal-selector="edit-elements-url-operation"]');
 
     // Check change element type.
-    $this->drupalGet('/admin/structure/webform/manage/contact/element/test/edit', ['query' => ['type' => 'value']]);
-    // Check value has no description.
-    $this->assertNoRaw(t('A short description of the element used as help for the user when he/she uses the webform.'));
-    $this->assertRaw('Value <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/edit" class="button button--small webform-ajax-link" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:600,&quot;dialogClass&quot;:&quot;ui-dialog-off-canvas webform-off-canvas&quot;}" data-drupal-selector="edit-cancel" id="edit-cancel">Cancel</a>');
+    $this->drupalGet('/admin/structure/webform/manage/contact/element/test/edit', ['query' => ['type' => 'hidden']]);
+    // Check hidden has no description.
+    $this->assertNoRaw(t('A short description of the element used as help for the user when they use the webform.'));
+    $this->assertRaw('Hidden <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/edit" class="button button--small webform-ajax-link" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:600,&quot;dialogClass&quot;:&quot;ui-dialog-off-canvas webform-off-canvas&quot;}" data-drupal-selector="edit-cancel" id="edit-cancel">Cancel</a>');
     $this->assertRaw('(Changing from <em class="placeholder">Text field</em>)');
 
     // Change the element type.
-    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', [], 'Save', ['query' => ['type' => 'value']]);
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/test/edit', [], 'Save', ['query' => ['type' => 'hidden']]);
 
-    // Change the element type from 'textfield' to 'value'.
+    // Change the element type from 'textfield' to 'hidden'.
     $this->drupalGet('/admin/structure/webform/manage/contact/element/test/edit');
 
     // Check change element type link.
-    $this->assertRaw('Value <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/change" class="button button--small webform-ajax-link" data-dialog-type="modal" data-dialog-options="{&quot;width&quot;:800,&quot;dialogClass&quot;:&quot;webform-ui-dialog&quot;}" data-drupal-selector="edit-change-type" id="edit-change-type">Change</a>');
+    $this->assertRaw('Hidden <a href="' . $base_path . 'admin/structure/webform/manage/contact/element/test/change" class="button button--small webform-ajax-link" data-dialog-type="modal" data-dialog-options="{&quot;width&quot;:800,&quot;dialogClass&quot;:&quot;webform-ui-dialog&quot;}" data-drupal-selector="edit-change-type" id="edit-change-type">Change</a>');
 
     // Check color element that does not have related type and return 404.
     $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/color', ['key' => 'test_color', 'properties[title]' => 'Test color'], 'Save');
@@ -262,6 +271,23 @@ class WebformUiElementTest extends WebformBrowserTestBase {
     ];
     $this->drupalPostForm('/admin/structure/webform/manage/test_element_date/element/date_min_max_dynamic/edit', $edit, 'Save');
     $this->assertRaw('The Default value could not be interpreted in <a href="https://www.gnu.org/software/tar/manual/html_chapter/tar_7.html#Date-input-formats">GNU Date Input Format</a>.');
+
+    /**************************************************************************/
+    // Off-canvas width.
+    /**************************************************************************/
+
+    // Check add off-canvas element width is 800.
+    $this->drupalGet('/admin/structure/webform/manage/contact/element/add');
+    $this->assertCssSelect('[href$="/admin/structure/webform/manage/contact/element/add/webform_test_offcanvas_width_element"][data-dialog-options*="800"]');
+    $this->assertNoCssSelect('[href$="/admin/structure/webform/manage/contact/element/add/webform_test_offcanvas_width_element"][data-dialog-options*="550"]');
+
+    // Create element.
+    $this->drupalPostForm('/admin/structure/webform/manage/contact/element/add/webform_test_offcanvas_width_element', ['key' => 'webform_test_offcanvas_width_element'], 'Save');
+
+    // Check edit off-canvas element width is 800.
+    $this->drupalGet('/admin/structure/webform/manage/contact');
+    $this->assertCssSelect('[href$="/admin/structure/webform/manage/contact/element/webform_test_offcanvas_width_element/edit"][data-dialog-options*="800"]');
+    $this->assertNoCssSelect('[href$="/admin/structure/webform/manage/contact/element/webform_test_offcanvas_width_element/edit"][data-dialog-options*="550"]');
   }
 
   /**

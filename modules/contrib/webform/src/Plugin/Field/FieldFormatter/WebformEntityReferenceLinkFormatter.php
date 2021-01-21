@@ -157,7 +157,7 @@ class WebformEntityReferenceLinkFormatter extends WebformEntityReferenceFormatte
       $form['dialog'] = [
         '#title' => $this->t('Dialog'),
         '#type' => 'select',
-        '#empty_option' => t('- Select dialog -'),
+        '#empty_option' => $this->t('- Select dialog -'),
         '#default_value' => $this->getSetting('dialog'),
         '#options' => $options,
       ];

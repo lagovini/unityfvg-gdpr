@@ -45,14 +45,14 @@ trait WebformEntityTrait {
       return;
     }
 
+    $selection_settings = isset($element['#selection_settings']) ? $element['#selection_settings'] : [];
     $selection_handler_options = [
-      'target_type' => $element['#target_type'],
-      'handler' => $element['#selection_handler'],
-      'handler_settings' => (isset($element['#selection_settings'])) ? $element['#selection_settings'] : [],
-      // Set '_webform_settings' used to limit and randomize options.
-      // @see webform_query_entity_reference_alter()
-      '_webform_settings' => $settings,
-    ];
+        'target_type' => $element['#target_type'],
+        'handler' => $element['#selection_handler'],
+        // Set '_webform_settings' used to limit and randomize options.
+        // @see webform_query_entity_reference_alter()
+        '_webform_settings' => $settings,
+      ] + $selection_settings;
 
     // Make sure settings has a limit.
     $settings += ['limit' => 0];
@@ -71,7 +71,8 @@ trait WebformEntityTrait {
 
     // If the selection handler is not using views, then translate
     // the entity reference's options.
-    if ($element['#selection_handler'] !== 'views') {
+    if (!\Drupal::moduleHandler()->moduleExists('views')
+      || !($handler instanceof \Drupal\views\Plugin\EntityReferenceSelection\ViewsSelection)) {
       $options = static::translateOptions($options, $element);
     }
 

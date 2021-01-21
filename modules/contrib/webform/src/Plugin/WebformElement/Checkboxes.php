@@ -67,7 +67,6 @@ class Checkboxes extends OptionsBase {
     return TRUE;
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -110,9 +109,9 @@ class Checkboxes extends OptionsBase {
 
     $element['#attached']['library'][] = 'webform/webform.element.checkboxes';
 
-    if (!empty($element['#options_all']) || !empty($element['#options_none']))
-    $element['#element_validate'][] = [get_class($this), 'validateCheckAllOrNone'];
-
+    if (!empty($element['#options_all']) || !empty($element['#options_none'])) {
+      $element['#element_validate'][] = [get_class($this), 'validateCheckAllOrNone'];
+    }
   }
 
   /**
@@ -138,7 +137,7 @@ class Checkboxes extends OptionsBase {
     $selectors = $element['#options'];
     foreach ($selectors as $index => $text) {
       // Remove description from text.
-      list($text) = explode(WebformOptionsHelper::DESCRIPTION_DELIMITER, $text);
+      list($text) = WebformOptionsHelper::splitOption($text);
       // Append element type to text.
       $text .= ' [' . $this->t('Checkbox') . ']';
       $selectors[$index] = $text;
@@ -199,15 +198,15 @@ class Checkboxes extends OptionsBase {
           'required' => [[':input[name="properties[' . $option_type . ']"]' => ['checked' => TRUE]]],
         ],
       ];
+      $form['options'][$option_type . '_container']['#attributes']['data-webform-states-no-clear'] = TRUE;
       $form['options'][$option_type . '_container'][$option_type . '_value'] = [
         '#type' => 'textfield',
         '#title' => $this->t("@type option value", $t_args),
-
       ];
       $form['options'][$option_type . '_container'][$option_type . '_text'] = [
         '#type' => 'textfield',
         '#title' => $this->t("@type option text", $t_args),
-        '#attributes' => ['class' => ['webform-ui-element-form-inline--input-double-width']]
+        '#attributes' => ['class' => ['webform-ui-element-form-inline--input-double-width']],
       ];
     }
     return $form;
