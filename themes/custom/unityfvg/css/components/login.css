@@ -1,0 +1,29 @@
+form[action="/user/login?internal="]#user-login-form div {
+  display: block;
+}
+
+form[action="/user/login"]#user-login-form a#edit-simplesamlphp-auth-login-link,
+form[action^="/user/login?destination="]#user-login-form a#edit-simplesamlphp-auth-login-link {
+  min-height: 1px;
+  padding: 1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin: 1em 0;
+  background-color: #286090;
+  border-radius: 4px;
+  display: inline-block;
+  color: white;
+  font-weight: bold;
+}
+
+form[action="/user/login"]#user-login-form div.form-item.form-type-textfield,
+form[action="/user/login"]#user-login-form div.form-item.form-type-password,
+form[action="/user/login"]#user-login-form div#edit-actions,
+form[action^="/user/login?destination="]#user-login-form div.form-item.form-type-textfield,
+form[action^="/user/login?destination="]#user-login-form div.form-item.form-type-password,
+form[action^="/user/login?destination="]#user-login-form div#edit-actions {
+  display: none;
+}
+
+/*div.form-item.form-type-textfield[style*="hidden"] + body.path-user nav.tabs ul.tabs--primary.nav.nav-tabs a {
+  display: none;
+}*/
