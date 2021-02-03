@@ -10,6 +10,7 @@ framework:
       css/components/block.css: {}
       css/components/footer.css: {}
       css/components/view.css: {}
+      css/components/login.css: {}
     theme:
       css/style.css: {}
       css/rwd/narrow.css: { media: "all and (min-width: 992px)" }

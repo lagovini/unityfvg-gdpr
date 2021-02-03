@@ -23,5 +23,25 @@
       });
     }
   };
+  Drupal.behaviors.userLogin = {
+    attach: function (context, settings) {
+      if (context.URL && context.URL.includes("user/")){
+        if (!context.URL.includes("?internal")) {
+          $("body.path-user nav.tabs ul.tabs--primary.nav.nav-tabs a")
+          .each(function()
+          {
+            this.style.display = 'none';
+          });
+        }
+        else {
+          $("body.path-user nav.tabs ul.tabs--primary.nav.nav-tabs a")
+          .each(function()
+          {
+            this.href += '?internal';
+          });
+        }
+      }
+    }
+  };
 })(jQuery, Drupal);
 
