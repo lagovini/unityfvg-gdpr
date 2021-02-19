@@ -1,3 +1,11 @@
+video_embed_field.settings:
+  type: config_object
+  label: 'Video embed field settings'
+  mapping:
+    privacy_mode:
+      type: string
+      label: 'Enable, disable or set the privacy mode enforcing as optional.'
+
 field.formatter.settings.video_embed_field_thumbnail:
   type: mapping
   label: 'Thumbnail formatter settings.'

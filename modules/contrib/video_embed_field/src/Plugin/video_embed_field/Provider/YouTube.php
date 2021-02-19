@@ -14,14 +14,38 @@ use Drupal\video_embed_field\ProviderPluginBase;
  */
 class YouTube extends ProviderPluginBase {
 
+  const DEFAULT_EMBED_URL = 'https://www.youtube.com/embed/%s';
+  const PRIVACY_EMBED_URL = 'https://www.youtube-nocookie.com/embed/%s';
+
   /**
    * {@inheritdoc}
    */
   public function renderEmbedCode($width, $height, $autoplay) {
+    $setting = $this->getConfig()->get('privacy_mode');
+    switch ($setting) {
+      case 'enabled':
+        $url = YouTube::PRIVACY_EMBED_URL;
+        break;
+
+      case 'optional':
+        // All domains like youtu.be redirect in the normal embed url so unless
+        // the user's input contains the youtube-nocookie domain, use the
+        // default url.
+        preg_match('#^(?:https?://|//)?(?:www\.)?(?<nocookie>youtube\-nocookie\.com)/(?:/.*)?#i', $this->getInput(), $matches);
+        $url = isset($matches['nocookie']) ? YouTube::PRIVACY_EMBED_URL : YouTube::DEFAULT_EMBED_URL;
+        break;
+
+      case 'disabled':
+      default:
+        $url = YouTube::DEFAULT_EMBED_URL;
+        break;
+
+    }
+
     $embed_code = [
       '#type' => 'video_embed_iframe',
       '#provider' => 'youtube',
-      '#url' => sprintf('https://www.youtube.com/embed/%s', $this->getVideoId()),
+      '#url' => sprintf($url, $this->getVideoId()),
       '#query' => [
         'autoplay' => $autoplay,
         'start' => $this->getTimeIndex(),
@@ -37,6 +61,9 @@ class YouTube extends ProviderPluginBase {
     if ($language = $this->getLanguagePreference()) {
       $embed_code['#query']['cc_lang_pref'] = $language;
     }
+
+    $embed_code['#cache']['tags'][] = 'config:video_embed_field.settings';
+
     return $embed_code;
   }
 
@@ -87,8 +114,30 @@ class YouTube extends ProviderPluginBase {
    * {@inheritdoc}
    */
   public static function getIdFromInput($input) {
-    preg_match('/^https?:\/\/(www\.)?((?!.*list=)youtube\.com\/watch\?.*v=|youtu\.be\/)(?<id>[0-9A-Za-z_-]*)/', $input, $matches);
-    return isset($matches['id']) ? $matches['id'] : FALSE;
+    // Supports protocols "http://", "https://" or "//".
+    $prefix = '(?:https?://|//)?';
+
+    $url_regexes = [
+      // youtu.be receives the id as the second parameter.
+      $prefix . '?youtu\.be/(?<id>[^\#\&\?]+)(?:/.*)?',
+      // Default youtube url that scans for the id in the v query parameter.
+      // Supports both www and m subdomains.
+      $prefix . '(?!.*list=)(?:www\.|m\.)?youtube\.com/(?:(?:watch)?)\?(?:.*&)?v=(?<id>[^\#\&\?]+)(?:/.*)?',
+      // Embed url. The id comes after the 'embed' keyword.
+      $prefix . '(?!.*list=)(?:www\.)?youtube\.com/embed/(?<id>[^\#\&\?]+)(?:/.*)?',
+      // No cookie domain. Only supports embedded urls. Does not support the m
+      // subdomain.
+      $prefix . '(?:www\.)?youtube\-nocookie\.com/embed/(?<id>[^\#\&\?]+)(?:/.*)?',
+    ];
+
+    foreach ($url_regexes as $regex) {
+      preg_match('#^' . $regex . '#i', $input, $matches);
+      if (isset($matches['id'])) {
+        return $matches['id'];
+      }
+    }
+
+    return FALSE;
   }
 
 }

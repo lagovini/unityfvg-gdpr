@@ -1,0 +1,637 @@
+diff --git a/config/install/video_embed_field.settings.yml b/config/install/video_embed_field.settings.yml
+new file mode 100644
+index 0000000..1679d1f
+--- /dev/null
++++ b/config/install/video_embed_field.settings.yml
+@@ -0,0 +1 @@
++privacy_mode: optional
+diff --git a/config/schema/video_embed_field.schema.yml b/config/schema/video_embed_field.schema.yml
+index 8229b1e..3b93cb7 100644
+--- a/config/schema/video_embed_field.schema.yml
++++ b/config/schema/video_embed_field.schema.yml
+@@ -1,3 +1,11 @@
++video_embed_field.settings:
++  type: config_object
++  label: 'Video embed field settings'
++  mapping:
++    privacy_mode:
++      type: string
++      label: 'Enable, disable or set the privacy mode enforcing as optional.'
++
+ field.formatter.settings.video_embed_field_thumbnail:
+   type: mapping
+   label: 'Thumbnail formatter settings.'
+diff --git a/src/Form/VideoEmbedFieldSettingsForm.php b/src/Form/VideoEmbedFieldSettingsForm.php
+new file mode 100644
+index 0000000..5d46acf
+--- /dev/null
++++ b/src/Form/VideoEmbedFieldSettingsForm.php
+@@ -0,0 +1,65 @@
++<?php
++
++namespace Drupal\video_embed_field\Form;
++
++use Drupal\Core\Cache\Cache;
++use Drupal\Core\Form\ConfigFormBase;
++use Drupal\Core\Form\FormStateInterface;
++
++/**
++ * Class VideoEmbedFieldSettingsForm.
++ */
++class VideoEmbedFieldSettingsForm extends ConfigFormBase {
++
++  /**
++   * {@inheritdoc}
++   */
++  protected function getEditableConfigNames() {
++    return ['video_embed_field.settings'];
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function getFormId() {
++    return 'video_embed_field_settings';
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function buildForm(array $form, FormStateInterface $form_state) {
++    $form['privacy_mode'] = [
++      '#title' => $this->t('Privacy mode'),
++      '#description' => t('Some providers might offer an option for '
++        . ' enhanced privacy settings (e.g. Youtube offers the youtube-nocookie domain. The following options are allowed:'
++        . '<br />Enabled: The settings will be enforced for all embeded URLs that support it.'
++        . '<br />Optional: The settings will depend on the user\'s input.'
++        . '<br />Disabled: Privacy options are not supported.'
++      ),
++      '#type' => 'select',
++      '#options' => [
++        'enabled' => $this->t('Enabled'),
++        'optional' => $this->t('Optional'),
++        'disabled' => $this->t('Disabled'),
++      ],
++      '#default_value' => $this->config('video_embed_field.settings')->get('privacy_mode'),
++    ];
++
++    return parent::buildForm($form, $form_state);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function submitForm(array &$form, FormStateInterface $form_state) {
++    $values = $form_state->getValues();
++    $this->config('video_embed_field.settings')
++      ->set('privacy_mode', $values['privacy_mode'])
++      ->save();
++
++    Cache::invalidateTags(['config:video_embed_field.settings']);
++    parent::submitForm($form, $form_state);
++  }
++
++}
+diff --git a/src/Plugin/video_embed_field/Provider/Vimeo.php b/src/Plugin/video_embed_field/Provider/Vimeo.php
+index 70c7f6b..b97067e 100644
+--- a/src/Plugin/video_embed_field/Provider/Vimeo.php
++++ b/src/Plugin/video_embed_field/Provider/Vimeo.php
+@@ -59,7 +59,7 @@ class Vimeo extends ProviderPluginBase {
+    * {@inheritdoc}
+    */
+   public static function getIdFromInput($input) {
+-    preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?$/', $input, $matches);
++    preg_match('/^https?:\/\/((www\.)|(player\.))?vimeo.com\/((channels\/[a-zA-Z0-9]*\/)|video\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?$/', $input, $matches);
+     return isset($matches['id']) ? $matches['id'] : FALSE;
+   }
+ 
+diff --git a/src/Plugin/video_embed_field/Provider/YouTube.php b/src/Plugin/video_embed_field/Provider/YouTube.php
+index 224edd2..ed5b6c2 100644
+--- a/src/Plugin/video_embed_field/Provider/YouTube.php
++++ b/src/Plugin/video_embed_field/Provider/YouTube.php
+@@ -14,14 +14,38 @@ use Drupal\video_embed_field\ProviderPluginBase;
+  */
+ class YouTube extends ProviderPluginBase {
+ 
++  const DEFAULT_EMBED_URL = 'https://www.youtube.com/embed/%s';
++  const PRIVACY_EMBED_URL = 'https://www.youtube-nocookie.com/embed/%s';
++
+   /**
+    * {@inheritdoc}
+    */
+   public function renderEmbedCode($width, $height, $autoplay) {
++    $setting = $this->getConfig()->get('privacy_mode');
++    switch ($setting) {
++      case 'enabled':
++        $url = YouTube::PRIVACY_EMBED_URL;
++        break;
++
++      case 'optional':
++        // All domains like youtu.be redirect in the normal embed url so unless
++        // the user's input contains the youtube-nocookie domain, use the
++        // default url.
++        preg_match('#^(?:https?://|//)?(?:www\.)?(?<nocookie>youtube\-nocookie\.com)/(?:/.*)?#i', $this->getInput(), $matches);
++        $url = isset($matches['nocookie']) ? YouTube::PRIVACY_EMBED_URL : YouTube::DEFAULT_EMBED_URL;
++        break;
++
++      case 'disabled':
++      default:
++        $url = YouTube::DEFAULT_EMBED_URL;
++        break;
++
++    }
++
+     $embed_code = [
+       '#type' => 'video_embed_iframe',
+       '#provider' => 'youtube',
+-      '#url' => sprintf('https://www.youtube.com/embed/%s', $this->getVideoId()),
++      '#url' => sprintf($url, $this->getVideoId()),
+       '#query' => [
+         'autoplay' => $autoplay,
+         'start' => $this->getTimeIndex(),
+@@ -37,6 +61,9 @@ class YouTube extends ProviderPluginBase {
+     if ($language = $this->getLanguagePreference()) {
+       $embed_code['#query']['cc_lang_pref'] = $language;
+     }
++
++    $embed_code['#cache']['tags'][] = 'config:video_embed_field.settings';
++
+     return $embed_code;
+   }
+ 
+@@ -87,8 +114,30 @@ class YouTube extends ProviderPluginBase {
+    * {@inheritdoc}
+    */
+   public static function getIdFromInput($input) {
+-    preg_match('/^https?:\/\/(www\.)?((?!.*list=)youtube\.com\/watch\?.*v=|youtu\.be\/)(?<id>[0-9A-Za-z_-]*)/', $input, $matches);
+-    return isset($matches['id']) ? $matches['id'] : FALSE;
++    // Supports protocols "http://", "https://" or "//".
++    $prefix = '(?:https?://|//)?';
++
++    $url_regexes = [
++      // youtu.be receives the id as the second parameter.
++      $prefix . '?youtu\.be/(?<id>[^\#\&\?]+)(?:/.*)?',
++      // Default youtube url that scans for the id in the v query parameter.
++      // Supports both www and m subdomains.
++      $prefix . '(?!.*list=)(?:www\.|m\.)?youtube\.com/(?:(?:watch)?)\?(?:.*&)?v=(?<id>[^\#\&\?]+)(?:/.*)?',
++      // Embed url. The id comes after the 'embed' keyword.
++      $prefix . '(?!.*list=)(?:www\.)?youtube\.com/embed/(?<id>[^\#\&\?]+)(?:/.*)?',
++      // No cookie domain. Only supports embedded urls. Does not support the m
++      // subdomain.
++      $prefix . '(?:www\.)?youtube\-nocookie\.com/embed/(?<id>[^\#\&\?]+)(?:/.*)?',
++    ];
++
++    foreach ($url_regexes as $regex) {
++      preg_match('#^' . $regex . '#i', $input, $matches);
++      if (isset($matches['id'])) {
++        return $matches['id'];
++      }
++    }
++
++    return FALSE;
+   }
+ 
+ }
+diff --git a/src/ProviderPluginBase.php b/src/ProviderPluginBase.php
+index c3c4b0d..6ff252b 100644
+--- a/src/ProviderPluginBase.php
++++ b/src/ProviderPluginBase.php
+@@ -172,4 +172,14 @@ abstract class ProviderPluginBase extends PluginBase implements ProviderPluginIn
+     return $this->t('@provider Video (@id)', ['@provider' => $this->getPluginDefinition()['title'], '@id' => $this->getVideoId()]);
+   }
+ 
++  /**
++   * Gets the site wide configuration.
++   *
++   * @return \Drupal\Core\Config\ImmutableConfig
++   *   Site wide configuration.
++   */
++  protected function getConfig() {
++    return \Drupal::config('video_embed_field.settings');
++  }
++
+ }
+diff --git a/tests/src/Kernel/FieldOutputTest.php b/tests/src/Kernel/FieldOutputTest.php
+index e3bf7f2..033cb66 100644
+--- a/tests/src/Kernel/FieldOutputTest.php
++++ b/tests/src/Kernel/FieldOutputTest.php
+@@ -80,6 +80,7 @@ class FieldOutputTest extends KernelTestBase {
+               'allowfullscreen' => 'allowfullscreen',
+             ],
+             '#cache' => [
++              'tags' => ['config:video_embed_field.settings'],
+               'contexts' => [
+                 'user.permissions',
+               ],
+@@ -121,6 +122,7 @@ class FieldOutputTest extends KernelTestBase {
+               'allowfullscreen' => 'allowfullscreen',
+             ],
+             '#cache' => [
++              'tags' => ['config:video_embed_field.settings'],
+               'contexts' => [
+                 'user.permissions',
+               ],
+@@ -163,6 +165,7 @@ class FieldOutputTest extends KernelTestBase {
+               'allowfullscreen' => 'allowfullscreen',
+             ],
+             '#cache' => [
++              'tags' => ['config:video_embed_field.settings'],
+               'contexts' => [
+                 'user.permissions',
+               ],
+@@ -606,4 +609,60 @@ class FieldOutputTest extends KernelTestBase {
+     return $field_output;
+   }
+ 
++  /**
++   * The test cases for the privacy mode test.
++   */
++  public function privacyModeTestCases() {
++    $random_id = $this->randomMachineName(11);
++    return [
++      'YouTube: Default url - privacy mode enabled' => [
++        'enabled',
++        'https://www.youtube.com/watch?v=' . $random_id,
++        'https://www.youtube-nocookie.com/embed/' . $random_id,
++      ],
++      'YouTube: Default url - privacy mode disabled' => [
++        'disabled',
++        'https://www.youtube.com/watch?v=' . $random_id,
++        'https://www.youtube.com/embed/' . $random_id,
++      ],
++      'YouTube: Default embed url - privacy mode enabled' => [
++        'enabled',
++        'https://www.youtube.com/embed/' . $random_id,
++        'https://www.youtube-nocookie.com/embed/' . $random_id,
++      ],
++      'YouTube: Default embed url - privacy mode optional' => [
++        'optional',
++        'https://www.youtube.com/embed/' . $random_id,
++        'https://www.youtube.com/embed/' . $random_id,
++      ],
++      'YouTube: Default nocookie embed url - privacy mode optional' => [
++        'optional',
++        'https://www.youtube-nocookie.com/embed/' . $random_id,
++        'https://www.youtube-nocookie.com/embed/' . $random_id,
++      ],
++      'YouTube: Default nocookie embed url - privacy mode disabled' => [
++        'disabled',
++        'https://www.youtube-nocookie.com/embed/' . $random_id,
++        'https://www.youtube.com/embed/' . $random_id,
++      ],
++    ];
++  }
++
++  /**
++   * Test the privacy mode.
++   *
++   * @dataProvider privacyModeTestCases
++   */
++  public function testPrivacyModeOnEmbedField($privacy_setting, $url, $expected_field_item_output) {
++    $this->container->get('config.factory')
++      ->getEditable('video_embed_field.settings')
++      ->set('privacy_mode', $privacy_setting)
++      ->save();
++    $entity = EntityTest::create();
++    $entity->{$this->fieldName}->value = $url;
++
++    $field_output = $entity->{$this->fieldName}->view();
++    $this->assertEquals($expected_field_item_output, $field_output[0]['children']['#url']);
++  }
++
+ }
+diff --git a/tests/src/Unit/ProviderUrlParseTest.php b/tests/src/Unit/ProviderUrlParseTest.php
+index 6f64b97..913e864 100644
+--- a/tests/src/Unit/ProviderUrlParseTest.php
++++ b/tests/src/Unit/ProviderUrlParseTest.php
+@@ -2,10 +2,12 @@
+ 
+ namespace Drupal\Tests\video_embed_field\Unit;
+ 
++use Drupal\Core\DependencyInjection\ContainerBuilder;
+ use Drupal\Tests\UnitTestCase;
+ use Drupal\Tests\video_embed_field\Kernel\MockHttpClient;
+ use Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo;
+ use Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube;
++use Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist;
+ 
+ /**
+  * Test that URL parsing for various providers is functioning.
+@@ -14,6 +16,23 @@ use Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube;
+  */
+ class ProviderUrlParseTest extends UnitTestCase {
+ 
++  /**
++   * The tests are depending on the config storage. Prepare a mock object.
++   */
++  protected function setUp() {
++    parent::setUp();
++
++    $config_factory = $this->getConfigFactoryStub([
++      'video_embed_field.settings' => [
++        'privacy_mode' => TRUE,
++      ],
++    ]);
++
++    $container = new ContainerBuilder();
++    $container->set('config.factory', $config_factory);
++    \Drupal::setContainer($container);
++  }
++
+   /**
+    * Test URL parsing works as expected.
+    *
+@@ -33,157 +52,217 @@ class ProviderUrlParseTest extends UnitTestCase {
+     return [
+       // Youtube passing cases.
+       'YouTube: Standard URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://www.youtube.com/watch?v=fdbFVWupSsw',
+         'fdbFVWupSsw',
+       ],
+       'YouTube: Non HTTPS' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'http://www.youtube.com/watch?v=fdbFVWupSsw',
+         'fdbFVWupSsw',
+       ],
+       'YouTube: Non WWW' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtube.com/watch?v=fdbFVWupSsw',
+         'fdbFVWupSsw',
+       ],
++      'YouTube: With WWW, No Protocol' => [
++        YouTube::class,
++        'www.youtube.com/watch?v=fdbFVWupSsw',
++        'fdbFVWupSsw',
++      ],
++      'YouTube: Non WWW, No Protocol' => [
++        YouTube::class,
++        'youtube.com/watch?v=fdbFVWupSsw',
++        'fdbFVWupSsw',
++      ],
++      'YouTube: With WWW, Implicit Protocol' => [
++        YouTube::class,
++        '//www.youtube.com/watch?v=fdbFVWupSsw',
++        'fdbFVWupSsw',
++      ],
++      'YouTube: Non WWW, Implicit Protocol' => [
++        YouTube::class,
++        '//youtube.com/watch?v=fdbFVWupSsw',
++        'fdbFVWupSsw',
++      ],
++      'YouTube: Standard Mobile URL' => [
++        YouTube::class,
++        'https://m.youtube.com/watch?v=fdbFVWupSsw',
++        'fdbFVWupSsw',
++      ],
+       'YouTube: Special Characters' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtube.com/watch?v=fdbFV_Wup-Ssw',
+         'fdbFV_Wup-Ssw',
+       ],
+       'YouTube: Short URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtu.be/fdbFVWupSsw',
+         'fdbFVWupSsw',
+       ],
+       'YouTube: With Language Preference' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtube.com/watch?v=fdbFV_Wup-Ssw&hl=fr-ca',
+         'fdbFV_Wup-Ssw',
+       ],
+       'YouTube: Added Query String' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtube.com/watch?v=fdbFVWupSsw&some_param=value&t=150',
+         'fdbFVWupSsw',
+       ],
+       'YouTube: Added Query String in first position' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtube.com/watch?feature=player_detailpage&v=fdbFV_Wup-Ssw',
+         'fdbFV_Wup-Ssw',
+       ],
+       'YouTube: Short URL Added Query String' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://youtu.be/fdbFVWupSsw?some_param=other&another=something&t=55',
+         'fdbFVWupSsw',
+       ],
++      'YouTube: Embed URL' => [
++        YouTube::class,
++        'https://youtube.com/embed/-A2Nc3TRpi0',
++        '-A2Nc3TRpi0',
++      ],
++      'YouTube: Embed URL With An Arbitrary Param' => [
++        YouTube::class,
++        'https://www.youtube.com/embed/-A2Nc3TRpi0?arbitrary_param=whatever',
++        '-A2Nc3TRpi0',
++      ],
++      'YouTube: No Cookie Embed URL' => [
++        YouTube::class,
++        'https://youtube-nocookie.com/embed/-A2Nc3TRpi0',
++        '-A2Nc3TRpi0',
++      ],
++      'YouTube: No Cookie Embed URL With An Arbitrary Param' => [
++        YouTube::class,
++        'https://www.youtube-nocookie.com/embed/-A2Nc3TRpi0?arbitrary_param=whatever',
++        '-A2Nc3TRpi0',
++      ],
+       // Youtube failing cases.
+       'YouTube: Non-youtube domain with ?v param' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://www.otherdomain.com/watch?v=fdbFVWupSsw',
+         FALSE,
+       ],
+       'YouTube: Malformed String' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         $this->randomMachineName(),
+         FALSE,
+       ],
+       'YouTube: Playlist URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://www.youtube.com/watch?v=-A2Nc3TRpi0&list=PLs4n2zZ8S1eszdZZwDSQ1G8iP95DmJHSh',
+         FALSE,
+       ],
+       'YouTube: Playlist URL (reversed params)' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTube',
++        Youtube::class,
+         'https://www.youtube.com/watch?list=PLs4n2zZ8S1eszdZZwDSQ1G8iP95DmJHSh&v=-A2Nc3TRpi0',
+         FALSE,
+       ],
++      'YouTube: Embed URL On The Mobile Subdomain' => [
++        YouTube::class,
++        'https://m.youtube.com/embed/-A2Nc3TRpi0',
++        FALSE,
++      ],
++      'YouTube: No Cookie Embed URL On The Mobile Subdomain' => [
++        YouTube::class,
++        'https://m.youtube-nocookie.com/embed/-A2Nc3TRpi0',
++        FALSE,
++      ],
+       // Youtube Playlists passing cases.
+       'YouTube Playlist' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?v=xoJH3qZwsHc&list=PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+         'PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+       ],
+       'YouTube Playlist: Reversed param order' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?list=PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB&v=xoJH3qZwsHc',
+         'PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+       ],
+       'YouTube Playlist: Underscore in ID' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?list=PLpeDXSh4nHjQCIZmkxg3VSdpR5e8_7X5eB&v=xoJH3qZwsHc',
+         'PLpeDXSh4nHjQCIZmkxg3VSdpR5e8_7X5eB',
+       ],
+       'YouTube Playlist: No HTTPs' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'http://www.youtube.com/watch?v=xoJH3qZwsHc&list=PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+         'PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+       ],
+       'YouTube Playlist: No www' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://youtube.com/watch?v=xoJH3qZwsHc&list=PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+         'PLpeDXSh4nHjQCIZmkxg3VSdpR5e87X5eB',
+       ],
+       'Youtube Playlist: Hyphens' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?list=PLg7vT2Yor-Q72v4NPNlWXWmT6iJ4t___k&v=5gdSMPaJOf4',
+         'PLg7vT2Yor-Q72v4NPNlWXWmT6iJ4t___k',
+       ],
+       // Youtube Playlists failing cases.
+       'YouTube Playlist: Invalid ID' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?v=xoJH3qZwsHc&list=!@#123',
+         FALSE,
+       ],
+       'YouTube Playlist: No ID' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?v=xoJH3qZwsHc&list=',
+         FALSE,
+       ],
+       'YouTube Playlist: No List' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\YouTubePlaylist',
++        YouTubePlaylist::class,
+         'https://www.youtube.com/watch?v=xoJH3qZwsHc',
+         FALSE,
+       ],
+       // Vimeo passing cases.
+       'Vimeo: Normal URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://vimeo.com/138627894',
+         '138627894',
+       ],
+       'Vimeo: WWW URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://www.vimeo.com/138627894',
+         '138627894',
+       ],
+       'Vimeo: Non HTTPS' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'http://www.vimeo.com/138627894',
+         '138627894',
+       ],
++      'Vimeo: Embed URL' => [
++        Vimeo::class,
++        'https://player.vimeo.com/video/138627894',
++        '138627894',
++      ],
+       'Vimeo: Channel URL' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://vimeo.com/channels/staffpicks/138627894',
+         '138627894',
+       ],
+       'Vimeo: Private Video' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://vimeo.com/173101914/aab5894fec',
+         '173101914',
+       ],
+       'Vimeo: with timeindex' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://vimeo.com/193517656#t=160s',
+         '193517656',
+       ],
+       // Vimeo failing cases.
+       'Vimeo: Malformed String' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         $this->randomMachineName(),
+         FALSE,
+       ],
+       'Vimeo: Non numeric channel page' => [
+-        'Drupal\video_embed_field\Plugin\video_embed_field\Provider\Vimeo',
++        Vimeo::class,
+         'https://vimeo.com/channels/staffpicks/some-page',
+         FALSE,
+       ],
+diff --git a/video_embed_field.links.menu.yml b/video_embed_field.links.menu.yml
+new file mode 100644
+index 0000000..8c87088
+--- /dev/null
++++ b/video_embed_field.links.menu.yml
+@@ -0,0 +1,5 @@
++video_embed_field.settings:
++  title: 'Video embed field'
++  description: 'Configure site wide settings for video embed fields.'
++  route_name: video_embed_field.settings
++  parent: system.admin_config_media
+diff --git a/video_embed_field.post_update.php b/video_embed_field.post_update.php
+new file mode 100644
+index 0000000..8bddd38
+--- /dev/null
++++ b/video_embed_field.post_update.php
+@@ -0,0 +1,16 @@
++<?php
++
++/**
++ * @file
++ * Post update functions for the video_embed_field module.
++ */
++
++/**
++ * Sets the default value of the privacy mode to false.
++ */
++function video_embed_field_post_update_install_privacy_default_settings() {
++  \Drupal::service('config.factory')
++    ->getEditable('video_embed_field.settings')
++    ->set('privacy_mode', 'optional')
++    ->save();
++}
+diff --git a/video_embed_field.routing.yml b/video_embed_field.routing.yml
+new file mode 100644
+index 0000000..6024bbd
+--- /dev/null
++++ b/video_embed_field.routing.yml
+@@ -0,0 +1,7 @@
++video_embed_field.settings:
++  path: '/admin/config/media/video-embed-field'
++  defaults:
++    _form: 'Drupal\video_embed_field\Form\VideoEmbedFieldSettingsForm'
++    _title: 'Video embed field settings'
++  requirements:
++    _permission: 'administer site configuration'

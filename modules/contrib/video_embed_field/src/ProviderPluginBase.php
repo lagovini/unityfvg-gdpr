@@ -172,4 +172,14 @@ abstract class ProviderPluginBase extends PluginBase implements ProviderPluginIn
     return $this->t('@provider Video (@id)', ['@provider' => $this->getPluginDefinition()['title'], '@id' => $this->getVideoId()]);
   }
 
+  /**
+   * Gets the site wide configuration.
+   *
+   * @return \Drupal\Core\Config\ImmutableConfig
+   *   Site wide configuration.
+   */
+  protected function getConfig() {
+    return \Drupal::config('video_embed_field.settings');
+  }
+
 }

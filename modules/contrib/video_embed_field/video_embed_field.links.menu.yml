@@ -1,0 +1,5 @@
+video_embed_field.settings:
+  title: 'Video embed field'
+  description: 'Configure site wide settings for video embed fields.'
+  route_name: video_embed_field.settings
+  parent: system.admin_config_media

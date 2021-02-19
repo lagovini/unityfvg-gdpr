@@ -59,7 +59,7 @@ class Vimeo extends ProviderPluginBase {
    * {@inheritdoc}
    */
   public static function getIdFromInput($input) {
-    preg_match('/^https?:\/\/(www\.)?vimeo.com\/(channels\/[a-zA-Z0-9]*\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?$/', $input, $matches);
+    preg_match('/^https?:\/\/((www\.)|(player\.))?vimeo.com\/((channels\/[a-zA-Z0-9]*\/)|video\/)?(?<id>[0-9]*)(\/[a-zA-Z0-9]+)?(\#t=(\d+)s)?$/', $input, $matches);
     return isset($matches['id']) ? $matches['id'] : FALSE;
   }
 

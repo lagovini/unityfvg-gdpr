@@ -80,6 +80,7 @@ class FieldOutputTest extends KernelTestBase {
               'allowfullscreen' => 'allowfullscreen',
             ],
             '#cache' => [
+              'tags' => ['config:video_embed_field.settings'],
               'contexts' => [
                 'user.permissions',
               ],
@@ -121,6 +122,7 @@ class FieldOutputTest extends KernelTestBase {
               'allowfullscreen' => 'allowfullscreen',
             ],
             '#cache' => [
+              'tags' => ['config:video_embed_field.settings'],
               'contexts' => [
                 'user.permissions',
               ],
@@ -163,6 +165,7 @@ class FieldOutputTest extends KernelTestBase {
               'allowfullscreen' => 'allowfullscreen',
             ],
             '#cache' => [
+              'tags' => ['config:video_embed_field.settings'],
               'contexts' => [
                 'user.permissions',
               ],
@@ -604,6 +607,62 @@ class FieldOutputTest extends KernelTestBase {
     });
 
     return $field_output;
+  }
+
+  /**
+   * The test cases for the privacy mode test.
+   */
+  public function privacyModeTestCases() {
+    $random_id = $this->randomMachineName(11);
+    return [
+      'YouTube: Default url - privacy mode enabled' => [
+        'enabled',
+        'https://www.youtube.com/watch?v=' . $random_id,
+        'https://www.youtube-nocookie.com/embed/' . $random_id,
+      ],
+      'YouTube: Default url - privacy mode disabled' => [
+        'disabled',
+        'https://www.youtube.com/watch?v=' . $random_id,
+        'https://www.youtube.com/embed/' . $random_id,
+      ],
+      'YouTube: Default embed url - privacy mode enabled' => [
+        'enabled',
+        'https://www.youtube.com/embed/' . $random_id,
+        'https://www.youtube-nocookie.com/embed/' . $random_id,
+      ],
+      'YouTube: Default embed url - privacy mode optional' => [
+        'optional',
+        'https://www.youtube.com/embed/' . $random_id,
+        'https://www.youtube.com/embed/' . $random_id,
+      ],
+      'YouTube: Default nocookie embed url - privacy mode optional' => [
+        'optional',
+        'https://www.youtube-nocookie.com/embed/' . $random_id,
+        'https://www.youtube-nocookie.com/embed/' . $random_id,
+      ],
+      'YouTube: Default nocookie embed url - privacy mode disabled' => [
+        'disabled',
+        'https://www.youtube-nocookie.com/embed/' . $random_id,
+        'https://www.youtube.com/embed/' . $random_id,
+      ],
+    ];
+  }
+
+  /**
+   * Test the privacy mode.
+   *
+   * @dataProvider privacyModeTestCases
+   */
+  public function testPrivacyModeOnEmbedField($privacy_setting, $url, $expected_field_item_output) {
+    $this->container->get('config.factory')
+      ->getEditable('video_embed_field.settings')
+      ->set('privacy_mode', $privacy_setting)
+      ->save();
+    $entity = EntityTest::create();
+    $entity->{$this->fieldName}->value = $url;
+
+    $field_output = $entity->{$this->fieldName}->view();
+    $this->assertEquals($expected_field_item_output, $field_output[0]['children']['#url']);
   }
 
 }
